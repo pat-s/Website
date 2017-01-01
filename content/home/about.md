@@ -14,7 +14,8 @@ weight = 1
   interests = [
     "Statistics",
     "Remote Sensing",
-    "R, Python, LaTeX"
+    "R, Python, LaTeX",
+    "test"
   ]
 
 # List your qualifications (such as academic degrees).
