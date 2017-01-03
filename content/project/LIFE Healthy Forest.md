@@ -2,6 +2,8 @@
 # Date this page was created.
 date = "2017-01-01"
 
+parent = "LIFE Healthy Forest"
+
 # Project title.
 title = "LIFE Healthy Forest"
 

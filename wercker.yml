@@ -13,9 +13,13 @@ build:
             git submodule update --remote --recursive
     - arjen/hugo-build:
         version: "0.17"
+        theme: academic
 
 deploy:
   steps:
+    - install-packages:
+        packages: git ssh-client
     - lukevivier/gh-pages:
         token: $GIT_TOKEN
+        domain: pat-s.github.io
         basedir: public

@@ -9,7 +9,7 @@ title = "R package 'oddsratio' (Creator)"
 summary = "Simplified odds ratio calculation of binomial GAM/GLM models"
 
 # Optional image to display on homepage (relative to `static/img/` folder).
-image_preview = "oddsratio.png"
+image_preview = "oddsratio3.png"
 
 # Optional image to display on project detail page (relative to `static/img/` folder).
 image = ""
