@@ -19,8 +19,7 @@ deploy:
   steps:
     - install-packages:
         packages: git ssh-client
-    - leipert/git-push:
-            gh_oauth: $GIT_TOKEN
-            repo: pat-s/pat-s.github.io
-            branch: master
-            basedir: public
+    - lukevivier/gh-pages:
+        token: $GIT_TOKEN
+        domain: pat-s.github.io
+        basedir: public
