@@ -1,14 +1,14 @@
+relativeurls = true
 baseurl = "https://pat-s.github.io/"
 title = "Patrick Schratz"
 copyright = "&copy; 2016 Patrick Schratz"
 theme = "academic"
 enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
-MetaDataFormat = "yaml"
 
 # Syntax Highlighting 
-PygmentsCodeFences = false
-pygmentsstyle = "emacs"
+PygmentsCodeFences = true
+pygmentsstyle = "monokai"
 
 
 # Enable comments by entering your Disqus shortname
