@@ -11,7 +11,7 @@ footnotereturnlinkcontents = "<sup>^</sup>"
 # pygmentsstyle = "monokai"
 
 custom_js = ["highlight.pack.js"] 
-custom_css = ["dracula.css"]
+custom_css = ["dracula.css", "my-hugo-academic.css"]
 
 
 # Enable comments by entering your Disqus shortname
