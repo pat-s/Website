@@ -6,7 +6,7 @@ enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 
 # Syntax Highlighting 
-PygmentsCodeFences = true
+PygmentsCodeFences = false
 pygmentsstyle = "emacs"
 
 
