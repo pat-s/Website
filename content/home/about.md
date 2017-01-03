@@ -1,35 +1,22 @@
-+++
-# About/Biography widget.
-
-date = "2016-04-20T00:00:00"
-draft = false
-
-widget = "about"
-
-# Order that this section will appear in.
-weight = 1
-
-# List your academic interests.
-[interests]
-  interests = [
-    "Statistics",
-    "Remote Sensing",
-    "R" 
-  ]
-
-# List your qualifications (such as academic degrees).
-
-[[education.courses]]
-  course = "M.Sc. in Geoinformatics"
-  institution = "Friedrich-Schiller-University Jena"
-  year = 2016
-
-[[education.courses]]
-  course = "B.Sc. in Geography"
-  institution = "Friedrich-Schiller-University Jena"
-  year = 2014
- 
-+++
+---
+date: 2016-04-20T00:00:00
+draft: false
+education:
+  courses:
+  - course: M.Sc. in Geoinformatics
+    institution: Friedrich-Schiller-University Jena
+    year: 2016
+  - course: B.Sc. in Geography
+    institution: Friedrich-Schiller-University Jena
+    year: 2014
+interests:
+  interests:
+  - Statistics
+  - Remote Sensing
+  - R
+weight: 1
+widget: about
+---
 
 # About me
 

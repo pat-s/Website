@@ -1,14 +1,15 @@
-+++
-date = "2016-04-20T12:00:00"
-draft = false
-image = "banners/getting-started.png"
-tags = ["academic", "hugo"]
-title = "Getting started with the Academic theme for Hugo"
-math = true
-summary = """
-Create a beautifully simple academic or personal website in under 10 minutes. 
-"""
-+++
+---
+date: 2016-04-20T12:00:00
+draft: false
+image: banners/getting-started.png
+math: true
+summary: "Create a beautifully simple academic or personal website in under 10 minutes.
+  \n"
+tags:
+- academic
+- hugo
+title: Getting started with the Academic theme for Hugo
+---
 
 The Academic theme enables you to easily create a beautifully simple academic or personal website using the [Hugo](https://gohugo.io) static site generator.
 

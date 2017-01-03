@@ -1,30 +1,17 @@
-+++
-# Date this page was created.
-date = "2017-01-01"
-
-parent = "LIFE Healthy Forest"
-
-# Project title.
-title = "LIFE Healthy Forest"
-
-# Project summary to display on homepage.
-summary = "Early detection and advanced management systems to reduce forest decline caused by invasive and pathogenic agents"
-
-# Optional image to display on homepage (relative to `static/img/` folder).
-image_preview = "life.tif"
-
-# Optional image to display on project detail page (relative to `static/img/` folder).
-image = "healthyforest.png"
-
-# Tags: can be used for filtering projects.
-# Example: `tags = ["logistic regression", "oddsratio"]`
-tags = ["pathogenic-agents", "forest", "science"]
-
-
-# Does the project detail page use math formatting?
-math = false
-
-+++
+---
+date: 2017-01-01
+image: healthyforest.png
+image_preview: life.tif
+math: false
+parent: LIFE Healthy Forest
+summary: Early detection and advanced management systems to reduce forest decline
+  caused by invasive and pathogenic agents
+tags:
+- pathogenic-agents
+- forest
+- science
+title: LIFE Healthy Forest
+---
 
 The main objective of **LIFE HEALTHY FOREST** project is the design, application and monitoring of advanced methodologies to achieve a more sustainable forest management at EU level in the field of control and prevention of forest decline caused by invasive and pathogenic agents taking into account both their environmental and socio-economic impact.
 

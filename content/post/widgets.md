@@ -1,13 +1,14 @@
-+++
-date = "2016-04-20T11:00:00"
-draft = false
-tags = ["academic", "hugo"]
-title = "Customizing the homepage with widgets"
-math = false
-summary = """
-Enable/disable and configure widgets to customize your homepage.
-"""
-+++
+---
+date: 2016-04-20T11:00:00
+draft: false
+math: false
+summary: |
+  Enable/disable and configure widgets to customize your homepage.
+tags:
+- academic
+- hugo
+title: Customizing the homepage with widgets
+---
 
 Homepage widgets display as sections on the homepage. They can be enabled/disabled and configured as desired. Academic has the following widgets available to use:
 
