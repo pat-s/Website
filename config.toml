@@ -7,8 +7,11 @@ enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 
 # Syntax Highlighting 
-PygmentsCodeFences = true
-pygmentsstyle = "monokai"
+# PygmentsCodeFences = true
+# pygmentsstyle = "monokai"
+
+custom_js = ["highlight.pack.js"] 
+custom_css = ["dracula.css"]
 
 
 # Enable comments by entering your Disqus shortname
