@@ -10,7 +10,6 @@ filter:
   tag: .science
 - name: Finished
   tag: .finished
-parent: LIFE Healthy Forest
 subtitle: ""
 title: Projects
 view: 1
