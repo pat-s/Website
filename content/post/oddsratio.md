@@ -1,5 +1,5 @@
 ---
-date: 2017-01-02T16:30:23+01:00
+date: 2016-11-01T16:30:23+01:00
 image: oddsratio3.png
 math: false
 summary: Usually, this calculation is done by setting all predictors to their mean
@@ -41,6 +41,11 @@ incr <- c(100, 2, 1, 1, 1)
 exp(coef(fit.glm)[-1] * incr)
 ```
 
+```bash
+gre       gpa       rank2     rank3     rank4 
+1.2541306 4.9931906 0.5089310 0.2617923 0.2119375
+```
+
 
 Here, the increments of our numeric predictors are `100` and `2`. The annoying part of this approach is that you have to specify as many "1s" as there are levels of your indicator variable - and you have to take care not to misplace the parentheses in the `exp()` call! Other possible errors might be to miss the `[-1]` for the intercept or increment/predictor misplacement within the `incr` vector.
 And yes, this was just the 'easy' procedure for GLMs - the GAM approach is way more extensive.
@@ -56,6 +61,16 @@ suppressMessages(library(cowplot)) # for plot theme
 calc.oddsratio.glm(data = dat, model = fit.glm, incr = list(gre = 100, gpa = 2))
 ```
 
+```bash
+  predictor oddsratio CI.low (2.5 %) CI.high (97.5 %)          increment
+1       gre     1.254          1.014            1.558                100
+2       gpa     4.993          1.378           18.696                  2
+3     rank2     0.509          0.272            0.945 Indicator variable
+4     rank3     0.262          0.132            0.512 Indicator variable
+5     rank4     0.212          0.091            0.471 Indicator variable
+```
+
+
 Note how the column names of `CI.low` and `CI.high` are automatically adjusted.
 
 By using `calc.oddsratio.glm()` you get a nicely formatted output. When setting up the function arguments you avoid false references of increments by providing the information in a named list (`gre = 100`, `gpa = 2`). Also, automatically confident intervals (CI) of odds ratios are calculated and returned. So you can directly see how "safe" your odds ratio calculation is based on the underlying fitted model for the specific predictor.
@@ -68,6 +83,14 @@ calc.oddsratio.glm(data = dat, model = fit.glm,
                    incr = list(gre = 100, gpa = 2), CI = .70)
 ```
 
+```bash
+  predictor oddsratio CI.low (15 %) CI.high (85 %)          increment
+1       gre     1.254         1.120          1.406                100
+2       gpa     4.993         2.520          9.984                  2
+3     rank2     0.509         0.366          0.706 Indicator variable
+4     rank3     0.262         0.183          0.374 Indicator variable
+5     rank4     0.212         0.136          0.325 Indicator variable
+```
 
 # GAM
 
@@ -96,6 +119,11 @@ calc.oddsratio.gam(data = dat, model = fit.gam, pred = "x2",
                    values = c(0.099, 0.198))
 ```
 
+```bash
+  predictor value1 value2 oddsratio CI.low (2.5%) CI.high (97.5%)
+1        x2  0.099  0.198  50.34194      52.87883        47.92677
+```
+
 Using `calc.oddsratio.gam()` you just specify your fitted model and your predictor, provide your values to calculate the odds ratio for and you receive your result!
 
 "Hmmm - so I have to call the function x times if I want multiple odds ratios of the same predictor?"
@@ -106,6 +134,15 @@ Well, actually yes - but that is the moment when the `slice` comes to stage!
 ```{r}
 calc.oddsratio.gam(data = dat, model = fit.gam, pred = "x2", 
                    percentage = 20, slice = TRUE)
+```
+
+``` bash
+  predictor value1 value2 perc1 perc2 oddsratio CI.low (2.5%) CI.high (97.5%)
+1        x2  0.017  0.212     0    20   3254.67       1801.96         5878.52
+2        x2  0.212  0.408    20    40      0.02          0.01            0.02
+3        x2  0.408  0.604    40    60      0.24          0.27            0.22
+4        x2  0.604  0.800    60    80      0.12          0.11            0.13
+5        x2  0.800  0.995    80   100      0.09          0.17            0.05
 ```
 
 You get the values which were taken for the odds ratio calculation (`value1`, `value2`), which percentage of the predictor distribution they correspond to (`perc1`, `perc2`), the calculate odds ratio and its confident interval borders.
@@ -119,6 +156,8 @@ Right now, the only (quick) possibility to plot the smoothing functions of a GAM
 ```{r}
 pl.smooth.gam(fit.gam, pred = "x2", title = "Predictor 'x2'")
 ```
+
+{{< figure src="/img/oddsratio1.png" title="Example plot of a GAM smooth function using `ggplot2`" >}}
 
 ## Add odds ratio information into smoothing function plot
 
@@ -136,6 +175,7 @@ plot.object <- add.oddsratio.into.plot(plot.object, or.object1, or.yloc = 3,
                                        values.yloc = 0.5, arrow.col = "red")
 ```
 
+{{< figure src="/img/oddsratio2.png" title="GAM smoothing function with inserted odds ratio information" >}}
 
 The odds ratio information is always centered between the two vertical lines. Hence it only looks nice if the gap between the two chosen values (here `0.099` and `0.198`) is large enough. If the smoothing line crosses your inserted text, you can correct it by adjusting `or.yloc`. This argument sets the y-location of the inserted odds ratio information. Depending on the number of digits of your chosen values (here 3), you might also need to adjust the x-axis location of the two values so that these do not interfer with the vertical line.
 
@@ -153,6 +193,8 @@ add.oddsratio.into.plot(plot.object, or.object2, or.yloc = 2.1, values.yloc = 2,
                         arrow.xloc.r = 0.01, arrow.xloc.l = -0.01,
                         arrow.length = 0.01, rect = TRUE)  
 ```
+
+{{< figure src="/img/oddsratio3.png" title="GAM smoothing function with information on two odds ratio intervals" >}}
 
 
 Quite some adjustments were made for this insertion: I adjusted `values.yloc` because we have only one digit this time. Also, `or.yloc` was set to a lower value than in the first example to avoid an interference with the smoothing function. A green shaded rectangle was added using `rect = TRUE` and I set the arrow color to `black`. Length and position of the arrows very slightly modified using `arrow.length`, `arrow.xloc.r` and `arrow.xloc.l`. If you do not like arrows, simply turn them off using `arrow = FALSE`. The same logic applies to the shaded rectangle `rect = FALSE` and the inserted values `values = FALSE`. 
