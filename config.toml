@@ -143,13 +143,6 @@ defaultContentLanguageInSubdir = false
   name = "Projects"
   url = "#projects"
   weight = 2
-  identifier = "projects"
-
-[[menu.main]]
-  name = "Current"
-  url = "#projects"
-  weight = 20
-  parent = "projects"
 
 [[menu.main]]
   name = "Teaching"
