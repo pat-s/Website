@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 content/**/*.html
+/themes
+public/
+README.html
