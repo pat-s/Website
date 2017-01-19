@@ -10,6 +10,7 @@ summary: Usually, this calculation is done by setting all predictors to their me
 tags: 
 - logistic regression
 - oddsratio
+- r-bloggers
 title: Introducing R Package 'oddsratio'
 ---
 
