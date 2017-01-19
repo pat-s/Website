@@ -1,6 +1,6 @@
 ---
 date: 2016-04-27
-external_link: https://github.com/pat-s/oddsratio
+external_link: https://pat-s.github.io/oddsratio/index.html
 image: ""
 image_preview: oddsratio3.png
 math: false
