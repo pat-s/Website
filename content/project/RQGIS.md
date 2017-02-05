@@ -1,6 +1,6 @@
 ---
 date: 2016-04-27
-external_link: https://github.com/jannes-m/RQGIS
+external_link: https://jannes-m.github.io/RQGIS/index.html
 image: ""
 image_preview: RQGIS.png
 math: false
