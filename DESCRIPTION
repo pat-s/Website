@@ -1,4 +1,4 @@
-Package: verao2017
+Package: pat-s.github.io
 Title: placeholder
 Version: 0.0.0.9000
 Authors@R: c(
@@ -33,14 +33,4 @@ Imports:
     dplyr,
     ggplot2,
     lubridate
-RoxygenNote: 5.0.1
-PowerUps:
-    curso-r/pu.manip,
-    curso-r/pu.ggplot,
-    curso-r/pu.rbase,
-    curso-r/pu.stringr,
-    curso-r/pu.lubridate,
-    curso-r/pu.forcats,
-    curso-r/pu.modelos,
-    curso-r/pu.pipe,
-    curso-r/pu.scrape
+RoxygenNote: 6.0.1
