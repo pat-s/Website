@@ -23,14 +23,5 @@ Imports:
     bookdown,
     devtools,
     blogdown,
-    tutorial,
-    desc,
-    forcats,
-    haven,
-    readr,
-    tibble,
-    tidyr,
-    dplyr,
-    ggplot2,
-    lubridate
+    oddsratio
 RoxygenNote: 6.0.1
