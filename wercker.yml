@@ -14,7 +14,7 @@ build:
 deploy:
   steps:
     - install-packages:
-            packages: git
+            packages: git 
     - leipert/git-push:
             gh_oauth: $GIT_TOKEN
             repo: pat-s/pat-s.github.io
