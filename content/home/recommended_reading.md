@@ -7,11 +7,13 @@ weight: 60
 widget: custom
 ---
 
-# Science
+# Books
+
+## Science
 
 - **Leek, J.** (2016): How to be a modern scientist. *Leanpub*. [https://leanpub.com/modernscientist](https://leanpub.com/modernscientist)
 
-# R
+## R
 
 - **Gillespie C. & Lovelace R.** (2016): Efficient R Programming. *O`Reilly*. [https://csgillespie.github.io/efficientR/](https://csgillespie.github.io/efficientR/)
 
@@ -22,3 +24,9 @@ widget: custom
 - **De Veaux R. et al.** (2015): Stats: Data and Models (4th ed.). *Pearson*. [Link](http://www.pearson.com.au/products/D-G-Deveaux-Velleman/Stats-Data-and-Models-Global-Edition/9781292101637?R=9781292101637)
 
 - **Zuur A.F. et al.** (2008): Mixed Effects Models and Extensions in Ecology with R. *Springer*. [http://www.springer.com/de/book/9780387874579](http://www.springer.com/de/book/9780387874579)
+
+# Blog Posts
+
+Mixed Models in R: http://m-clark.github.io/docs/mixedModels/mixedModels.html
+
+Intro to Spatial Analysis in R: https://jafflerbach.github.io/spatial-analysis-R/intro_spatial_data_R.html#introduction
