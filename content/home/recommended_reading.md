@@ -23,6 +23,8 @@ widget: custom
 
 - **De Veaux R. et al.** (2015): Stats: Data and Models (4th ed.). *Pearson*. [Link](http://www.pearson.com.au/products/D-G-Deveaux-Velleman/Stats-Data-and-Models-Global-Edition/9781292101637?R=9781292101637)
 
+- **James R. et al.** (2015) An Introduction to Statistical Learning. *Springer*. [Link](http://www-bcf.usc.edu/~gareth/ISL/)
+
 - **Zuur A.F. et al.** (2008): Mixed Effects Models and Extensions in Ecology with R. *Springer*. [http://www.springer.com/de/book/9780387874579](http://www.springer.com/de/book/9780387874579)
 
 # Blog Posts
@@ -30,3 +32,5 @@ widget: custom
 Mixed Models in R: http://m-clark.github.io/docs/mixedModels/mixedModels.html
 
 Intro to Spatial Analysis in R: https://jafflerbach.github.io/spatial-analysis-R/intro_spatial_data_R.html#introduction
+
+Generalized Additive Models (GAMs) in R: https://m-clark.github.io/docs/GAM.html
