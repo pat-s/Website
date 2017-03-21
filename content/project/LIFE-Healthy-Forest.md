@@ -13,6 +13,9 @@ tags:
 title: LIFE Healthy Forest
 ---
 
+{{< youtube ilXlX4blagQ >}}
+
+
 The main objective of **LIFE HEALTHY FOREST** project is the design, application and monitoring of advanced methodologies to achieve a more sustainable forest management at EU level in the field of control and prevention of forest decline caused by invasive and pathogenic agents taking into account both their environmental and socio-economic impact.
 
 To this purpose, the specific objectives are:
@@ -25,4 +28,4 @@ To this purpose, the specific objectives are:
 6. Involvement of public and private stakeholders (both public institutions responsible for policy making and forest management, and private organisations related to the forest industry) to achieve replicability and transferability at EU level, as well as to increase awareness in the general public about the importance of sustainable forests.
 7. Contribution to the objectives of the New EU Forest Strategy and the EU Biodiversity Strategy to 2020.
 
-Fore more information please visit [the official homepage](http://www.lifehealthyforest.com). 
+For more information please visit [the official homepage](http://www.lifehealthyforest.com). 
