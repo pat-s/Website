@@ -10,9 +10,12 @@ footnotereturnlinkcontents = "<sup>^</sup>"
 # PygmentsCodeFences = true
 # pygmentsstyle = "monokai"
 
-custom_js = ["highlight.pack.js"] 
-custom_css = ["dracula.css", "my-hugo-academic.css"]
+## Link custom CSS and JS assets (not needed currently as highlighting is supported by default now)
+#custom_js = ["highlight.pack.js"] 
+#custom_css = ["dracula.css", "my-hugo-academic.css"]
 
+highlight = true
+highlight_languages = ["r"]
 
 # Enable comments by entering your Disqus shortname
 disqusShortname = ""
