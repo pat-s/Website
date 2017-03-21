@@ -17,7 +17,7 @@ widget: custom
 
 - **Gillespie C. & Lovelace R.** (2016): Efficient R Programming. *O`Reilly*. [https://csgillespie.github.io/efficientR/](https://csgillespie.github.io/efficientR/)
 
-- **Xie Y.** (2016): bookdown: Authoring Books and Technical Documents with R Markdown. *Chapman & Hall*. [https://bookdown.org/yihui/bookdown/](https://bookdown.org/yihui/bookdown/)
+- **Xie Y.** (2016): bookdown: Authoring Books and Technical Documents with R Markdown. *Chapman & Hall*.  [https://bookdown.org/yihui/bookdown/](https://bookdown.org/yihui/bookdown/)
 
 # Statistics
 
