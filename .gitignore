@@ -4,5 +4,5 @@
 .Ruserdata
 content/**/*.html
 /themes
-public/
 README.html
+public/
