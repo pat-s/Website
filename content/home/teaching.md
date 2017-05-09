@@ -11,7 +11,7 @@ widget: custom
 
 ## Winter term 2016/2017
 
-- Geo 311 (3rd year): Geoinformatics III 
+- Geo 311 (3rd year B.Sc.): Geoinformatics III 
     - Introduction to Python
     - Python for geoprocessing -> `arcpy`
     - Introduction to scientific reporting using Rmarkdown
@@ -19,6 +19,6 @@ widget: custom
 
 # List of internships (Geoinformatics/Remote Sensing)
 
-I maintain a list of internships done in the Geoinformatics/Remote Sensing field by FSU students (B.Sc. Geography & M.Sc. Geoinformatics).  
-Please come to my office or write me an e-mail if you want to get it. We cannot make it available for the public due to sensible contact data.
-If you have undertaken an Geoinf/RS related internship in your B.Sc./M.Sc., please contact me so I can add yours to the list. 
+I maintain a list of internships undertaken in the Geoinformatics or Remote Sensing field by B.Sc. Geography & M.Sc. Geoinformatics students.  
+Please come to my office if you are interested. We will not share it in a digital way due to sensible contact data.
+If you want to add your intership to the list, feel free to contact me.
