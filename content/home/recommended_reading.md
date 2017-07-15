@@ -2,7 +2,7 @@
 date: 2016-04-20T00:00:00
 draft: false
 subtitle: ""
-title: Recommended Reading
+title: Recommended books/tutorials
 weight: 60
 widget: custom
 ---
@@ -34,3 +34,9 @@ Mixed Models in R: http://m-clark.github.io/docs/mixedModels/mixedModels.html
 Intro to Spatial Analysis in R: https://jafflerbach.github.io/spatial-analysis-R/intro_spatial_data_R.html#introduction
 
 Generalized Additive Models (GAMs) in R: https://m-clark.github.io/docs/GAM.html
+
+# Tutorial  
+
+Charlotte Wickham @useR!2017 (Brussels): Solving iteration problems with `purrr`. 
+Video: https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/Solving-iteration-problems-with-purrr
+Slides: https://github.com/Cascadia-R/purrr-tutorial
