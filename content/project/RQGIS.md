@@ -5,7 +5,7 @@ image: ""
 image_preview: RQGIS.png
 math: false
 summary: Integrating R with QGIS
-tags:
+tags_include:
 - QGIS
 - R-package
 title: R package 'RQGIS' (Author)

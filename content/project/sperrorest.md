@@ -5,7 +5,7 @@ image: ""
 image_preview: sperrorest.png
 math: false
 summary: Perform Spatial Error Estimation and Variable Importance in Parallel
-tags:
+tags_include:
 - cross-validation
 - sperrorest
 - R-package

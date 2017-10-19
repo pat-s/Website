@@ -18,7 +18,7 @@ footnotereturnlinkcontents = "<sup>^</sup>"
 #   For more info on the highlighting options, see:
 #   https://sourcethemes.com/academic/post/writing-markdown-latex/#highlighting-options
 highlight = true
-highlight_languages = []
+highlight_languages = ["r"]
 highlight_style = "dracula"
 
 # old approach
@@ -54,7 +54,7 @@ defaultContentLanguageInSubdir = false
 
   # Color theme.
   #   Choose from `default`, `ocean`, `forest`, or `coffee`.
-  color_theme = "default"
+  color_theme = "defaul"
 
   # Font style.
   #   Choose from `default`, `classic`, or `playfair`.

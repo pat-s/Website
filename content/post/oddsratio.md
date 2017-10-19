@@ -1,13 +1,14 @@
 ---
 date: 2016-11-01T16:30:23+01:00
 image: oddsratio3.png
+last_mod: 2016-11-01
 math: false
 summary: Usually, this calculation is done by setting all predictors to their mean
   value, predict the response, change the desired predictor to a new value and predict
   the response again. These actions results in two log odds values, respectively,
   which are transformed into odds by exponentiating them. Finally, the odds ratio
   can be calculated from these two odds values.
-tags: 
+tags_include: 
 - logistic regression
 - oddsratio
 - r-bloggers
