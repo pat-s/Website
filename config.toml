@@ -4,18 +4,26 @@ title = "Patrick Schratz"
 copyright = "&copy; 2017 Patrick Schratz"
 theme = "academic"
 enableEmoji = true
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 footnotereturnlinkcontents = "<sup>^</sup>"
 
-# Syntax Highlighting 
+# Syntax Highlighting
 # PygmentsCodeFences = true
 # pygmentsstyle = "monokai"
 
 ## Link custom CSS and JS assets (not needed currently as highlighting is supported by default now)
-#custom_js = ["highlight.pack.js"] 
+#custom_js = ["highlight.pack.js"]
 #custom_css = ["dracula.css", "my-hugo-academic.css"]
 
+#   For more info on the highlighting options, see:
+#   https://sourcethemes.com/academic/post/writing-markdown-latex/#highlighting-options
 highlight = true
-highlight_languages = ["r"]
+highlight_languages = []
+highlight_style = "dracula"
+
+# old approach
+#highlight = true
+#highlight_languages = ["r"]
 
 # Enable comments by entering your Disqus shortname
 disqusShortname = ""
@@ -28,7 +36,9 @@ defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 
 [blackfriday]
-  hrefTargetBlank = true
+  hrefTargetBlank = true  # `true` opens external links in a new tab.
+  fractions = true  # `false` disables smart fractions (e.g. 5/12 formatted as a fraction).
+  smartypants = true  # `false` disables all smart punctuation substitutions (e.g. smart quotes, dashes, fractions).
 
 [params]
   name = "Patrick Schratz"
@@ -42,8 +52,20 @@ defaultContentLanguageInSubdir = false
   skype = ""
   telegram = ""
 
+  # Color theme.
+  #   Choose from `default`, `ocean`, `forest`, or `coffee`.
+  color_theme = "default"
+
+  # Font style.
+  #   Choose from `default`, `classic`, or `playfair`.
+  font = "default"
+
   # Enable Keybase in Contact section by entering your keybase.io username.
   keybase = ""
+
+  # Diplay a logo in navigation bar rather than title (optional).
+  #   To enable, place an image in `static/img/` and reference its filename below. To disable, set the value to "".
+  logo = ""
 
   # Date format (refer to Go's date format: http://flippinggodateformat.com )
   #   Examples: "Mon, Jan 2, 2006" or "2006-01-02"
@@ -84,12 +106,12 @@ defaultContentLanguageInSubdir = false
     icon = "envelope"
     icon_pack = "fa"
     link = "mailto:patrick.schratz@uni-jena.de"
-	
+
   [[params.social]]
     icon = "linkedin"
     icon_pack = "fa"
     link = "https://www.linkedin.com/in/patrick-schratz-94666b101?trk=hp-identity-name"
-    
+
   [[params.social]]
     icon = "researchgate"
     icon_pack = "ai"
@@ -114,7 +136,7 @@ defaultContentLanguageInSubdir = false
     icon = "stack-exchange"
     icon_pack = "fa"
     link = "http://stackexchange.com/users/5237716/pat-s?tab=accounts"
-    
+
 
 
 # Navigation Links
@@ -131,7 +153,7 @@ defaultContentLanguageInSubdir = false
   name = "Publications"
   url = "#publications_selected"
   weight = 4
-  
+
 [[menu.main]]
   name = "Rec. Reading"
   url = "#recommended_reading"
@@ -156,6 +178,13 @@ defaultContentLanguageInSubdir = false
   name = "Contact"
   url = "#contact"
   weight = 6
+
+
+# Taxonomies.
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  publication_type = "publication_types"
 
 # Languages
 #   Create a [languages.X] block for each language you want, where X is the language ID.
