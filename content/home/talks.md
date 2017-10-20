@@ -1,11 +1,22 @@
 ---
-count: 10
-date: 2016-04-20T00:00:00
-detailed_list: false
+# Recent and Upcoming Talks widget.
+
+date: "2016-04-20T00:00:00"
 draft: false
+
+title: "Recent & Upcoming Talks"
 subtitle: ""
-title: Recent Talks
+widget: "talks"
+
+# Order that this section will appear in.
 weight: 30
-widget: talks
+
+# Number of talks to list.
+count: 10
+
+# List format.
+#   0: Simple
+#   1: Detailed
+list_format: 0
 ---
 

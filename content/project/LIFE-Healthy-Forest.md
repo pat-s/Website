@@ -6,7 +6,7 @@ math: false
 parent: LIFE Healthy Forest
 summary: Early detection and advanced management systems to reduce forest decline
   caused by invasive and pathogenic agents
-tags_include:
+tags:
 - pathogenic-agents
 - forest
 - science

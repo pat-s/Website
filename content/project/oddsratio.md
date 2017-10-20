@@ -5,7 +5,7 @@ image: ""
 image_preview: oddsratio3.png
 math: false
 summary: Simplified odds ratio calculation of binomial GAM/GLM models
-tags_include:
+tags:
 - logistic-regression
 - oddsratio
 - R-package

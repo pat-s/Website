@@ -4,7 +4,7 @@ image: dragon.png
 image_preview: dragon1.jpg
 math: false
 summary: ESA-MOST Dragon 3 cooperation program
-tags_include:
+tags:
 - DRAGON
 - forest
 - science

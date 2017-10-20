@@ -1,10 +1,17 @@
 ---
-autolink: true
-date: 2016-04-20T00:00:00
+# Contact widget.
+
+date: "2016-04-20T00:00:00"
 draft: false
+
+title: "Contact"
 subtitle: ""
-title: Contact
+widget: "contact"
+
+# Order that this section will appear in.
 weight: 70
-widget: contact
+
+# Automatically link email and phone?
+autolink: true
 ---
 

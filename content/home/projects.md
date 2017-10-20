@@ -2,7 +2,6 @@
 date: 2016-04-20T00:00:00
 draft: false
 
-
 # Filter toolbar.
 
 # Default filter index (e.g. 0 corresponds to the first `[[filter]]` instance below).

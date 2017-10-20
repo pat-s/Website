@@ -5,6 +5,7 @@ copyright = "&copy; 2017 Patrick Schratz"
 theme = "academic"
 enableEmoji = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+preserveTaxonomyNames = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 
 # Syntax Highlighting
@@ -36,7 +37,7 @@ defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 
 [outputs]
-  home = [ "HTML", "CSS" ]
+  home = ["HTML", "CSS"]
 
 [blackfriday]
   hrefTargetBlank = true  # `true` opens external links in a new tab.
@@ -46,7 +47,10 @@ defaultContentLanguageInSubdir = false
 [params]
   name = "Patrick Schratz"
   role = "PhD Student"
-  organization = "Friedrich-Schiller-University Jena"
+
+  # Organizations/Affiliations.
+  #   Separate multiple entries with a comma, using the form: `[ {name="Org1", url=""}, {name="Org2", url=""} ]`.
+  organizations = [ { name = "Friedrich-Schiller-University Jena", url = "https://www.uni-jena.de/" } ]
   avatar = "avatar.jpg"
   email = "patrick.schratz@uni-jena.de"
   address = "Grietgasse 6, Room 126, 07745 Jena (Germany)"
@@ -85,6 +89,22 @@ defaultContentLanguageInSubdir = false
   #   (relative to /static/css and /static/js respectively)
   custom_css = []
   custom_js  = []
+
+  # Publication types.
+  #   Used to categorize publications.
+  #   The index of the publication type in the list is used as its unique numerical identifier.
+  #   The numeric ID is used in a publication's frontmatter to categorize it.
+  #   The language can be edited below.
+  #   For multi-lingual sites, copy this block to each language section at the end of this file.
+  publication_types = [
+    'Uncategorized',  # 0
+    'Conference proceedings',  # 1
+    'Journal',  # 2
+    'Work in progress',  # 3
+    'Technical report',  # 4
+    'Book',  # 5
+    'Book chapter'  # 6
+  ]
 
 
   # Social/Academic Networking
@@ -193,5 +213,5 @@ defaultContentLanguageInSubdir = false
 #   Create a [languages.X] block for each language you want, where X is the language ID.
 
 # Configure the English version of the website.
-[languages.en]
+[Languages.en]
   languageCode = "en-us"
