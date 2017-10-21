@@ -1,22 +1,35 @@
----
-date: 2016-04-20T00:00:00
-draft: false
-education:
-  courses:
-  - course: M.Sc. in Geoinformatics
-    institution: Friedrich-Schiller-University Jena
-    year: 2016
-  - course: B.Sc. in Geography
-    institution: Friedrich-Schiller-University Jena
-    year: 2014
-interests:
-  interests:
-  - Statistics
-  - Remote Sensing
-  - R
-weight: 1
-widget: about
----
++++
+# About/Biography widget.
+
+date = "2016-04-20T00:00:00"
+draft = false
+
+widget = "about"
+
+# Order that this section will appear in.
+weight = 1
+
+# List your academic interests.
+[interests]
+  interests = [
+    "(Geo)statistics",
+    "Remote Sensing",
+    "R",
+    "Machine Learning"
+  ]
+
+# List your qualifications (such as academic degrees).
+[[education.courses]]
+  course = "MSc in Geoinformatics"
+  institution = "Friedrich-Schiller-University Jena"
+  year = 2016
+
+[[education.courses]]
+  course = "BSc in Geography"
+  institution = "Friedrich-Schiller-University Jena"
+  year = 2014
+ 
++++
 
 # About me
 

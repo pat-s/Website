@@ -1,16 +1,32 @@
----
-date: 2017-01-01
-image: dragon.png
-image_preview: dragon1.jpg
-math: false
-summary: ESA-MOST Dragon 3 cooperation program
-tags:
-- DRAGON
-- forest
-- science
-- finished
-title: Forest-DRAGON 3 (2013 - 2016)
----
++++
+# Date this page was created.
+date = "2017-01-01"
+
+# Project title.
+title = "Forest-DRAGON 3 (2013 - 2016)"
+
+# Project summary to display on homepage.
+summary = "ESA-MOST Dragon 3 cooperation program"
+
+# Optional image to display on homepage (relative to `static/img/` folder).
+image_preview = "dragon1.jpg"
+
+# Tags: can be used for filtering projects.
+# Example: `tags = ["machine-learning", "deep-learning"]`
+tags = ["DRAGON", "forest", "science", "finished"]
+
+# Optional external URL for project (replaces project detail page).
+external_link = ""
+
+# Does the project detail page use math formatting?
+math = false
+
+# Optional featured image (relative to `static/img/` folder).
+# [header]
+# image = "headers/bubbles-wide.jpg"
+# caption = "My caption :smile:"
+
++++
 
 The overall goal of the FOREST DRAGON 3 project is to advance understanding in forest ecosystems mapping within China. In addition, methodological developments towards the synergy of different sensors and techniques are proposed. Furthermore, a profound study will be carried out, in which a Decision Support System (DSS) will be built around web services providing decision-support on the mixture of eco-system services in local to regional scale integrating space and airborne remote sensing data. 
 

@@ -1,17 +1,34 @@
----
-date: 2017-01-01
-image: healthyforest.png
-image_preview: life.tif
-math: false
-parent: LIFE Healthy Forest
-summary: Early detection and advanced management systems to reduce forest decline
-  caused by invasive and pathogenic agents
-tags:
-- pathogenic-agents
-- forest
-- science
-title: LIFE Healthy Forest
----
++++
+# Date this page was created.
+date = "2017-01-01"
+
+# parent = LIFE Healthy Forest
+
+# Project title.
+title = "LIFE Healthy Forest"
+
+# Project summary to display on homepage.
+summary = "Early detection and advanced management systems to reduce forest decline caused by invasive and pathogenic agents"
+
+# Optional image to display on homepage (relative to `static/img/` folder).
+image_preview = "life.tif"
+
+# Tags: can be used for filtering projects.
+# Example: `tags = ["machine-learning", "deep-learning"]`
+tags = ["pathogenic-agents", "forest", "science"]
+
+# Optional external URL for project (replaces project detail page).
+external_link = ""
+
+# Does the project detail page use math formatting?
+math = false
+
+# Optional featured image (relative to `static/img/` folder).
+[header]
+image = "healthyforest.png"
+# caption = "My caption :smile:"
+
++++
 
 {{< youtube ilXlX4blagQ >}}
 

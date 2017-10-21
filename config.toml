@@ -62,7 +62,7 @@ defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 
 [outputs]
-  home = ["HTML", "CSS"]
+ home = ["HTML", "CSS"]
 
 [blackfriday]
   hrefTargetBlank = true  # `true` opens external links in a new tab.

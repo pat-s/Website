@@ -1,18 +1,15 @@
 ---
+title: Introducing R Package 'oddsratio'
 date: 2016-11-01T16:30:23+01:00
 image: oddsratio3.png
-lastmod: 2016-11-01
+categories: ["R"]
 math: false
+tags: ["logistic regression", "oddsratio", "r-bloggers"]
 summary: Usually, this calculation is done by setting all predictors to their mean
   value, predict the response, change the desired predictor to a new value and predict
   the response again. These actions results in two log odds values, respectively,
   which are transformed into odds by exponentiating them. Finally, the odds ratio
   can be calculated from these two odds values.
-tags: 
-- logistic regression
-- oddsratio
-- r-bloggers
-title: Introducing R Package 'oddsratio'
 ---
 
 You are dealing with statistical models (GLMs or GAMs) with a binomial response variable? Then the `oddsratio` package will improve your analysis routine!
@@ -23,7 +20,7 @@ This package simplifies the calculation of odds ratios in binomial models. For G
 
 # GLM
 
-## The concept of odds ratio calculation
+## The concept of odds ratio calculation 
 
 The standard approach to calculate odds ratios in Generalized Linear Models (GLMs) is to exponentiate the function coefficients using `exp(coef(model))`. Since the coefficients are returned in log odds, exponentiating converts them to odds. But wait! We want odds ratios showing the change in odds for a specific predictor change! Usually you just create a vector which stores the increments of your predictors you want to calculate odds ratios for. Next, you have to remove the first value of the `coef` output (which is usually the intercept) because you only want to calculate odds ratios for your predictors! Then you multiply the coefficients with your increment values.
 
@@ -33,7 +30,7 @@ If your predictor is not numeric but an indicator variable with certain levels (
 
 All these steps result in the following code:
 
-```{r}
+```{r, eval = FALSE}
 # Example data
 dat <- read.csv("http://www.ats.ucla.edu/stat/data/binary.csv")
 dat$rank <- factor(dat$rank)
@@ -56,7 +53,7 @@ And yes, this was just the 'easy' procedure for GLMs - the GAM approach is way m
 
 All what was shown before can be done better - in my opinion!
 
-```{r}
+```{r, eval = FALSE}
 library(oddsratio)
 suppressMessages(library(cowplot)) # for plot theme
 
@@ -80,7 +77,7 @@ By using `calc.oddsratio.glm()` you get a nicely formatted output. When setting 
 For GLMs the default CI is 95%, i.e. the lower border is 2.5% and the upper one is 97.5%. You can easily specify your own CI using the `CI` argument:
 
 
-```{r}
+```{r, eval = FALSE}
 calc.oddsratio.glm(data = dat, model = fit.glm, 
                    incr = list(gre = 100, gpa = 2), CI = .70)
 ```
@@ -100,7 +97,7 @@ For Generalized Additive Models (GAMs) the odds ratio calculation is done differ
 
 Let's show some examples! (Data source: <a href="https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/predict.gam.html">?mgcv::predict.gam</a>)
 
-```{r}
+```{r, eval = FALSE}
 suppressPackageStartupMessages(library(mgcv))
 set.seed(1234)
 n <- 200
@@ -116,7 +113,7 @@ After that, you have your two log odds coefficients corresponding to your specif
 
 If you do not understand this theory in depth, do not worry - `calc.oddsratio.gam()` does the work for you! What counts in the first place is to be able to correctly interpret the odds ratios.
 
-```{r}
+```{r, eval = FALSE}
 calc.oddsratio.gam(data = dat, model = fit.gam, pred = "x2", 
                    values = c(0.099, 0.198))
 ```
@@ -133,7 +130,7 @@ Well, actually yes - but that is the moment when the `slice` comes to stage!
 
 `calc.oddsratio.gam()` supports the calculation of multiple odds ratios for one predictor using `slice = TRUE`. This option splits the value range of the predictor by percentage steps (specified in the `percentage` argument). So if you want, for example, to calculate odds ratios for 20% quantiles of your predictors value range, you proceed as follows:
 
-```{r}
+```{r, eval = FALSE}
 calc.oddsratio.gam(data = dat, model = fit.gam, pred = "x2", 
                    percentage = 20, slice = TRUE)
 ```
@@ -155,7 +152,7 @@ You get the values which were taken for the odds ratio calculation (`value1`, `v
 
 Right now, the only (quick) possibility to plot the smoothing functions of a GAM(M) in R was by using the built-in `plot()` function. Since I prefer using `ggplot2` for all kind of plotting, I implemented the somehow fiddly procedure of plotting GAM smoothing functions using `ggplot()` in `pl.smooth.gam()`:
 
-```{r}
+```{r, eval = FALSE}
 pl.smooth.gam(fit.gam, pred = "x2", title = "Predictor 'x2'")
 ```
 
@@ -165,7 +162,7 @@ pl.smooth.gam(fit.gam, pred = "x2", title = "Predictor 'x2'")
 
 So now, we have the odds ratios and we have a plot of the smoothing function. Why not combine both? We can do so using `add.oddsratio.into.plot()`! Its main arguments are (i) a `ggplot` plotting object containing the smooth function (from `pl.smooth.gam()`) and a data frame returned from `calc.oddsratio.gam()` containing information about the predictor and the respective values we want to insert.
 
-```{r}
+```{r, eval = FALSE}
 plot.object <- pl.smooth.gam(fit.gam, pred = "x2", title = "Predictor 'x2'")
 or.object1 <- calc.oddsratio.gam(data = dat, model = fit.gam, pred = "x2", 
                                  values = c(0.099, 0.198))
@@ -183,7 +180,7 @@ The odds ratio information is always centered between the two vertical lines. He
 
 Let's add another odds ratio into this plot! This time we simply take the already produced plot as an input to `add.oddsratio.into.plot()` and use a new odds ratio object:
 
-```{r}
+```{r, eval = FALSE}
 or.object2 <- calc.oddsratio.gam(data = dat, model = fit.gam, pred = "x2", 
                                  values = c(0.4, 0.6))
                                   
