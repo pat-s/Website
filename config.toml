@@ -81,6 +81,14 @@ defaultContentLanguageInSubdir = false
   skype = ""
   telegram = ""
 
+  # Enable Google Maps by entering your API key, latitude, and longitude.
+  #   Get your API key: https://developers.google.com/maps/documentation/javascript/get-api-key
+  #   Get your coords: Right-click place on Google Maps. Select 'What's here?'. At the bottom is a card with the coords.
+  #   Disable Google Maps by clearing all three options to "".
+  google_maps_api_key = "AIzaSyBbRIbzupLPH1lx7ebPwqQ0C_2CHvEK8co"
+  latitude = "50.926571"
+  longitude = "11.588254"
+
   # Color theme.
   #   Choose from `default`, `ocean`, `forest`, or `coffee`.
   color_theme = "ocean"
