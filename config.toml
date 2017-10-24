@@ -8,9 +8,6 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 preserveTaxonomyNames = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 
-# Syntax Highlighting
-# PygmentsCodeFences = true
-# pygmentsstyle = "monokai"
 
 ## Link custom CSS and JS assets (not needed currently as highlighting is supported by default now)
 #custom_js = ["highlight.pack.js"]
@@ -43,9 +40,9 @@ footnotereturnlinkcontents = "<sup>^</sup>"
   #
   #   For more info on the highlighting options, see:
   #   https://sourcethemes.com/academic/post/writing-markdown-latex/#highlighting-options
-highlight = true
+highlight = false
 highlight_languages = ["r"]
-highlight_style = "dracula"
+highlight_style = "github"
 
 # old approach
 #highlight = true
