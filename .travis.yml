@@ -6,6 +6,9 @@ branches:
   only:
     - master
 
+r_packages:
+  - oddsratio
+
 cache:
   packages: yes
   directories:
@@ -16,7 +19,6 @@ before_script:
 
 script:
   - "Rscript -e 'blogdown::build_site()'"
-
 
 deploy:
   provider: pages
