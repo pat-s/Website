@@ -28,5 +28,5 @@ deploy:
     branch: master
   local_dir: public
   # fqdn: travis-blogdown.yihui.name
-  repo: pat-s.github.io
+  repo: pat-s/pat-s.github.io
   target_branch: master
