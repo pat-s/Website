@@ -1,3 +1,5 @@
-[![wercker status](https://app.wercker.com/status/484634e94e552129efdcdb47e82d6578/s/master "wercker status")](https://app.wercker.com/project/byKey/484634e94e552129efdcdb47e82d6578)
-
+[![Build Status](https://travis-ci.org/rbind/pat-s_web.svg?branch=master)](https://travis-ci.org/rbind/pat-s_web)
 Repository of my personal website: https://pat-s.github.io
+
+Build using [`blogdown`](https://bookdown.org/yihui/blogdown/) on top of [Hugo](https://gohugo.io/). 
+Deployed via Travis CI. 
