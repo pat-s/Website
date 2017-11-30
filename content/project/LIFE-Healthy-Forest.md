@@ -11,7 +11,7 @@ title = "LIFE Healthy Forest"
 summary = "Early detection and advanced management systems to reduce forest decline caused by invasive and pathogenic agents"
 
 # Optional image to display on homepage (relative to `static/img/` folder).
-image_preview = "life.tif"
+image_preview = "life.jpg" 
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
@@ -30,7 +30,7 @@ image = "healthyforest.png"
 
 +++
 
-{{< youtube ilXlX4blagQ >}}
+{{< youtube dvaojV7GeFA >}}
 
 
 The main objective of **LIFE HEALTHY FOREST** project is the design, application and monitoring of advanced methodologies to achieve a more sustainable forest management at EU level in the field of control and prevention of forest decline caused by invasive and pathogenic agents taking into account both their environmental and socio-economic impact.
