@@ -6,7 +6,12 @@ categories: ["linux"]
 highlight: true
 math: false
 tags: ["autofs", "automount", "unix", "fstab", "linux"]
+output:
+  blogdown::html_page:
+    toc: true
 ---
+
+# Introduction
 
 At work I usually have to connect to several servers. 
 Some are Windows Servers, some are Linux Servers.
@@ -14,6 +19,8 @@ On my local Linux machines (running Kubuntu 17.10 at the time writing this) I us
 However, the `fstab` way does not mount on boot and always needs manual re-mounting.
 I was told that there have been times in which automatic mounting during boot using `fstab` was working but I never managed to get it working although I tried several mount options like `_netdev` and others.
 Since I often have to re-mount the network shares (whenever there was a network disconnect), an option to automatically re-connect and mount the folders on boot was highly sought for.
+
+# Autofs
 
 Recently I came across `autofs`. 
 It basically mounts the network shares on-demand (when the folder is accessed) for a desired time.
@@ -31,7 +38,7 @@ Mine looks as follows:
 ```
 
 The first option `/-` sets the root directory as an universal mount point.
-Other attempts as suggested in various examples ([1](https://help.ubuntu.com/community/Autofs#FUSE_based_file_systems),[2](https://wiki.ubuntuusers.de/Autofs/)) did not work for me. 
+Other attempts as suggested in various examples[^1] [^2] did not work for me. 
 
 Next, you need to edit the specified file from above (here `/etc/auto.all`).
 It will hold the specific mount instructions for each protocol.
@@ -45,7 +52,7 @@ I prefer to use a single file that looks as follows:
 /server2 -fstype=fuse,rw,allow_other,uid=1000,users :sshfs\#<user>@<server ip>\:/<share>
 ```
 
-Some notes:
+# Notes
 
 * `/mnt` is the desired mount point here. 
 
@@ -61,7 +68,5 @@ Without it in front of `#username@server` and `:/home`, the mount process will n
 Be aware that only the direct mount point (here `/mnt`) exists permanently.
 The on-demand folders (here e.g. `/mnt/server1`) will be created during the mount process and should not exist before.
 
-Sources:
-
-* https://help.ubuntu.com/community/Autofs#Introduction
-* https://wiki.ubuntuusers.de/Autofs/
+[^1]: https://help.ubuntu.com/community/Autofs#Introduction
+[^2]: https://wiki.ubuntuusers.de/Autofs/
