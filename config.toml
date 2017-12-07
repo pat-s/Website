@@ -49,7 +49,7 @@ highlight_style = "github"
 #highlight_languages = ["r"]
 
 # Enable comments by entering your Disqus shortname
-disqusShortname = ""
+disqusShortname = "pat-s"
 
 # Enable analytics by entering your Google Analytics tracking ID
 googleAnalytics = "UA-35704082-2"
@@ -59,7 +59,8 @@ defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 
 [outputs]
- home = ["HTML", "CSS"]
+  home = [ "HTML", "CSS", "RSS" ]
+  section = [ "HTML", "RSS" ]
 
 [blackfriday]
   hrefTargetBlank = true  # `true` opens external links in a new tab.
@@ -112,6 +113,9 @@ defaultContentLanguageInSubdir = false
   #   If false, you can enable it locally on a per page basis.
   math = false
 
+  # Display section pager for posts?
+  section_pager = true
+
   # Enable native social sharing buttons?
   sharing = false
 
@@ -155,6 +159,10 @@ defaultContentLanguageInSubdir = false
   #
   #   Full list: https://jpswalsh.github.io/academicons/
 
+  [params.menus]
+  # Align the main menu to the right of the page? (true/false)
+  align_right = true
+
   [[params.social]]
     icon = "envelope"
     icon_pack = "fa"
@@ -169,6 +177,11 @@ defaultContentLanguageInSubdir = false
     icon = "researchgate"
     icon_pack = "ai"
     link = "https://www.researchgate.net/profile/Patrick_Schratz"
+
+ [[params.social]]
+    icon = "orcid"
+    icon_pack = "ai"
+    link = "https://orcid.org/0000-0003-0748-6624"
 
   [[params.social]]
     icon = "twitter"
@@ -189,8 +202,6 @@ defaultContentLanguageInSubdir = false
     icon = "stack-exchange"
     icon_pack = "fa"
     link = "http://stackexchange.com/users/5237716/pat-s?tab=accounts"
-
-
 
 # Navigation Links
 #   To link a homepage widget, specify the URL as a hash `#` followed by the filename of the
