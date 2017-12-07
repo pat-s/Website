@@ -12,6 +12,9 @@ summary: Usually, this calculation is done by setting all predictors to their me
   the response again. These actions results in two log odds values, respectively,
   which are transformed into odds by exponentiating them. Finally, the odds ratio
   can be calculated from these two odds values.
+output:
+  blogdown::html_page:
+    toc: true 
 ---
 
 You are dealing with statistical models (GLMs or GAMs) with a binomial response variable? Then the `oddsratio` package will improve your analysis routine!

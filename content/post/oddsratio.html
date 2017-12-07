@@ -12,15 +12,31 @@ summary: Usually, this calculation is done by setting all predictors to their me
   the response again. These actions results in two log odds values, respectively,
   which are transformed into odds by exponentiating them. Finally, the odds ratio
   can be calculated from these two odds values.
+output:
+  blogdown::html_page:
+    toc: true 
 ---
 
 
+<div id="TOC">
+<ul>
+<li><a href="#glm">GLM</a><ul>
+<li><a href="#the-concept-of-odds-ratio-calculation">The concept of odds ratio calculation</a></li>
+<li><a href="#the-oddsratio-approach">The ‘oddsratio’ approach</a></li>
+</ul></li>
+<li><a href="#gam">GAM</a><ul>
+<li><a href="#plot-gamm-smoothing-functions">Plot GAM(M) smoothing functions</a></li>
+<li><a href="#add-odds-ratio-information-into-smoothing-function-plot">Add odds ratio information into smoothing function plot</a></li>
+</ul></li>
+<li><a href="#installation">Installation</a></li>
+</ul>
+</div>
 
 <p>You are dealing with statistical models (GLMs or GAMs) with a binomial response variable? Then the <code>oddsratio</code> package will improve your analysis routine!</p>
 <p>This package simplifies the calculation of odds ratios in binomial models. For GAMs, it also provides you with the power to insert your results into the smooth functions of your predictors! But let’s start with some basics…</p>
-<section id="glm" class="level1">
+<div id="glm" class="section level1">
 <h1>GLM</h1>
-<section id="the-concept-of-odds-ratio-calculation" class="level2">
+<div id="the-concept-of-odds-ratio-calculation" class="section level2">
 <h2>The concept of odds ratio calculation</h2>
 <p>The standard approach to calculate odds ratios in Generalized Linear Models (GLMs) is to exponentiate the function coefficients using <code>exp(coef(model))</code>. Since the coefficients are returned in log odds, exponentiating converts them to odds. But wait! We want odds ratios showing the change in odds for a specific predictor change! Usually you just create a vector which stores the increments of your predictors you want to calculate odds ratios for. Next, you have to remove the first value of the <code>coef</code> output (which is usually the intercept) because you only want to calculate odds ratios for your predictors! Then you multiply the coefficients with your increment values.</p>
 <p>But wait again!? How do we get a ratio (‘odds ratio’) by multiplying two values? Well, this is a mathematical thing. Behind the scences you are doing a <code>exp()</code>call on a substraction of log odds: <code>log odds1 - log odds2</code> where <code>log odds1</code> is just “one unit” (+1) larger than <code>log odds2</code>. This difference is your coefficient. Applying <code>exp()</code> on a substraction results in a division. Subsequently, the result is a ratio of <code>odds1</code> by <code>odds2</code>. If you then set an increment value to multiply your coefficient with, this “one unit increase/difference” (+1) is multiplied by this value and then <code>exp()</code> is applied on it. This means that if you set an increment value of <code>5</code>, the “new” coefficient (corresponding to a change of <code>5</code>) is simply five times the coefficients of <code>1</code> (which was returned by your model summary).</p>
@@ -35,8 +51,8 @@ exp(coef(fit_glm)[-1] * incr)</code></pre>
 <pre><code>##       gre       gpa     rank2     rank3     rank4 
 ## 1.2541306 4.9931906 0.5089310 0.2617923 0.2119375</code></pre>
 <p>Here, the increments of our numeric predictors are <code>100</code> and <code>2</code>. The annoying part of this approach is that you have to specify as many “1s” as there are levels of your indicator variable - and you have to take care not to misplace the parentheses in the <code>exp()</code> call! Other possible errors might be to miss the <code>[-1]</code> for the intercept or increment/predictor misplacement within the <code>incr</code> vector. And yes, this was just the ‘easy’ procedure for GLMs - the GAM approach is way more extensive.</p>
-</section>
-<section id="the-oddsratio-approach" class="level2">
+</div>
+<div id="the-oddsratio-approach" class="section level2">
 <h2>The ‘oddsratio’ approach</h2>
 <p>All what was shown before can be done better - in my opinion!</p>
 <pre class="r"><code>or_glm(data = data_glm, model = fit_glm, incr = list(gre = 100, gpa = 2))</code></pre>
@@ -57,9 +73,9 @@ exp(coef(fit_glm)[-1] * incr)</code></pre>
 ## 3     rank2     0.509         0.366          0.706 Indicator variable
 ## 4     rank3     0.262         0.183          0.374 Indicator variable
 ## 5     rank4     0.212         0.136          0.325 Indicator variable</code></pre>
-</section>
-</section>
-<section id="gam" class="level1">
+</div>
+</div>
+<div id="gam" class="section level1">
 <h1>GAM</h1>
 <p>For Generalized Additive Models (GAMs) the odds ratio calculation is done different. Due to the non-linear behavior of this model type, odds ratios of specific increment steps are different for every value combination and not constant throughout the value range of each predictor as for GLMs. For example, the odds ratio of two arbitrary values <code>3</code> and <code>10</code> with their difference of <code>7</code> is different to the odds ratio of <code>22</code> and <code>29</code>. This is based on the different coefficient slopes of GAMs between these two value combinations (non-linear!). For GLMs, the slope would be the same (‘linear’) and hence also the odds ratios.</p>
 <p>Let’s show some examples! (Data source: <a href="https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/predict.gam.html">?mgcv::predict.gam</a>)</p>
@@ -97,14 +113,14 @@ fit_gam &lt;- mgcv::gam(y ~ s(x0) + s(I(x1^2)) + s(x2) + offset(x3) + x4,
 ## 5            0.22</code></pre>
 <p>You get the values which were taken for the odds ratio calculation (<code>value1</code>, <code>value2</code>), which percentage of the predictor distribution they correspond to (<code>perc1</code>, <code>perc2</code>), the calculate odds ratio and its confident interval borders.</p>
 <p><em>Note that currently the CI of GAMs is fixed to 95% and cannot be modified.</em></p>
-<section id="plot-gamm-smoothing-functions" class="level2">
+<div id="plot-gamm-smoothing-functions" class="section level2">
 <h2>Plot GAM(M) smoothing functions</h2>
 <p>Right now, the only (quick) possibility to plot the smoothing functions of a GAM(M) in R was by using the built-in <code>plot()</code> function. Since I prefer using <code>ggplot2</code> for all kind of plotting, I implemented the somehow fiddly procedure of plotting GAM smoothing functions using <code>ggplot()</code> in <code>plot_gam()</code>:</p>
 <pre class="r"><code>suppressPackageStartupMessages(library(cowplot)) # for plotting theme
 plot_gam(fit_gam, pred = &quot;x2&quot;, title = &quot;Predictor &#39;x2&#39;&quot;)</code></pre>
 <p><img src="/post/oddsratio_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-</section>
-<section id="add-odds-ratio-information-into-smoothing-function-plot" class="level2">
+</div>
+<div id="add-odds-ratio-information-into-smoothing-function-plot" class="section level2">
 <h2>Add odds ratio information into smoothing function plot</h2>
 <p>So now, we have the odds ratios and we have a plot of the smoothing function. Why not combine both? We can do so using <code>insert_or()</code>! Its main arguments are (i) a <code>ggplot</code> plotting object containing the smooth function (from <code>plot_gam()</code>) and a data frame returned from <code>or_gam()</code> containing information about the predictor and the respective values we want to insert.</p>
 <pre class="r"><code>plot_object &lt;- plot_gam(fit_gam, pred = &quot;x2&quot;, title = &quot;Predictor &#39;x2&#39;&quot;)
@@ -131,12 +147,12 @@ insert_or(plot_object, or_object2, or_yloc = 2.1, values_yloc = 2,
           arrow_length = 0.01, rect = TRUE)  </code></pre>
 <p><img src="/post/oddsratio_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Quite some adjustments were made for this insertion: I adjusted <code>values_yloc</code> because we have only one digit this time. Also, <code>or_yloc</code> was set to a lower value than in the first example to avoid an interference with the smoothing function. A green shaded rectangle was added using <code>rect = TRUE</code> and I set the arrow color to <code>black</code>. Length and position of the arrows very slightly modified using <code>arrow_length</code>, <code>arrow_xloc_r</code> and <code>arrow_xloc_l</code>. If you do not like arrows, simply turn them off using <code>arrow = FALSE</code>. The same logic applies to the shaded rectangle <code>rect = FALSE</code> and the inserted values <code>values = FALSE</code>.</p>
-</section>
-</section>
-<section id="installation" class="level1">
+</div>
+</div>
+<div id="installation" class="section level1">
 <h1>Installation</h1>
 <p>You can install the package from CRAN by</p>
 <pre class="r"><code>install.packages(&quot;oddsratio&quot;)</code></pre>
 <p>or from Github using</p>
 <pre class="r"><code>remotes::install_github(&quot;pat-s/oddsratio&quot;, build_vignettes = TRUE)</code></pre>
-</section>
+</div>
