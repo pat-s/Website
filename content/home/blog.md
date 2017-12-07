@@ -15,7 +15,7 @@ weight = 40
 # Filter posts by tag.
 #  By default, show all recent posts.
 #  Filtering example: `tags_include = ["hugo", "academic"]`
-tags_include = []
+tags_include = ["linux"]
 tags_exclude = []
 
 # Number of posts to list.
