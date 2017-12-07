@@ -1,0 +1,67 @@
+---
+title: Auto-mount network shares (cifs, sshfs, nfs) on-demand using autofs
+date: 2017-12-07
+# lastmod: 2017-10-24
+categories: ["linux"]
+highlight: true
+math: false
+tags: ["autofs", "automount", "unix", "fstab", "linux"]
+---
+
+At work I usually have to connect to several servers. 
+Some are Windows Servers, some are Linux Servers.
+On my local Linux machines (running Kubuntu 17.10 at the time writing this) I usually used `/etc/fstab` entries.
+However, the `fstab` way does not mount on boot and always needs manual re-mounting.
+I was told that there have been times in which automatic mounting during boot using `fstab` was working but I never managed to get it working although I tried several mount options like `_netdev` and others.
+Since I often have to re-mount the network shares (whenever there was a network disconnect), an option to automatically re-connect and mount the folders on boot was highly sought for.
+
+Recently I came across `autofs`. 
+It basically mounts the network shares on-demand (when the folder is accessed) for a desired time.
+If there was no activity during that time the shares are unmounted again.
+This gives a practical feeling of networks shares which are mounted at boot.
+
+After installation of `autofs` using your favorite package manager, you will see an `/etc/auto.master` file. 
+This file holds the main settings. 
+
+Mine looks as follows:
+
+```bash
+# /etc/auto.master
+/- /etc/auto.all --timeout=60 --ghost
+```
+
+The first option `/-` sets the root directory as an universal mount point.
+Other attempts as suggested in various examples ([1](https://help.ubuntu.com/community/Autofs#FUSE_based_file_systems),[2](https://wiki.ubuntuusers.de/Autofs/)) did not work for me. 
+
+Next, you need to edit the specified file from above (here `/etc/auto.all`).
+It will hold the specific mount instructions for each protocol.
+You can either use multiple entries in `/etc/auto.master` with subsequent multiple `/etc/auto.*` files or use a single file for various protocols (e.g. `cifs`, `sshfs`, `nfs`).
+
+I prefer to use a single file that looks as follows:
+
+```text
+/mnt \
+/server1 -fstype=cifs,rw,credentials=/etc/.smbcredentials.txt,uid=1000,file_mode=0775,dir_mode=0775,users ://<server ip>/<share> \
+/server2 -fstype=fuse,rw,allow_other,uid=1000,users :sshfs\#<user>@<server ip>\:/<share>
+```
+
+Some notes:
+
+* `/mnt` is the desired mount point here. 
+
+* I mount a Windows server using `cifs` (samba protocol) with the respective credentials (username, password) stores in `/etc/.smbcredentials.txt` and a Linux server using `sshfs`.
+    * The private ssh key which enables a passwordless ssh connection for `sshfs` has to be copied from `~/.ssh/id_rsa` to `/root/.ssh/id_rsa` because `root` will be the user which creates the connection. 
+Subsequently, `sshfs` will try to use its respective `id_rsa` file. 
+
+* Note the escaping `\` in the `sshfs` setup. 
+Without it in front of `#username@server` and `:/home`, the mount process will not work.
+
+* I set specified file and directory rights (`file_mode`, `dir_mode`) so that I have full access to the mounted folders.
+
+Be aware that only the direct mount point (here `/mnt`) exists permanently.
+The on-demand folders (here e.g. `/mnt/server1`) will be created during the mount process and should not exist before.
+
+Sources:
+
+* https://help.ubuntu.com/community/Autofs#Introduction
+* https://wiki.ubuntuusers.de/Autofs/
