@@ -9,15 +9,15 @@ publication = "In *Proc.'Dragon 3 Final Results & Dragon 4 Kick-Off Symposium', 
 publication_short = "In *Proc.'Dragon 3 Final Results & Dragon 4 Kick-Off Symposium', Wuhan, PR China*"
 selected = false
 title = "Forest DRAGON-3: Decadal trends of Northeastern Forests in China from Earth Observation Synergy"
-url_code = "#"
-url_dataset = "#"
+url_code = ""
+url_dataset = ""
 url_pdf = "https://www.researchgate.net/publication/309644491_Forest_DRAGON-3_Decadal_Trends_of_Northeastern_Forests_in_China_From_Earth_Observation_Synergy.pdf"
 url_project = ""
-url_slides = "#"
-url_video = "#"
-url_poster = "#"
+url_slides = ""
+url_video = ""
+url_poster = ""
 url_preprint = ""
-url_source = "#"
+url_source = ""
 
 +++
 
