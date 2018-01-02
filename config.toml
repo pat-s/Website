@@ -1,7 +1,7 @@
 relativeurls = true
 baseurl = "https://pat-s.github.io/"
 title = "Patrick Schratz"
-copyright = "&copy; 2017 Patrick Schratz"
+copyright = "&copy; 2017-2018 Patrick Schratz"
 theme = "academic"
 enableEmoji = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
@@ -64,7 +64,7 @@ defaultContentLanguageInSubdir = false
   smartypants = true  # `false` disables all smart punctuation substitutions (e.g. smart quotes, dashes, fractions).
 
 [params]
-  name = "Patrick Schratz"
+  name = ""
   role = "PhD Student"
 
   # Organizations/Affiliations.
