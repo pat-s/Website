@@ -36,6 +36,6 @@ weight = 1
 I am a **PhD student** within the [GIScience group](http://www.geographie.uni-jena.de/Geoinformatik_p_1558.html) at the [Department of Geography](http://www.geographie.uni-jena.de/Institut+für+Geographie.html). 
 I focus on the application of statistical- and machine learning techniques to address research questions related to environmental issues. 
 Beside the scientific part I am also interested in the development of (geo)statistical programming solutions to simplify todays data science challenges. 
-Check the [projects]({{< relref "#projects" >}}) section for detailed information.
-I like to [write]({{< relref "#blog" >}}) about the Linux world, R stuff and other technical topics that I find interesting.
-
+Check the [**projects**]({{< relref "#projects" >}}) section for detailed information.
+I like to [**write**]({{< relref "#blog" >}}) about the Linux world, R stuff and other technical topics that I find interesting.
+You can find my CV {{% staticref "pdf/cv.pdf" %}}**here**{{% /staticref %}}.
