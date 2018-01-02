@@ -5,14 +5,16 @@
 date = "2016-04-20T00:00:00"
 draft = false
 
-title = "Recommended books/tutorials"
+title = "What to read"
 subtitle = ""
 widget = "custom"
 
 # Order that this section will appear in.
-weight = 60
+weight = 70
 
 +++
+
+All sorts of web stuff that I found helpful to read.
 
 # Books
 
@@ -26,7 +28,7 @@ weight = 60
 
 - **Xie Y.** (2016): bookdown: Authoring Books and Technical Documents with R Markdown. *Chapman & Hall*.  [https://bookdown.org/yihui/bookdown/](https://bookdown.org/yihui/bookdown/)
 
-# Statistics
+## Statistics
 
 - **De Veaux R. et al.** (2015): Stats: Data and Models (4th ed.). *Pearson*. [Link](http://www.pearson.com.au/products/D-G-Deveaux-Velleman/Stats-Data-and-Models-Global-Edition/9781292101637?R=9781292101637)
 
@@ -34,7 +36,7 @@ weight = 60
 
 - **Zuur A.F. et al.** (2008): Mixed Effects Models and Extensions in Ecology with R. *Springer*. [http://www.springer.com/de/book/9780387874579](http://www.springer.com/de/book/9780387874579)
 
-# Blog Posts
+# Single Blog Posts
 
 Mixed Models in R: http://m-clark.github.io/docs/mixedModels/mixedModels.html
 
@@ -42,8 +44,18 @@ Intro to Spatial Analysis in R: https://jafflerbach.github.io/spatial-analysis-R
 
 Generalized Additive Models (GAMs) in R: https://m-clark.github.io/docs/GAM.html
 
-# Tutorial  
+# Tutorials
 
 Charlotte Wickham @useR!2017 (Brussels): Solving iteration problems with `purrr`. 
 Video: https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/Solving-iteration-problems-with-purrr
 Slides: https://github.com/Cascadia-R/purrr-tutorial
+
+# My Blogroll/RSS Feed
+
+* http://r-spatial.org
+
+* http://dirk.eddelbuettel.com/blog
+
+* http://kkulma.github.io
+
+

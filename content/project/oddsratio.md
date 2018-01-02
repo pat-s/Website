@@ -13,7 +13,7 @@ image_preview = "oddsratio3.png"
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
-tags = ["logistic-regression", "oddsratio" , "R-package"]
+tags = ["logistic-regression", "oddsratio" , "R-Packages"]
 
 # Optional external URL for project (replaces project detail page).
 external_link = "https://pat-s.github.io/oddsratio/index.html"

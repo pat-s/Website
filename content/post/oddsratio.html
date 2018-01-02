@@ -2,9 +2,8 @@
 title: Introducing R Package 'oddsratio'
 date: 2016-11-01T16:30:23+01:00
 image: oddsratio3.png
-lastmod: 2017-10-24
+lastmod: 2017-10-24 
 categories: ["R"]
-highlight: false
 math: false
 tags: ["logistic regression", "oddsratio", "r-bloggers"]
 summary: Usually, this calculation is done by setting all predictors to their mean
@@ -50,7 +49,7 @@ incr &lt;- c(100, 2, 1, 1, 1)
 exp(coef(fit_glm)[-1] * incr)</code></pre>
 <pre><code>##       gre       gpa     rank2     rank3     rank4 
 ## 1.2541306 4.9931906 0.5089310 0.2617923 0.2119375</code></pre>
-<p>Here, the increments of our numeric predictors are <code>100</code> and <code>2</code>. The annoying part of this approach is that you have to specify as many “1s” as there are levels of your indicator variable - and you have to take care not to misplace the parentheses in the <code>exp()</code> call! Other possible errors might be to miss the <code>[-1]</code> for the intercept or increment/predictor misplacement within the <code>incr</code> vector. And yes, this was just the ‘easy’ procedure for GLMs - the GAM approach is way more extensive.</p>
+<p>Here, the increments of our numeric predictors are <code>100</code> and <code>2</code>. The annoying part of this approach is that you have to specify as many “1s” as there are levels of your indicator variable - and you have to take care not to misplace the parentheses in the <code>exp()</code> call! Other possible errors might be to miss the <code>[-1]</code> for the intercept or increment/predictor misplacement within the <code>incr</code> vector. And yes, this was just the ‘easy’ procedure for GLMs - the GAM approach is way more extensive.</p>
 </div>
 <div id="the-oddsratio-approach" class="section level2">
 <h2>The ‘oddsratio’ approach</h2>
@@ -132,7 +131,6 @@ plot_object &lt;- insert_or(plot_object, or_object1, or_yloc = 3,
                          values_xloc = 0.04, line_size = 0.5, 
                          line_type = &quot;dotdash&quot;, text_size = 5,
                          values_yloc = 0.5, arrow_col = &quot;red&quot;)</code></pre>
-<p>{{&lt; figure src=“/img/oddsratio2.png” title=“GAM smoothing function with inserted odds ratio information” &gt;}}</p>
 <p>The odds ratio information is always centered between the two vertical lines. Hence it only looks nice if the gap between the two chosen values (here <code>0.099</code> and <code>0.198</code>) is large enough. If the smoothing line crosses your inserted text, you can correct it by adjusting <code>or_yloc</code>. This argument sets the y-location of the inserted odds ratio information. Depending on the number of digits of your chosen values (here 3), you might also need to adjust the x-axis location of the two values so that these do not interfer with the vertical line.</p>
 <p>Let’s add another odds ratio into this plot! This time we simply take the already produced plot as an input to <code>insert_or()</code> and use a new odds ratio object:</p>
 <pre class="r"><code>or_object2 &lt;- or_gam(data = dat, model = fit_gam, pred = &quot;x2&quot;, 

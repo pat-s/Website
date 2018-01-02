@@ -1,0 +1,103 @@
+body {
+  max-width: 1000px;
+  margin: auto;
+  padding: 1em;
+  line-height: 1.5em;
+}
+
+/* misc elements */
+img, iframe, video { max-width: 100%; }
+main { hyphens: auto; }
+blockquote {
+  background: #f9f9f9;
+  border-left: 5px solid #ccc;
+  padding: 3px 1em 3px;
+}
+
+table {
+  margin: auto;
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #666;
+}
+table thead th { border-bottom: 1px solid #ddd; }
+th, td { padding: 5px; }
+tr:nth-child(even) { background: #eee }
+
+/* code style from https://github.com/rstudio/blogdown/blob/master/docs/02-hugo.Rmd*/
+pre {
+  border: 1px solid #ddd;
+  box-shadow: 5px 5px 5px #eee;
+  padding: 1em;
+  overflow-x: auto;
+}
+code { background: #f9f9f9; }
+pre code { background: none; }
+
+.home-section:nth-of-type(even) {
+  background-color: white;
+}
+
+
+body {
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: inherit;
+  color: inherit;
+  background-color: {{ .Get "background" }};
+  margin-top: 75px; /* Offset body content by navbar height. */
+  padding-top: 0;
+  counter-reset: captions;
+}
+
+/* from themes/academic.css */
+.article-container {
+  font-size: 15px;
+  max-width: 1000px;
+  padding: 1rem 20px 0 20px;
+  margin: 0 auto 0 auto;
+}
+
+html {
+  font-family: '{{ .Get "body_font" }}', sans-serif;
+  font-size: 18px;
+  color: rgba(0,0,0,0.8);
+  line-height: 1.35;
+}
+
+/* color on hover */
+h3.article-title a:hover {
+  /* color: #0095eb; */
+  color: #313131;
+  text-decoration: none;
+  transition: color 0.6s ease;
+}
+
+/* icon color of academicons */
+a {
+    color: #313131;
+    text-decoration: none;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #313131 !important;
+    border-color: #2e6da4;
+}
+
+.btn-primary.btn-outline {
+    color: white;
+    border-color: #313131 !important;
+}
+
+.btn-toolbar .btn.btn-primary:active, .btn-toolbar .btn.btn-primary.active {
+    background-color: #313131 !important;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary:visited, .open > .dropdown-toggle.btn-primary {
+    background: #313131 !important;
+}
+
+.btn-primary.btn-outline {
+    color: white !important;
+    border-color: #313131 !important;
+}

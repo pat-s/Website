@@ -13,7 +13,7 @@ image_preview = "RQGIS.png"
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
-tags = ["QGIS", "R-package"]
+tags = ["QGIS", "R-Packages"]
 
 # Optional external URL for project (replaces project detail page).
 external_link = "https://jannes-m.github.io/RQGIS/index.html"

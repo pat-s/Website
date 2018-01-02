@@ -13,9 +13,9 @@ weight = 1
 [interests]
   interests = [
     "(Geo)statistics",
+    "Open-Source Development",
+    "Statistical modeling and machine learning",
     "Remote Sensing",
-    "R",
-    "Machine Learning"
   ]
 
 # List your qualifications (such as academic degrees).

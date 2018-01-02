@@ -2,9 +2,8 @@
 title: Introducing R Package 'oddsratio'
 date: 2016-11-01T16:30:23+01:00
 image: oddsratio3.png
-lastmod: 2017-10-24
+lastmod: 2017-10-24 
 categories: ["R"]
-highlight: false
 math: false
 tags: ["logistic regression", "oddsratio", "r-bloggers"]
 summary: Usually, this calculation is done by setting all predictors to their mean
@@ -17,19 +16,31 @@ output:
     toc: true 
 ---
 
-You are dealing with statistical models (GLMs or GAMs) with a binomial response variable? Then the `oddsratio` package will improve your analysis routine!
+You are dealing with statistical models (GLMs or GAMs) with a binomial response variable? 
+Then the `oddsratio` package will improve your analysis routine!
 
-This package simplifies the calculation of odds ratios in binomial models. For GAMs, it also provides you with the power to insert your results into the smooth functions of your predictors! But let's start with some basics...
+This package simplifies the calculation of odds ratios in binomial models. 
+For GAMs, it also provides you with the power to insert your results into the smooth functions of your predictors! But let's start with some basics...
 
 # GLM
 
 ## The concept of odds ratio calculation 
 
-The standard approach to calculate odds ratios in Generalized Linear Models (GLMs) is to exponentiate the function coefficients using `exp(coef(model))`. Since the coefficients are returned in log odds, exponentiating converts them to odds. But wait! We want odds ratios showing the change in odds for a specific predictor change! Usually you just create a vector which stores the increments of your predictors you want to calculate odds ratios for. Next, you have to remove the first value of the `coef` output (which is usually the intercept) because you only want to calculate odds ratios for your predictors! Then you multiply the coefficients with your increment values.
+The standard approach to calculate odds ratios in Generalized Linear Models (GLMs) is to exponentiate the function coefficients using `exp(coef(model))`. 
+Since the coefficients are returned in log odds, exponentiating converts them to odds. 
+But wait! We want odds ratios showing the change in odds for a specific predictor change! 
+Usually you just create a vector which stores the increments of your predictors you want to calculate odds ratios for. 
+Next, you have to remove the first value of the `coef` output (which is usually the intercept) because you only want to calculate odds ratios for your predictors! Then you multiply the coefficients with your increment values.
 
-But wait again!? How do we get a ratio ('odds ratio') by multiplying two values? Well, this is a mathematical thing. Behind the scences you are doing a `exp()`call on a substraction of log odds: `log odds1 - log odds2` where `log odds1` is just "one unit" (+1) larger than `log odds2`. This difference is your coefficient. Applying `exp()` on a substraction results in a division. Subsequently, the result is a ratio of `odds1` by `odds2`. If you then set an increment value to multiply your coefficient with, this "one unit increase/difference" (+1) is multiplied by this value and then `exp()` is applied on it. This means that if you set an increment value of `5`, the "new" coefficient (corresponding to a change of `5`) is simply five times the coefficients of `1` (which was returned by your model summary).
+But wait again!? How do we get a ratio ('odds ratio') by multiplying two values? Well, this is a mathematical thing. 
+Behind the scences you are doing a `exp()`call on a substraction of log odds: `log odds1 - log odds2` where `log odds1` is just "one unit" (+1) larger than `log odds2`. 
+This difference is your coefficient. Applying `exp()` on a substraction results in a division. 
+Subsequently, the result is a ratio of `odds1` by `odds2`. 
+If you then set an increment value to multiply your coefficient with, this "one unit increase/difference" (+1) is multiplied by this value and then `exp()` is applied on it. 
+This means that if you set an increment value of `5`, the "new" coefficient (corresponding to a change of `5`) is simply five times the coefficients of `1` (which was returned by your model summary).
 
-If your predictor is not numeric but an indicator variable with certain levels (like `rank` in the example), it does not make sense to set increments since the calculated coefficients just refer to your base factor level, here being `rank1`. In practice this makes sense because you can just say "being `rank1` increases/decreases the odds of the event to happen by x % compared to `rank2`. So you just set the increment to `1` to calculate the basic odds ratio between the respective levels. Note that you need to set as much "1s" as there are levels of your indicator variable!
+If your predictor is not numeric but an indicator variable with certain levels (like `rank` in the example), it does not make sense to set increments since the calculated coefficients just refer to your base factor level, here being `rank1`. 
+In practice this makes sense because you can just say "being `rank1` increases/decreases the odds of the event to happen by x % compared to `rank2`. So you just set the increment to `1` to calculate the basic odds ratio between the respective levels. Note that you need to set as much "1s" as there are levels of your indicator variable!
 
 All these steps result in the following code:
 
@@ -42,7 +53,9 @@ incr <- c(100, 2, 1, 1, 1)
 exp(coef(fit_glm)[-1] * incr)
 ```
 
-Here, the increments of our numeric predictors are `100` and `2`. The annoying part of this approach is that you have to specify as many "1s" as there are levels of your indicator variable - and you have to take care not to misplace the parentheses in the `exp()` call! Other possible errors might be to miss the `[-1]` for the intercept or increment/predictor misplacement within the `incr` vector.
+Here, the increments of our numeric predictors are `100` and `2`. 
+The annoying part of this approach is that you have to specify as many "1s" as there are levels of your indicator variable - and you have to take care not to misplace the parentheses in the `exp()` call! 
+Other possible errors might be to miss the `[-1]` for the intercept or increment/predictor misplacement within the `incr` vector.
 And yes, this was just the 'easy' procedure for GLMs - the GAM approach is way more extensive.
 
 ## The 'oddsratio' approach
@@ -55,9 +68,12 @@ or_glm(data = data_glm, model = fit_glm, incr = list(gre = 100, gpa = 2))
 
 Note how the column names of `CI_low` and `CI_high` are automatically adjusted.
 
-By using `or_glm()` you get a nicely formatted output. When setting up the function arguments you avoid false references of increments by providing the information in a named list (`gre = 100`, `gpa = 2`). Also, automatically confident intervals (CI) of odds ratios are calculated and returned. So you can directly see how "safe" your odds ratio calculation is based on the underlying fitted model for the specific predictor.
+By using `or_glm()` you get a nicely formatted output. 
+When setting up the function arguments you avoid false references of increments by providing the information in a named list (`gre = 100`, `gpa = 2`). 
+Also, automatically confident intervals (CI) of odds ratios are calculated and returned. So you can directly see how "safe" your odds ratio calculation is based on the underlying fitted model for the specific predictor.
 
-For GLMs the default CI is 95%, i.e. the lower border is 2.5% and the upper one is 97.5%. You can easily specify your own CI using the `CI` argument:
+For GLMs the default CI is 95%, i.e. the lower border is 2.5% and the upper one is 97.5%. 
+You can easily specify your own CI using the `CI` argument:
 
 
 ```{r, eval = TRUE}
@@ -67,7 +83,10 @@ or_glm(data = data_glm, model = fit_glm,
 
 # GAM
 
-For Generalized Additive Models (GAMs) the odds ratio calculation is done different. Due to the non-linear behavior of this model type, odds ratios of specific increment steps are different for every value combination and not constant throughout the value range of each predictor as for GLMs. For example, the odds ratio of two arbitrary values `3` and `10` with their difference of `7` is different to the odds ratio of `22` and `29`. This is based on the different coefficient slopes of GAMs between these two value combinations (non-linear!). For GLMs, the slope would be the same ('linear') and hence also the odds ratios.
+For Generalized Additive Models (GAMs) the odds ratio calculation is done different. 
+Due to the non-linear behavior of this model type, odds ratios of specific increment steps are different for every value combination and not constant throughout the value range of each predictor as for GLMs. 
+For example, the odds ratio of two arbitrary values `3` and `10` with their difference of `7` is different to the odds ratio of `22` and `29`. This is based on the different coefficient slopes of GAMs between these two value combinations (non-linear!). 
+For GLMs, the slope would be the same ('linear') and hence also the odds ratios.
 
 Let's show some examples! (Data source: <a href="https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/predict.gam.html">?mgcv::predict.gam</a>)
 
@@ -133,8 +152,6 @@ plot_object <- insert_or(plot_object, or_object1, or_yloc = 3,
                          line_type = "dotdash", text_size = 5,
                          values_yloc = 0.5, arrow_col = "red")
 ```
-
-{{< figure src="/img/oddsratio2.png" title="GAM smoothing function with inserted odds ratio information" >}}
 
 The odds ratio information is always centered between the two vertical lines. Hence it only looks nice if the gap between the two chosen values (here `0.099` and `0.198`) is large enough. If the smoothing line crosses your inserted text, you can correct it by adjusting `or_yloc`. This argument sets the y-location of the inserted odds ratio information. Depending on the number of digits of your chosen values (here 3), you might also need to adjust the x-axis location of the two values so that these do not interfer with the vertical line.
 

@@ -10,7 +10,7 @@ subtitle = ""
 widget = "projects"
 
 # Order that this section will appear in.
-weight = 2
+weight = 50
 
 # View.
 # Customize how projects are displayed.
@@ -36,6 +36,10 @@ filter_default = 0
 [[filter]]
   name = "Finished"
   tag = ".finished"
+  
+[[filter]]
+  name = "R Packages"
+  tag = ".R-Packages"
 
 +++
 

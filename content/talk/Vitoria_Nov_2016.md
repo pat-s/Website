@@ -1,19 +1,17 @@
 +++
-date = "2016-11-08"
-title = "Modeling the Spatial Distribution of Hail Damage in Pine Plantations of Northern Spain as a Major Risk Factor for Forest Disease"
+time_start = 2016-11-08
+title = "LIFE Healthy Forest: Modeling the Spatial Distribution of Hail Damage in Pine Plantations of Northern Spain as a Major Risk Factor for Forest Disease"
 abstract = ""
 abstract_short = ""
-event = "LIFE Healthy Forest project meeting"
+event = "LIFE Healthy Forest Project Meeting, Vitoria, Spain"
 # event_url = "https://example.org"
 location = "Vitoria, Spain"
 
 selected = false
 math = true
 
-url_pdf = ""
-url_slides = "https://speakerd.s3.amazonaws.com/presentations/943b87e7eafd4d0c89b1aa748edf10c1/MA.Schratz.presentation.pdf"
+url_pdf = "slides/LIFE/2016_11_Vitoria.pdf"
+url_slides = ""
 url_video = ""
 
 +++
-
-{{< speakerdeck 943b87e7eafd4d0c89b1aa748edf10c1 >}}
