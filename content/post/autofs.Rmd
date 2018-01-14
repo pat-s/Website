@@ -2,10 +2,10 @@
 title: Auto-mount network shares (cifs, sshfs, nfs) on-demand using autofs
 date: 2017-12-07
 lastmod: 2018-01-09
-categories: ["linux"]
+categories: ["Linux"]
 highlight: true
 math: false
-tags: ["autofs", "automount", "unix", "fstab", "linux"]
+tags: ["autofs", "automount", "fstab", "Linux"]
 output:
   blogdown::html_page:
     toc: true
