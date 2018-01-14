@@ -1,6 +1,6 @@
 ---
 title: Introducing R Package 'oddsratio'
-date: 2016-11-01T16:30:23+01:00
+date: 2016-11-01
 image: oddsratio3.png
 lastmod: 2017-10-24 
 categories: ["R"]
