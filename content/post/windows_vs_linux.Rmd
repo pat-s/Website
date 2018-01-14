@@ -1,0 +1,218 @@
+---
+title: 'Why you should use Linux for data science, science and R'
+author: Patrick Schratz
+date: '2018-01-14'
+lastmod: ""
+categories: ["R", "Data Science", "Linux"]
+tags: ["R", "Data Science", "Linux", "Windows"]
+header:
+  caption: ''
+  image: ''
+output:
+  blogdown::html_page:
+    toc: true
+summary: "The year just started and I would like to start a small series of blog posts that describe my work environment: Which libraries/applications do I use to get my PhD work done and why I use exactly these. I will start by writing down my thoughts on the 'Windows vs. Unix' debate. I know this is a hot topic and will probably outlive humanity :wink:. However, I often have to deal with it because all people in my working environment run Windows and I always try to convince them why they could by more productive in our field of work if they would use Linux, especially if they run into troubles and ask me for help (parallelization, server access, automation, etc.). This post only aims to compare both worlds in the field of data science, science and in more detail the usage of R."
+---
+
+```{r, echo=FALSE}
+library(blogdown)
+```
+
+
+The year just started and I would like to start a small series of blog posts that describe my work environment: Which libraries/applications do I use to get my PhD work done and why I use exactly these.
+
+Before I start, I would like to point out to all people who do not know me in person:
+I am one of the guys who likes to optimize his working setup, try out new applications that ease up daily processes and that have somewhat an aesthetic looking as well.
+
+Yes, this costs a lot of time and I have re-installed my operation system (OS) more than a dozen times within the last 5 years (not counting live ISOs and virtual machines).
+I was running Windows roughly until the point when Windows 10 was released.
+I had a dual-boot system with Windows and Linux running for quite some time but was afraid to completely switch because I needed to use ArcGIS (a software that only runs on Windows) frequently (nowadays, I do all GIS stuff in R or QGIS).
+Back then I was already upset about the problematic way to automate things in Windows, the lack of customization and the tremendous GUI clicking practice.
+I decided to switch to macOS at the beginning of my PhD, with the hope it could be the best trade-off between Linux and an "enterprise-ready" operating system.
+As an open source software developer I naturally have Linux Virtual Machines running to test some stuff on Linux locally in case I cannot track down some build failures on my continuous integration tests on Travis CI.
+Travis tests on Ubuntu (which is probably the most popular Linux distribution) so I had several Ubuntu releases installed.
+
+# My current laptop
+
+A few months ago I sold my Mac book with the aim to completely switch to Linux.
+I did so for two reasons: 
+
+1. The hardware in a Mac (CPU, GPU) is relatively bad compared to what you get for the same money with a Linux/Windows laptop. 
+To illustrate this point, my 2015 Mac book Pro had an i5 (5th generation) with 2 Cores, 16 GB DDR3 RAM, an integrated Intel graphics and an 256 GB SSD.
+The [new Linux laptop](https://slimbook.es/en/pro-ultrabook-13-aluminium) I have has an i5 (8th) generation with 4 cores, 16 GB DDR 4 RAM, an Intel UHD 630 graphics and an 512 GB SSD. 
+The price of both laptops was exactly the same, around 1200€ at the time writing this.
+What I certainly miss on my Mac is the battery capacity. 
+macOS in combination with the optimized hardware is able to really provide up to 10h+ of battery life.
+My new Slimbook struggles with reaching 3h although I already use battery optimization tools such as `powertop`.
+Well, four cores of course use more battery than two and a DDR4 RAM probably as well (not sure about this though).
+
+2. Due to the high cost of a Mac, not so many people have one and therefore the community that maintains some niche libraries (i.e. all the spatial libraries) is somewhat small and relies on few people.
+Although I like to contribute to open source projects a lot, I had the feeling that I have to file more bugs and patch stuff for myself than I wanted to.
+Furthermore, I had the feeling that this contribution only reaches a somewhat small community.
+
+# Windows vs. Linux
+
+This is the first post of the series and I will start by writing down my thoughts on the "Windows vs. Unix" debate.
+I know this is a hot topic and will probably outlive humanity.
+However, I often have to deal with it because all people in my working environment run Windows and I always try to convince them why they could by more productive in our field of work if they would use Linux, especially if they run into troubles and ask me for help (parallelization, server access, automation, etc.).
+This post only aims to compare both worlds in the field of data science, science and in more detail the usage of R.
+
+Nobody is an expert across all operating systems. 
+I do not claim all statements here to be absolutely correct, they just express my current view on them.
+There may certainly be things that I do not know of (both in the Windows and Linux world) that abrogate some arguments of mine.
+
+## General
+
+Also I want to point out that this post is biased because I am a Linux user.
+Traditionally, Linux users write about why `Windows` is "bad" and why `Linux` is great.
+I try to be objective as much as I can but essentially this is also what this post comes down to.
+However, already the word objective is subjective :smile:.
+You find rarely a post that writes the other way round.
+So why is this? 
+And why do people still stick to Windows?
+
+Before we tackle this questions, let me point out, that this comparison here is focused on using the operating system for data science tasks.
+The main purpose of your work is very important.
+If you are mainly doing office work, I would even suggest to use Windows (read below).
+
+In my opinion the most important point why people use Windows is that most people have been raised with Windows because its installed on the parents computer, in school and so on.
+Most of the work on Windows is done by clicking Graphical User Interfaces (GUIs) and you rarely need the command line.
+Windows provides out-of-the-box driver support for almost everything and all possible applications can be installed using graphical GUI installers using the `.exe` files.
+Windows really shines when collaborating with other people on documents, e.g. using Word.
+If you are an Office user, I would even **suggest you to use Windows** as it provides the best Office apps out there. 
+Open source alternatives to Microsoft Office like e.g. `LibreOffice` (default on most Linux distros) are sufficient if you want to make very basic edits to a document from time to time but are not really suited for creating complex documents.
+
+## File Managers
+
+I do not understand why Windows these days still comes with a file manager that has so few features.
+Maybe I missed something important and someone can explain it to me? :scream_cat:
+
+You cannot have multiple tabs (well, you can by installing an external application named [Clover](http://en.ejie.me)).
+Instead one has to open a new window, place both windows side by side to be able to drag-and-drop files between two folders.
+Most often I see people copying (`STRG + C`) files, then manually navigating to the desired folder where the item should be inserted and pressing `STRG + V`.
+Afterwards they navigate back because they realize that they actually want to work in the previous folder.
+
+{{% alert warning %}}
+That costs so much time!
+{{% /alert %}}
+
+In Unix, all file managers at least provide the option for multiple tabs (e.g. Finder on macOS) or even have a split-view option that makes it possible to have two directories open side-by-side in ONE windows.
+You never need a second file manager window.
+If you would need one, you just open a new tab with a new split-view window.
+I'll write a blog post in the future about the features of [Dolphin](https://www.kde.org).org/applications/system/dolphin/) the [KDE](https://www.kde.org) file manager on [Kubuntu](https://kubuntu.org).
+
+If you often have to move files (and usually not only data science guys have to do this), this is a crucial task that eats a lot of time. 
+
+## Compilers
+
+When installing R for Windows, it seems perfect: 
+There are binaries for almost all packages and they install instantly.
+On Linux, most packages have to be installed form source and take quite some time to compile.
+But what if no binary is available for a specific package on Windows?
+Then you need [Rtools](https://cran.r-project.org/bin/windows/Rtools/), which is an external application installing all sort of missing stuff for Windows needed to compile packages.
+Windows does not come with basic compilers such as `gcc`.
+To install `Rtools` and add it to the `PATH` variable, one needs Admin rights.
+If you do not have such or an error occurs because the Rtools executables are not added to the `PATH` variable, most users are lost and frustrated.
+
+Users mostly do not understand what they need Rtools for and I am always tired of explaining why the installation of certain packages failed.
+
+This is just one example of a missing application/library on Windows that needs additionally be installed to get something working properly on Windows. 
+More to come in future sections/posts.
+
+## Package manager
+
+Windows does not come with a package manager while all UNIX systems do. 
+macOS does not natively have one but the open-source [`homebrew`](https://brew.sh/index_de.html) project is really good.
+
+So why is there a package manager in the first place and why is it useful for data science?
+A package manager does basically two things:
+
+1. It takes care of dependencies of libraries when a specific package is installed/removed.
+2. It checks if updates for certain libraries are available, notifies the user and installs all of them.
+
+On Windows, if you want to have an update of a specific library/application, you need to be lucky that the developers integrated an "check for automatic updates" feature into their application.
+While this holds true for most of the applications, if you install system libraries such as `GDAL`, `Imagemagick` or other widely used libraries that many tools use, you have to check for new versions either by visiting their respective websites or run the installer again. 
+By hand. For every library. Isn't that exhausting?
+
+This causes the problem that a lot of Windows user I know rarely (or never) update their libraries.
+
+Another advantage of a package manager that takes care of dependencies is that you only need to install a library once and all other libraries/applications that depend on it use it.
+On Windows, a lot of applications often come with their own packaged libraries, often with different versions.
+For example, I frequently see Windows users with 3 or more Python or `GDAL` versions on their systems.
+Often enough, these parallel installations interfere with each other due to their order of installation and appearance in the `PATH` variable.
+If you ask a Linux user which `GDAL` version he has installed, he will either know it out-of-the-box or just type `gdalinfo --version`.
+On Windows, users most likely have no clues and also `GDAL` is most often not even in the `PATH` so they cannot run `gdalinfo` in the console..
+
+All in all, the Windows approach just fills your system with redundant files and you slowly loose the overview of which version of which library you actually have installed.
+
+{{% alert note %}}
+My opinion: Windows is not made for development (of libraries)! Have you ever questioned yourself why all the geeks in your work environment use either Linux or macOS? There might be a reason..
+{{% /alert %}}
+
+## Customization
+
+This topic applies for both Windows and macOS. 
+If an operating system is created by a large company (here Microsoft and Apple), they tend to restrict as much as they can to keep the OS simple and easy to maintain.
+If you give users a lot of customization power, there is a risk that they might do something "bad", break their installation in some way and then blame the company for this.
+Finally, they move to another OS/company.
+
+On Linux, you have many distributions to choose from (e.g. Ubuntu is a "distribution"). 
+Each of them tailored towards a specific field of application.
+Just to name a few: Arch, Fedora, Mint, Ubuntu, Kubuntu, Xubuntu, Debian.
+This post is not intended to explain the differences between Linux distributions.
+What is important here is: You can customize every distribution as much as you want, depending on the capabilities of the chosen desktop System ([GNOME](https://www.gnome.org), [KDE](https://www.kde.org), [MATE](https://mate-desktop.org/de/), [XFCE](https://xfce.org), etc.).
+You can change icons, colors, dock appearance. 
+Almost everything. 
+And it will cost you nothing.
+
+## Pricing and availability 
+
+Which leads me to the next point: Pricing. 
+Windows costs you money but can at least be installed on all computers.
+macOS costs you money and is illegal to be installed on non Mac machines.
+Why? Well, on the one hand Apple wants you to buy a Mac if you like the OS.
+On the other, the OS is highly tailored to the components that Apple uses (CPU, GPU) to be really efficient.
+If you want to build a so called Hackintosh (a self-made Mac) you have to precisely choose specific components that the OS supports.
+
+Linux costs you nothing. 
+And can be run on all computers.
+The resources usage highly depends on the chosen Desktop Environment (see [customization](https://pat-s.github.io/post/windows_vs_linux#customization) and it supports all computer parts out there.
+
+## Updates
+
+Updates mainly address security issues (because OS used by many people are more often attacked) and new features are integrated slowly as stability is a high priority.
+Why is that? Simply because bad people who try to hack operation systems will try to attack operating systems choose Windows because its used by the majority of people in the world.
+
+New features in Windows and macOS are mainly focusing on the "wow" effect: Something that is great to present but often less useful in the daily life (e.g. Siri and Cortana stuff).
+Why? Well, both companies do not have to maintain package libraries and need to attract new users by having "something excitingly new" that the other big player does not have.
+
+Linux updates of release-distributions like e.g. Ubuntu mainly focus on updating libraries that work together with each other to create a stable working environment.
+There is no Cortana or Siri and "exciting features" are something like the introduction of a new cross-distribution package format for applications called [snap](https://snapcraft.io).
+
+This builds the bring to another update related point: The update frequency and reboot urgency.
+There is a myth that on Linux you never need to reboot when updating.
+That's not true. 
+For example, if the kernel gets updated, you need to perform a reboot to re-link everything.
+However, if only some libraries get updated, there is no need to reboot.
+
+Windows usually has its patchday every Wednesday which comes with a lot of bug-fixes and updates.
+Updates became quick big recently (sometimes GB size) and can take quite some time to install, depending on your machine performance.
+This leads to the case that people postpone the updates forever or are installing them within the working day, being forced to take a coffee break for 15-30 minutes sometimes.
+
+## Connecting to servers
+
+Last section of this post.
+Most server run Linux. 
+Because its free, they are stable and secure.
+So, its always kind of problematic to connect from Windows to Linux and the other way round.
+Usually this is done using `samba` and the `cifs` protocol.
+You may have noticed that you can add server connections to Windows servers to your explorer on Windows.
+This is not possible if you are connecting to a Linux server.
+Then you need again workaround tools such as [WinSCP](https://winscp.net/eng/index.php) to get this going and whoops, you have another file manager and application to get your daily stuff running.
+Only because you are on Windows!  
+
+On Linux, you can add all server connections into your file manager.
+Optionally, mount them on boot using entries in `etc/fstab` or mount them on-demand using `autofs` (see [this blog post](https://pat-s.github.io/post/autofs/) for more info).
+
+It does not matter if these are Windows servers (`cifs`) or Linux servers (`nfs` or `sshfs` protocol).
+
