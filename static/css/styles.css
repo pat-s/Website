@@ -72,12 +72,6 @@ h3.article-title a:hover {
   transition: color 0.6s ease;
 }
 
-/* icon color of academicons */
-a {
-    color: #313131;
-    text-decoration: none;
-}
-
 .btn-primary {
     color: #fff;
     background-color: #313131 !important;
@@ -100,4 +94,9 @@ a {
 .btn-primary.btn-outline {
     color: white !important;
     border-color: #313131 !important;
+}
+
+/* color of link */
+a {
+    color: #0095eb;
 }
