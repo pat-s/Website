@@ -32,11 +32,12 @@ pre {
 }
 code { background: #f9f9f9; }
 pre code { background: none; }
+*/
 
+/* tuns off grey background in publicatons_selected*/
 .home-section:nth-of-type(even) {
   background-color: white;
 }
-*/
 
 /* expand dracula box color */
 pre{padding:0}
