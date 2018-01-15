@@ -8,11 +8,6 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 preserveTaxonomyNames = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 
-
-## Link custom CSS and JS assets (not needed currently as highlighting is supported by default now)
-#custom_js = ["highlight.pack.js"]
-#custom_css = ["dracula.css", "my-hugo-academic.css"]
-
 # Highlight.js options
   #   highlight
   #     Enable global source code highlighting?  If false, you can
@@ -40,9 +35,9 @@ footnotereturnlinkcontents = "<sup>^</sup>"
   #
   #   For more info on the highlighting options, see:
   #   https://sourcethemes.com/academic/post/writing-markdown-latex/#highlighting-options
-highlight = false
+highlight = true
 highlight_languages = ["r", "bash", "css"]
-highlight_style = "highlight"
+highlight_style = "solarized-dark"
 
 # Enable comments by entering your Disqus shortname
 disqusShortname = "pat-s"
