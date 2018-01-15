@@ -23,7 +23,7 @@ table thead th { border-bottom: 1px solid #ddd; }
 th, td { padding: 5px; }
 tr:nth-child(even) { background: #eee }
 
-/* code style from https://github.com/rstudio/blogdown/blob/master/docs/02-hugo.Rmd*/
+/* code style from https://github.com/rstudio/blogdown/blob/master/docs/02-hugo.Rmd
 pre {
   border: 1px solid #ddd;
   box-shadow: 5px 5px 5px #eee;
@@ -36,6 +36,10 @@ pre code { background: none; }
 .home-section:nth-of-type(even) {
   background-color: white;
 }
+*/
+
+/* expand dracula box color */
+pre{padding:0px}
 
 
 body {
