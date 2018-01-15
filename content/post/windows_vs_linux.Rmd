@@ -1,23 +1,22 @@
 ---
-title: 'Why you should use Linux for data science, science and R'
+title: 'Why you should use Linux for Data Science and R'
 author: Patrick Schratz
 date: '2018-01-14'
 lastmod: ""
 categories: ["R", "Data Science", "Linux"]
 tags: ["R", "Data Science", "Linux", "Windows"]
-header:
-  caption: ''
-  image: ''
 output:
   blogdown::html_page:
     toc: true
 summary: "The year just started and I would like to start a small series of blog posts that describe my work environment: Which libraries/applications do I use to get my PhD work done and why I use exactly these. I will start by writing down my thoughts on the 'Windows vs. Unix' debate. I know this is a hot topic and will probably outlive humanity :wink:. However, I often have to deal with it because all people in my working environment run Windows and I always try to convince them why they could by more productive in our field of work if they would use Linux, especially if they run into troubles and ask me for help (parallelization, server access, automation, etc.). This post only aims to compare both worlds in the field of data science, science and in more detail the usage of R."
+image: "windows-vs-linux.png"
+caption: "Image credit: https://www.webhostdesignpost.com/webhosting/linuxwindowswebhosting.html"
+preview: true  # Show a thumbnail in listings?
 ---
 
 ```{r, echo=FALSE}
 library(blogdown)
 ```
-
 
 The year just started and I would like to start a small series of blog posts that describe my work environment: Which libraries/applications do I use to get my PhD work done and why I use exactly these.
 
@@ -215,4 +214,3 @@ On Linux, you can add all server connections into your file manager.
 Optionally, mount them on boot using entries in `etc/fstab` or mount them on-demand using `autofs` (see [this blog post](https://pat-s.github.io/post/autofs/) for more info).
 
 It does not matter if these are Windows servers (`cifs`) or Linux servers (`nfs` or `sshfs` protocol).
-
