@@ -1,21 +1,5 @@
----
-title: Introducing R Package 'oddsratio'
-date: 2016-11-01T16:30:23+01:00
-image: oddsratio3.png
-lastmod: 2017-10-24 
-categories: ["R"]
-math: false
-tags: ["logistic regression", "oddsratio", "r-bloggers"]
-summary: Usually, this calculation is done by setting all predictors to their mean
-  value, predict the response, change the desired predictor to a new value and predict
-  the response again. These actions results in two log odds values, respectively,
-  which are transformed into odds by exponentiating them. Finally, the odds ratio
-  can be calculated from these two odds values.
-output:
-  blogdown::html_page:
-    toc: true 
----
-
+<!-- BLOGDOWN-HEAD -->
+<!-- /BLOGDOWN-HEAD -->
 
 <div id="TOC">
 <ul>
@@ -117,7 +101,7 @@ fit_gam &lt;- mgcv::gam(y ~ s(x0) + s(I(x1^2)) + s(x2) + offset(x3) + x4,
 <p>Right now, the only (quick) possibility to plot the smoothing functions of a GAM(M) in R was by using the built-in <code>plot()</code> function. Since I prefer using <code>ggplot2</code> for all kind of plotting, I implemented the somehow fiddly procedure of plotting GAM smoothing functions using <code>ggplot()</code> in <code>plot_gam()</code>:</p>
 <pre class="r"><code>suppressPackageStartupMessages(library(cowplot)) # for plotting theme
 plot_gam(fit_gam, pred = &quot;x2&quot;, title = &quot;Predictor &#39;x2&#39;&quot;)</code></pre>
-<p><img src="/post/oddsratio_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="oddsratio_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="add-odds-ratio-information-into-smoothing-function-plot" class="section level2">
 <h2>Add odds ratio information into smoothing function plot</h2>
@@ -143,7 +127,7 @@ insert_or(plot_object, or_object2, or_yloc = 2.1, values_yloc = 2,
           line_alpha = 1, line_type = &quot;dashed&quot;,
           arrow_xloc_r = 0.01, arrow_xloc_l = -0.01,
           arrow_length = 0.01, rect = TRUE)  </code></pre>
-<p><img src="/post/oddsratio_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="oddsratio_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Quite some adjustments were made for this insertion: I adjusted <code>values_yloc</code> because we have only one digit this time. Also, <code>or_yloc</code> was set to a lower value than in the first example to avoid an interference with the smoothing function. A green shaded rectangle was added using <code>rect = TRUE</code> and I set the arrow color to <code>black</code>. Length and position of the arrows very slightly modified using <code>arrow_length</code>, <code>arrow_xloc_r</code> and <code>arrow_xloc_l</code>. If you do not like arrows, simply turn them off using <code>arrow = FALSE</code>. The same logic applies to the shaded rectangle <code>rect = FALSE</code> and the inserted values <code>values = FALSE</code>.</p>
 </div>
 </div>
