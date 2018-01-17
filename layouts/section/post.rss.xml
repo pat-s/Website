@@ -3,11 +3,21 @@
     <title>Blog of Patrick Schratz</title>
     <link>{{ .Permalink }}</link>
     <description>Posts about Linux, R and Data Science</description>
+
+    <image>
+	  <url>https://pat-s.github.io/files/avatar.jpg</url>
+	  <title>Patrick Schratz</title>
+	  <link>pat-s.github.io</link>
+	  <width>32</width>
+	  <height>32</height>
+    </image>
+
     <generator>Hugo -- gohugo.io</generator>{{ with .Site.LanguageCode }}
     <language>{{.}}</language>{{end}}{{ with .Site.Author.email }}
     <managingEditor>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</managingEditor>{{end}}{{ with .Site.Author.email }}
     <webMaster>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</webMaster>{{end}}{{ with .Site.Copyright }}
     <copyright>2017-2018 Patrick Schratz</copyright>{{end}}{{ if not .Date.IsZero }}
+
     <lastBuildDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
     {{ with .OutputFormats.Get "RSS" }}
         {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
