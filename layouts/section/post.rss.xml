@@ -4,13 +4,13 @@
     <link>{{ .Permalink }}</link>
     <description>Posts about Linux, R and Data Science</description>
 
-    <image>
-	  <url>https://pat-s.github.io/files/avatar.jpg</url>
+<image>
+	  <url>https://pat-s.github.io/files/avatar_32x32.png</url>
 	  <title>Patrick Schratz</title>
 	  <link>pat-s.github.io</link>
 	  <width>32</width>
 	  <height>32</height>
-    </image>
+</image>
 
     <generator>Hugo -- gohugo.io</generator>{{ with .Site.LanguageCode }}
     <language>{{.}}</language>{{end}}{{ with .Site.Author.email }}
