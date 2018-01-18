@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1" xmlns:content="http://purl.org/rss/1.0/modules/content" xmlns:media="http://search.yahoo.com/mrss/">
   <channel>
     <title>Blog of Patrick Schratz</title>
     <link>{{ .Permalink }}</link>
@@ -30,6 +30,7 @@
       {{ with .Site.Author.email }}<author>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</author>{{end}}
       <guid>{{ .Permalink }}</guid>
       <description>{{ .Summary | html }}</description>
+      {{ if and (isset .Params "banner") (not (eq .Params.banner "")) }} <media:content type="image/png" medium="image" width="32" height="32" url="https://pat-s.github.io/files/avatar_32x32.png" /> {{ end }}
     </item>
     {{ end }}
   </channel>
