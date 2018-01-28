@@ -5,3 +5,4 @@
 content/**/*.html
 README.html
 public/
+.directory
