@@ -2,7 +2,7 @@
 title: 'Why you should use Linux for Data Science and R'
 author: Patrick Schratz
 date: '2018-01-14'
-lastmod: ""
+lastmod: "2018-01-20"
 categories: ["R", "Data Science", "Linux"]
 tags: ["R", "Data Science", "Linux", "Windows"]
 output:
@@ -121,16 +121,33 @@ More to come in future sections/posts.
 ## Package manager
 
 Windows does not come with a package manager while all UNIX systems do. 
-macOS does not natively have one but the open-source [`homebrew`](https://brew.sh/index_de.html) project is really good.
+Recently I came across chocoaltey which seems to be a good effort. 
+macOS does not natively come with one but the open-source [`homebrew`](https://brew.sh/index_de.html) project is really good.
 
 So why is there a package manager in the first place and why is it useful for data science?
 A package manager does basically two things:
 
-1. It takes care of dependencies of libraries when a specific package is installed/removed.
-2. It checks if updates for certain libraries are available, notifies the user and installs all of them.
+1. It takes care of dependencies of system libraries when a specific package is installed/removed.
+2. It checks if updates for certain system libraries are available, notifies the user and installs all of them.
+
+#### Excurse:
+
+For those who are not familiar with system libraries and are confused what the difference is compared to R packages: 
+System libraries are the actual software that drive your machine, they are usually installed system-wide on Unix systems.
+That means that the installation of a system library is used by all other libraries that need this library as a dependency.
+System libraries are e.g. compilers such as `gcc`, version control systems like `git` but also `gdal` can be seen as a system library.
+
+R packages are only functions of compiled R code that a nice person packaged for you so you can use it for any kind of R stuff you want to do.
+Sometimes R packages need to be compiled against system libraries to work (e.g. the `sf` package on macOS/Linux or the `Rcpp` package (against the c++ compiler)).
+
+R packages can optionally also be installed via the system-wide package manager instead of using `install.packages()` or `devtools::install_github()`.
+The basic R installation for example is named `r-base` and `r-core`.
+These can be installed via the package manager, e.g. `sudo apt-get install r-base` on Debian based distributions.
+If you add the ppa c2d4u from Michael Rutter, you can install and update binaries of R packages via the systems package manager.
+This is helpful if you run in trouble when trying to compile some packages from source and cannot find out the problem, e.g. with `doMPI`.
 
 On Windows, if you want to have an update of a specific library/application, you need to be lucky that the developers integrated an "check for automatic updates" feature into their application.
-While this holds true for most of the applications, if you install system libraries such as `GDAL`, `Imagemagick` or other widely used libraries that many tools use, you have to check for new versions either by visiting their respective websites or run the installer again. 
+While this holds true for most of the applications, if you install system libraries such as `gdal`, `Imagemagick` or other widely used libraries that many tools use, you have to check for new versions either by visiting their respective websites or run the installer again. 
 By hand. For every library. Isn't that exhausting?
 
 This causes the problem that a lot of Windows user I know rarely (or never) update their libraries.
