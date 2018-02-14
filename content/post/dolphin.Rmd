@@ -1,0 +1,108 @@
+---
+title: 'My working environment (1): File Manager Dolphin'
+author: Patrick Schratz
+date: '2018-01-20'
+lastmod: ""
+categories: ["Data Science", "Linux", "KDE", "Kubuntu"]
+tags: ["Data Science", "Linux", "KDE", "Kubuntu"]
+output:
+  blogdown::html_page:
+    toc: true
+summary: "I use [KDE](https://www.kde.org) as my Desktop environment (DE). For those who are unfamiliar what a desktop environment is: Every OS has at least one. Its the application that is responsible for the look of the OS, the customization options and the login screen. However, on Windows and macOS you do not have a choice to choose or change the DE, you simply have to use what Windows or Apple provide you with."
+image: "dolphin2.png"
+preview: true  # Show a thumbnail in listings?
+---
+
+```{r, echo=FALSE}
+library(blogdown)
+```
+
+I recently announced that I will start with a little series explaining my working environment.
+By this I mean my operating system setup, which tools I use and why I think that these boost my productivity.
+This is part 1 of the series in which I'll talk about the file manager, [Dolphin](https://userbase.kde.org/Dolphin).
+
+#### Excurse
+
+I use [KDE](https://www.kde.org) as my Desktop environment (DE). 
+For those who are unfamiliar what a desktop environment is:
+Every OS has at least one.
+Its the application that is responsible for the look of the OS, the customization options and the login screen.
+However, on Windows and macOS you do not have a choice to choose or change the DE, you simply have to use what Windows or Apple provide you with.
+
+On Linux, multiple ones exist ([KDE](https://www.kde.org), [GNOME](https://www.gnome.org), [MATE](https://mate-desktop.org/de/), [XFCE](https://xfce.org)) and probably some more that I just do not know.
+The differ in their simplicity/complexity, resource usage and customization ability.
+Also, they come with different pre-installed software such as the file manager, an editor, a PDF reader and most often a music player and a mail program.
+Some like for example [KDE](https://www.kde.org) come with even more applications, such as an RSS reader, calender application, and many more.
+
+I use [KDE](https://www.kde.org) as it provides the most customization options and I like having as much options as possible to change something to my liking.
+
+# Dolphin
+
+While I only talk about the file manager of [KDE](https://www.kde.org) ([Dolphin](https://userbase.kde.org/Dolphin)) in this post, please note that other DE have file managers with similar features.
+They are just named differently (e.g. [Nautilus](https://projects.gnome.org/nautilus/screenshots.html), [Thunar](https://wiki.ubuntuusers.de/Thunar/), [Caja](https://wiki.ubuntuusers.de/Caja/)).
+
+## Folder view
+
+### Display options
+
+[Dolphin](https://userbase.kde.org/Dolphin) has great folder display options. 
+You can choose between a icon view, a compact view and a detailed view.
+The latter is basically the same as the compact view but you can expand folders to see their contents without actually entering it.
+
+<img src="../../img/dolphin1.png" style="width: 100%;">
+
+### Side-by-side
+
+Furthermore, you can split your view so that you have two folder views side-by-side.
+This is a crucial feature, in my opinion maybe the most important one compared to the Windows Explorer.
+
+If that is not enough, you can also add tabs to open additional (split-view) folder views.
+
+<img src="../../img/dolphin2.png" style="width: 100%;">
+
+By doing that you only need one [Dolphin](https://userbase.kde.org/Dolphin) window to have
+
+* a side-by-side view of your two main document folders (tab1)
+* a side-by-side view of your two main data folders (tab2)
+* a side-by-side view of you two main script folders (tab3)
+
+### Grouping
+
+You can also group folders, meaning that all files named with a similar pattern will get grouped although you have not grouped them in explicit sub-folders yourself.
+
+Consider 50 files, containing results of an analysis.
+Instead of manually adding sub-folders that sort these files by prefix you can just "group" this folder and they will be grouped automatically by [Dolphin](https://userbase.kde.org/Dolphin).
+
+<img src="../../img/dolphin3.png" style="width: 100%;">
+
+## Terminal integration
+
+If you are working on Linux, you often encounter the situation in which you have to run a command with a file that is stored in a deep folder structure.
+With [Dolphin](https://userbase.kde.org/Dolphin), you can just enable the Terminal Panel (e.g. by pressing F4) and a terminal window will pop up at the bottom.
+You can configure it to automatically set the working directory to the folder you currently have selected.
+So instead of opening a new terminal windows, writing `cd /some/path/that/is/really/long/file.txt` you can just press F4 and type whatever command you want without the need to supply a file-path.
+
+<img src="../../img/dolphin4.png" style="width: 100%;">
+
+## Integration of remote servers
+
+When running Windows, you can only have remote servers integrated into the explorer if these are Windows server.
+On Linux, you can integrate all kind of remote servers into your file manager.
+If you are connected you directly see them at the point where you mounted them to.
+
+You can set them as bookmarks in the left panel of [Dolphin](https://userbase.kde.org/Dolphin) and address them as if they were local folders on your laptop without the need of an additional application.
+
+If you are using the `fstab` way, you can even specify an automount during boot so you do not even have to do anything to mount the folders.
+If there is a network interruption, simply call `sudo automount -a` to remount all remote folders again.
+A different approach is to use `autofs`, see [this post](https://pat-s.github.io/post/autofs/) for more information.
+
+## Additional features
+
+Besides the main features I mentioned above, there are multiple others:
+
+* Lock filters of a directory when changing folders (the little lock icon at the bottom)
+* Re-size folder icons on the fly using the slider at the bottom
+* Edit the current folder path you are viewing and easily copy it to the clipboard
+
+In case you are wondering what theme and icons I use here - its the "breeze dark" theme that comes with the [KDE](https://www.kde.org) Desktop and the [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) icon pack.
+

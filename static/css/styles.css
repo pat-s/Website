@@ -23,7 +23,7 @@ table thead th { border-bottom: 1px solid #ddd; }
 th, td { padding: 5px; }
 tr:nth-child(even) { background: #eee }
 
-/* code style from https://github.com/rstudio/blogdown/blob/master/docs/02-hugo.Rmd*/
+/* code style from https://github.com/rstudio/blogdown/blob/master/docs/02-hugo.Rmd
 pre {
   border: 1px solid #ddd;
   box-shadow: 5px 5px 5px #eee;
@@ -32,10 +32,15 @@ pre {
 }
 code { background: #f9f9f9; }
 pre code { background: none; }
+*/
 
+/* tuns off grey background in publicatons_selected*/
 .home-section:nth-of-type(even) {
   background-color: white;
 }
+
+/* expand dracula box color */
+pre{padding:0}
 
 
 body {
@@ -72,12 +77,6 @@ h3.article-title a:hover {
   transition: color 0.6s ease;
 }
 
-/* icon color of academicons */
-a {
-    color: #313131;
-    text-decoration: none;
-}
-
 .btn-primary {
     color: #fff;
     background-color: #313131 !important;
@@ -100,4 +99,9 @@ a {
 .btn-primary.btn-outline {
     color: white !important;
     border-color: #313131 !important;
+}
+
+/* color of link */
+a {
+    color: #0095eb;
 }

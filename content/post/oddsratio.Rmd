@@ -1,11 +1,12 @@
 ---
 title: Introducing R Package 'oddsratio'
-date: 2016-11-01T16:30:23+01:00
+date: 2016-11-01
 image: oddsratio3.png
+# highlight: false
 lastmod: 2017-10-24 
-categories: ["R"]
+categories: ["R", "r-bloggers"]
 math: false
-tags: ["logistic regression", "oddsratio", "r-bloggers"]
+tags: ["logistic regression", "oddsratio"]
 summary: Usually, this calculation is done by setting all predictors to their mean
   value, predict the response, change the desired predictor to a new value and predict
   the response again. These actions results in two log odds values, respectively,
@@ -16,13 +17,18 @@ output:
     toc: true 
 ---
 
+```{r, echo=FALSE}
+library("oddsratio") 
+```
+
+
 You are dealing with statistical models (GLMs or GAMs) with a binomial response variable? 
 Then the `oddsratio` package will improve your analysis routine!
 
 This package simplifies the calculation of odds ratios in binomial models. 
 For GAMs, it also provides you with the power to insert your results into the smooth functions of your predictors! But let's start with some basics...
 
-# GLM
+# GLM 
 
 ## The concept of odds ratio calculation 
 
@@ -185,4 +191,3 @@ or from Github using
 ```{r, eval = FALSE}
 remotes::install_github("pat-s/oddsratio", build_vignettes = TRUE)
 ```
-

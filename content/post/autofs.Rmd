@@ -1,11 +1,11 @@
 ---
 title: Auto-mount network shares (cifs, sshfs, nfs) on-demand using autofs
 date: 2017-12-07
-# lastmod: 2017-10-24
-categories: ["linux"]
+lastmod: 2018-01-09
+categories: ["Linux"]
 highlight: true
 math: false
-tags: ["autofs", "automount", "unix", "fstab", "linux"]
+tags: ["autofs", "automount", "fstab", "Linux"]
 output:
   blogdown::html_page:
     toc: true
@@ -59,11 +59,13 @@ I prefer to use a single file that looks as follows:
 * I mount a Windows server using `cifs` (samba protocol) with the respective credentials (username, password) stores in `/etc/.smbcredentials.txt` and a Linux server using `sshfs`.
     * The private ssh key which enables a passwordless ssh connection for `sshfs` has to be copied from `~/.ssh/id_rsa` to `/root/.ssh/id_rsa` because `root` will be the user which creates the connection. 
 Subsequently, `sshfs` will try to use its respective `id_rsa` file. 
+Make sure that you set the correct permission rights for the `id_rsa` file: `sudo chown 644 /root/.ssh/id_rsa`.
+    * Besides `id_rsa`, you also should copy `.ssh/known_hosts` to `/root/.ssh/known_hosts`.
 
 * Note the escaping `\` in the `sshfs` setup. 
 Without it in front of `#username@server` and `:/home`, the mount process will not work.
 
-* I set specified file and directory rights (`file_mode`, `dir_mode`) so that I have full access to the mounted folders.
+* I set specific file and directory rights (`file_mode`, `dir_mode`) so that I have full access to the mounted folders.
 
 Be aware that only the direct mount point (here `/mnt`) exists permanently.
 The on-demand folders (here e.g. `/mnt/server1`) will be created during the mount process and should not exist before.
