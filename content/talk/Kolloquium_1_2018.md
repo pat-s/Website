@@ -10,7 +10,7 @@ location = "Jena, Germany"
 selected = false
 math = true
 
-url_pdf = "slides/paper1/2018_01_Kolloquium.Rmd"
+url_pdf = "slides/paper1/2018_01_Kolloquium.pdf"
 url_slides = ""
 url_video = ""
 
