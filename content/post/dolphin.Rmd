@@ -3,8 +3,8 @@ title: 'My working environment (1): File Manager Dolphin'
 author: Patrick Schratz
 date: '2018-01-20'
 lastmod: ""
-categories: ["Data Science", "Linux", "KDE", "Kubuntu"]
-tags: ["Data Science", "Linux", "KDE", "Kubuntu"]
+categories: ["Data Science", "Linux", "KDE"]
+tags: ["Data Science", "Linux", "KDE"]
 output:
   blogdown::html_page:
     toc: true

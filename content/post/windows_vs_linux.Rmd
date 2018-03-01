@@ -98,7 +98,7 @@ That costs so much time!
 In Unix, all file managers at least provide the option for multiple tabs (e.g. Finder on macOS) or even have a split-view option that makes it possible to have two directories open side-by-side in ONE windows.
 You never need a second file manager window.
 If you would need one, you just open a new tab with a new split-view window.
-I'll write a blog post in the future about the features of [Dolphin](https://www.kde.org).org/applications/system/dolphin/) the [KDE](https://www.kde.org) file manager on [Kubuntu](https://kubuntu.org).
+I'll write a blog post in the future about the features of [Dolphin](https://www.kde.org).org/applications/system/dolphin/) the [KDE](https://www.kde.org) file manager.
 
 If you often have to move files (and usually not only data science guys have to do this), this is a crucial task that eats a lot of time. 
 
