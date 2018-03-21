@@ -50,7 +50,7 @@ Charlotte Wickham @useR!2017 (Brussels): Solving iteration problems with `purrr`
 Video: https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/Solving-iteration-problems-with-purrr
 Slides: https://github.com/Cascadia-R/purrr-tutorial
 
-# My Blogroll/RSS Feed
+# Blogroll
 
 * http://r-spatial.org
 
@@ -58,4 +58,4 @@ Slides: https://github.com/Cascadia-R/purrr-tutorial
 
 * http://kkulma.github.io
 
-
+* https://www.r-bloggers.com
