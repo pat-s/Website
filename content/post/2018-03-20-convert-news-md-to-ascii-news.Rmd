@@ -8,6 +8,7 @@ categories:
   - package-development
 tags:
   - R
+  - r-bloggers
 header:
   caption: ''
   image: ''
