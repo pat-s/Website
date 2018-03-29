@@ -207,12 +207,12 @@ defaultContentLanguageInSubdir = false
 [[menu.main]]
   name = "Publications"
   url = "#publications_selected"
-  weight = 4
+  weight = 2
 
 [[menu.main]]
-  name = "What to read"
+  name = "Reading list"
   url = "#recommended_reading"
-  weight = 4.5
+  weight = 6
 
 [[menu.main]]
   name = "Blog"
@@ -222,22 +222,22 @@ defaultContentLanguageInSubdir = false
 [[menu.main]]
   name = "Talks"
   url = "#talks"
-  weight = 3.5
+  weight = 5
 
 [[menu.main]]
   name = "Projects"
   url = "#projects"
-  weight = 2
+  weight = 4
 
 [[menu.main]]
   name = "Teaching"
   url = "#teaching"
-  weight = 5
+  weight = 7
 
 [[menu.main]]
   name = "Contact"
   url = "#contact"
-  weight = 6
+  weight = 8
 
 
 # Taxonomies.

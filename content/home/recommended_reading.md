@@ -42,7 +42,9 @@ Mixed Models in R: http://m-clark.github.io/docs/mixedModels/mixedModels.html
 
 Intro to Spatial Analysis in R: https://jafflerbach.github.io/spatial-analysis-R/intro_spatial_data_R.html#introduction
 
-Generalized Additive Models (GAMs) in R: https://m-clark.github.io/docs/GAM.html
+Generalized Additive Models (GAMs) in R: https://m-clark.github.io/generalized-additive-models/preface.html
+
+More statistic related posts from Michael Clark: http://m-clark.github.io/documents/
 
 # Tutorials
 
@@ -54,8 +56,24 @@ Slides: https://github.com/Cascadia-R/purrr-tutorial
 
 * http://r-spatial.org
 
+* https://yihui.name/en/
+
+* https://r-podcast.org
+
+* http://blog.rstudio.com
+
+* https://ropensci.org
+
+* https://rweekly.org
+
+* http://www.json.blog
+
 * http://dirk.eddelbuettel.com/blog
 
 * http://kkulma.github.io
+
+* http://www.masalmon.eu
+
+* https://rud.is/b/
 
 * https://www.r-bloggers.com

@@ -13,19 +13,19 @@ weight = 1
 [interests]
   interests = [
     "(Geo)statistics",
-    "Open-Source Development",
-    "Statistical modeling and machine learning",
+    "Open-source development",
+    "Statistical modeling and machine-learning",
     "Remote Sensing",
   ]
 
 # List your qualifications (such as academic degrees).
 [[education.courses]]
-  course = "MSc in Geoinformatics"
+  course = "M.Sc. in Geoinformatics"
   institution = "Friedrich-Schiller-University Jena"
   year = 2016
 
 [[education.courses]]
-  course = "BSc in Geography"
+  course = "B.Sc. in Geography"
   institution = "Friedrich-Schiller-University Jena"
   year = 2014
  
