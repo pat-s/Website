@@ -1,11 +1,10 @@
 +++
 title = 'User guide for R servers of the GISciecne group at FSU Jena'
-author = Patrick Schratz
+author = 'Patrick Schratz'
 date = '2018-01-20'
 lastmod = ""
 +++
 
-Author: Patrick Schratz
 [NEWS](http://www.geoinf.uni-jena.de/~bi28yuv/r_server/Changelog.txt)
 
 Acknowledgements:
