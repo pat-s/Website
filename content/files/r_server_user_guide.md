@@ -1,7 +1,7 @@
 +++
 title = 'User guide for the R processing servers'
 author = 'Patrick Schratz'
-date = '2018-01-20'
+# date = '2018-01-20'
 +++
 
 [NEWS](https://pat-s.github.io/files/changelog.md)
