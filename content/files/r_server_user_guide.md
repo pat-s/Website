@@ -1,4 +1,9 @@
-# User guide for R servers of the GISciecne group at FSU Jena
++++
+title = 'User guide for R servers of the GISciecne group at FSU Jena'
+author = Patrick Schratz
+date = '2018-01-20'
+lastmod = ""
++++
 
 Author: Patrick Schratz
 [NEWS](http://www.geoinf.uni-jena.de/~bi28yuv/r_server/Changelog.txt)
@@ -9,7 +14,6 @@ Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
 <!--ts-->
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [User guide for R servers of the GISciecne group at FSU Jena](#user-guide-for-r-servers-of-the-gisciecne-group-at-fsu-jena)
 - [1. Introduction](#1-introduction)
 - [2. Data and scripts](#2-data-and-scripts)
 - [3. Geospatial libraries](#3-geospatial-libraries)
