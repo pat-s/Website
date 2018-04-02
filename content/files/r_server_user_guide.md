@@ -1,13 +1,15 @@
 +++
-title = 'User guide for R servers of the GISciecne group at FSU Jena'
+title = 'User guide for the R processing servers'
 author = 'Patrick Schratz'
 date = '2018-01-20'
 +++
 
-[NEWS](http://www.geoinf.uni-jena.de/~bi28yuv/r_server/Changelog.txt)
+[NEWS](https://pat-s.github.io/files/changelog.md)
 
 Acknowledgements:
 Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
+
+**Table of Contents**
 
 <!--ts-->
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
