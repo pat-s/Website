@@ -2,7 +2,7 @@
 title: 'My working environment (2): Everything related to writing'
 author: Patrick Schratz
 date: '2018-03-01'
-lastmod: ""
+#lastmod: ""
 categories: ["Data Science", "Linux", "KDE", "LaTeX", "Arch Linux", "Antergos"]
 tags: ["Data Science", "Linux", "KDE", "LaTeX", "Arch Linux", "Antergos"]
 output:
