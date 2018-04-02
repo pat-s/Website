@@ -230,7 +230,7 @@ All packages you install will also be used across all other servers as your pers
 Please log in to the VPN using
 
 ```
-<URZ_username>@vlan630.uni-jena.de
+<URZ_username>@uni-jena.de
 ```
 
 where “URZ_username” is your university username (not the one you use on the server!).
