@@ -30,7 +30,7 @@ Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
 		- [4.2.2 Linux & Mac](#422-linux-mac)
 - [5. RStudio Server Pro](#5-rstudio-server-pro)
 - [6. Executing long running/parallel processing jobs](#6-executing-long-runningparallel-processing-jobs)
-		- [6.1 How to do it right](#61-how-to-do-it-right)
+	- [6.1 How to do it right](#61-how-to-do-it-right)
 	- [6.2 Killing processes](#62-killing-processes)
 - [7. Appendix: Admin notes (German)](#7-appendix-admin-notes-german)
 	- [7.1 Installation of R with Intel-mkl support](#71-installation-of-r-with-intel-mkl-support)
@@ -246,7 +246,7 @@ All this does not happen often but if your script crashes after several days, pl
 
 Video with some usage instructions: https://www.rstudio.com/resources/videos/rstudio-server-pro-1-1-new-features/
 
-### 6.1 How to do it right
+## 6.1 How to do it right
 
 1. To ensure that your script is not tackled by any interference, please start it using `nohup`.
 This command ensures that no permanent connection is required between the source which started the script and the server.
