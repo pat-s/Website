@@ -56,7 +56,7 @@ There are currently four servers set up tailored towards `R` processing:
 * SCOTTY (scotty.geogr.uni-jena.de; 141.35.159.149)
 * SPOCK (spock.geogr.uni-jena.de; 141.35.159.148)
 
-All are curretnly running on a Debian 9 “stretch” operating system.
+All are currently running on a Debian 9 “stretch” operating system.
 All servers have the same hardware (48 cores, 193 GB RAM) with each AMD core running on 2,1 GHz.
 Your user accounts will work for all four servers.
 
@@ -193,7 +193,8 @@ You now have a `id_rsa.pub` file in a (hidden!) folder named `.ssh` within `/hom
 Now you need to copy this file (`id_rsa.pub`) to the server so that you can be identified:
 
 ```
-cat .ssh/id_rsa.pub | ssh username@mccoy.geogr.uni-jena.de 'cat >> .ssh/authorized_keys'
+$ ssh username@mccoy.geogr.uni-jena.de 'test -d ~/.ssh && mkdir ~/.ssh' # creates the .ssh directory if it does not exist
+$ cat .ssh/id_rsa.pub | ssh username@mccoy.geogr.uni-jena.de 'cat >> .ssh/authorized_keys' # copies your local public key to the server
 ```
 
 Every time you log in via command line now, you will not be prompted for your password.

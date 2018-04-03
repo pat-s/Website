@@ -9,6 +9,7 @@ date = '2018-04-02'
   * Format: Move to plain rmarkdown
   * Add `.ssh/config` instructions
   * Add instructions how to kill processes
+  * Update ssh key setup instructions for UNIX
 
 # v2.3.1 (13 Mar 2018)
   * Add remote file opening via ssh instructions
