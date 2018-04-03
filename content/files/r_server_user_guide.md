@@ -4,7 +4,7 @@ author = 'Patrick Schratz'
 date = '2018-04-02'
 +++
 
-[NEWS](https://pat-s.github.io/files/changelog.md)
+[NEWS](https://pat-s.github.io/files/changelog)
 
 Acknowledgements:
 Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
