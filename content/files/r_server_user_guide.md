@@ -8,7 +8,39 @@ date = '2018-04-02'
 
 Acknowledgements:
 Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
+- [1. Introduction](#1-introduction)
+- [2. Data and scripts](#2-data-and-scripts)
+- [3. Geospatial libraries](#3-geospatial-libraries)
+- [4. Accessing the servers](#4-accessing-the-servers)
+	- [4.1 Accessing the folders](#41-accessing-the-folders)
+		- [4.1.1 Windows](#411-windows)
+			- [4.1.1.1 Scripts](#4111-scripts)
+			- [4.1.1.2 Data](#4112-data)
+		- [4.1.2 Linux & Mac](#412-linux-mac)
+			- [4.1.2.1 Scripts](#4121-scripts)
+			- [4.1.2.2 Data](#4122-data)
+	- [4.2 Command-line access](#42-command-line-access)
+		- [4.2.1 Windows](#421-windows)
+		- [4.2.2 Linux & Mac](#422-linux-mac)
+- [5. RStudio Server Pro & Shiny Server](#5-rstudio-server-pro-shiny-server)
+	- [5.1 RStudio Server Pro](#51-rstudio-server-pro)
+	- [5.2 Shiny server](#52-shiny-server)
+- [6. Executing long running/parallel processing jobs](#6-executing-long-runningparallel-processing-jobs)
+	- [6.1 How to do it right](#61-how-to-do-it-right)
+	- [6.2 Killing processes](#62-killing-processes)
+- [7. Appendix: Admin notes (German)](#7-appendix-admin-notes-german)
+	- [7.1 Installation of R with Intel-mkl support](#71-installation-of-r-with-intel-mkl-support)
+	- [7.2 Remote file editing over ssh](#72-remote-file-editing-over-ssh)
+	- [7.3 `/data` folder](#73-data-folder)
+	- [7.4 `home` folders](#74-home-folders)
+	- [7.5 Shiny Server setup](#75-shiny-server-setup)
+	- [7.5 Installierte Bibliotheken (alle server)](#75-installierte-bibliotheken-alle-server)
+		- [7.5.1 mccoy only (rstudio server)](#751-mccoy-only-rstudio-server)
+		- [7.5.2 kirk, scotty, spock only](#752-kirk-scotty-spock-only)
+
+<!-- /TOC -->
 **Table of Contents**
 
 <!--ts-->
@@ -28,7 +60,9 @@ Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
 	- [4.2 Command-line access](#42-command-line-access)
 		- [4.2.1 Windows](#421-windows)
 		- [4.2.2 Linux & Mac](#422-linux-mac)
-- [5. RStudio Server Pro](#5-rstudio-server-pro)
+- [5. RStudio Server Pro & Shiny Server](#5-rstudio-server-pro-shiny-server)
+	- [5.1 RStudio Server Pro](#51-rstudio-server-pro)
+	- [5.2 Shiny server](#52-shiny-server)
 - [6. Executing long running/parallel processing jobs](#6-executing-long-runningparallel-processing-jobs)
 	- [6.1 How to do it right](#61-how-to-do-it-right)
 	- [6.2 Killing processes](#62-killing-processes)
@@ -37,6 +71,7 @@ Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
 	- [7.2 Remote file editing over ssh](#72-remote-file-editing-over-ssh)
 	- [7.3 `/data` folder](#73-data-folder)
 	- [7.4 `home` folders](#74-home-folders)
+	- [7.5 Shiny Server setup](#75-shiny-server-setup)
 	- [7.5 Installierte Bibliotheken (alle server)](#75-installierte-bibliotheken-alle-server)
 		- [7.5.1 mccoy only (rstudio server)](#751-mccoy-only-rstudio-server)
 		- [7.5.2 kirk, scotty, spock only](#752-kirk-scotty-spock-only)
@@ -138,7 +173,7 @@ patrick@141.35.159.150:/      /mnt/mccoy      fuse.sshfs
   x-systemd.after=network-online.target   0 00
 ```
 
-On any Ubuntu derivate it would be as follows (fuse v2.9)
+On any Debian derivate (e.g. Ubuntu) it would look as follows (fuse v2.9)
 
 ```bash
 sshfs#patrick@141.35.159.150:/        /mnt/mccoy          fuse
@@ -152,10 +187,13 @@ sshfs#patrick@141.35.159.150:/        /mnt/mccoy          fuse
 To connect to Windows servers in our environment, you can use a similar entry in `/etc/fstab`:
 
 ```bash
-//141.35.159.70/home_geoinf /mnt/geoinf cifs credentials=/etc/.smbcredentials.txt,uid=1000,
+//141.35.159.70/home_geoinf /mnt/geoinf cifs credentials=~/.smbcredentials.txt,uid=1000,
   file_mode=0775,dir_mode=0775,gid=100,sec=ntlm,vers=1.0,dom=ads.uni-jena.de,forcegid,
   _netdev,x-systemd.after=network-online.target 0 0
 ```
+
+You should also make sure that minimal permissions are set for `~/.smbcredentials`.
+If not already done, do `sudo chmod 600 ~/.smbcredentials`.
 
 Note: To get the `cifs` mounts working, you need to provide a text file with your username and password.
 In this example I use `/etc/.smbcredentials.txt` which contains:
@@ -216,14 +254,15 @@ You can further save arrangements of multiple profiles if your terminal applicat
 If you restore the arrangement, all your profiles will be loaded.
 This is extremely useful to log in to all servers with multiple windows with just one click.
 
-# 5. RStudio Server Pro
+# 5. RStudio Server Pro & Shiny Server
 
+## 5.1 RStudio Server Pro
 We have a license for `RStudio Server Pro` which runs on `MCCOY`.
 `RStudio Server Pro` enables you to work in your familiar `RStudio` environment while all processing is executed on the server and not on your local machine.
 This enables you to do other stuff at your local machine while the server is busy processing.
 No crashing because of lack of RAM or limited number of cores.
 
-To log in, simply connect to `mccoy.geogr.uni-jena.de:8787` in your browser and log in using your username and password.
+To log in, simply connect to `mccoy.geogr.uni-jena.de:8787` or `mccoy.geogr.uni-jena.de/rstudio` in your browser and log in using your username and password.
 
 All packages you install will also be used across all other servers as your personal library is by default stored within your `/home` directory.
 
@@ -236,6 +275,12 @@ Please log in to the VPN using
 
 where “URZ_username” is your university username (not the one you use on the server!).
 This identifies you as a temporary member of our group and gives you the remote access rights for the RStudio Server port.
+
+## 5.2 Shiny server
+
+Shiny server is running on MCCOY.
+To launch your shiny apps, simply put the respective `server.R` and `ui.R` files in a folder `ShinyApps` in your home directory, e.g. `~/patrick/ShinyApps/hello/server.R`.
+You can then access the shiny app via the following URLs: mccoy.geogr.uni-jena.de/shiny/patrick/hello or mccoy.geogr.uni-jena.de:3838/patrick/hello
 
 # 6. Executing long running/parallel processing jobs
 
@@ -353,6 +398,32 @@ In Zukunft wäre es sinnvoll auch einen Linux Daten Server zu haben, damit diese
 MCCOY dient als '`nfs` share für `SCOTTY`,`KIRK` und `SPOCK` für `/home` mit der Ziel directory `/home`.
 Die ursprüngliche `/home` directory von `SCOTTY`,`KIRK` und `SPOCK` ist nach `/home_local` verschoben.
 
+## 7.5 Shiny Server setup
+
+https://deanattali.com/2015/05/09/setup-rstudio-shiny-server-digital-ocean/#user-libraries
+
+To allow for port aliases (3838 = shiny, 8787 = rstudio) the following has been added to `/etc/nginx/sites-enabled/default`:
+
+```
+location /shiny/ {
+proxy_pass http://127.0.0.1:3838/;
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "upgrade";
+}
+
+location /rstudio/ {
+proxy_pass http://127.0.0.1:8787/;
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "upgrade";
+}
+```
+
+The "prox-pass" modifications are needed to suppress websocket related errors.
+
+The ability to give users the option to place apps in their home directory was enabled (http://docs.rstudio.com/shiny-server/#let-users-manage-their-own-applications).
+
 ## 7.5 Installierte Bibliotheken (alle server)
 
 * 18/08/2017
@@ -433,6 +504,9 @@ Die ursprüngliche `/home` directory von `SCOTTY`,`KIRK` und `SPOCK` ist nach `/
 
 * 02/02/2018
   * libcairo2-dev
+
+* 05/04/2018
+  * nginx
 
 ### 7.5.1 mccoy only (rstudio server)
 

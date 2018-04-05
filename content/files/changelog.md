@@ -4,6 +4,11 @@ title = 'Changelog'
 date = '2018-04-02'
 +++
 
+# v3.1.0
+  * add Shiny Server instructions
+  * set aliases for ports 3838 (shiny) and 8787 (rstudio)
+  * update placement of .smbcredentials.txt
+
 # v3.0.0 (02 Apr 2018)
 
   * Format: Move to plain rmarkdown
