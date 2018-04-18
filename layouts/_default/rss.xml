@@ -1,0 +1,37 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1" xmlns:content="http://purl.org/rss/1.0/modules/content" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Patricks's blogs</title>
+    <link>{{ .Permalink }}</link>
+    <description>Posts about Linux, R and Data Science</description>
+
+<image>
+	  <url>https://pat-s.github.io/files/avatar_32x32.png</url>
+	  <title>Patricks's blogs</title>
+	  <link>https://pat-s.github.io/post/</link>
+	  <width>32</width>
+	  <height>32</height>
+</image>
+
+    <generator>Hugo -- gohugo.io</generator>{{ with .Site.LanguageCode }}
+    <language>{{.}}</language>{{end}}{{ with .Site.Author.email }}
+    <managingEditor>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</managingEditor>{{end}}{{ with .Site.Author.email }}
+    <webMaster>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</webMaster>{{end}}{{ with .Site.Copyright }}
+    <copyright>2017-2018 Patrick Schratz</copyright>{{end}}{{ if not .Date.IsZero }}
+
+    <lastBuildDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>{{ end }}
+    {{ with .OutputFormats.Get "RSS" }}
+        {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+    {{ end }}
+    {{ range (where .Data.Pages "Section" "post") }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      {{ with .Site.Author.email }}<author>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</author>{{end}}
+      <guid>{{ .Permalink }}</guid>
+      <description>{{ .Summary | html }}</description>
+      {{ if and (isset .Params "banner") (not (eq .Params.banner "")) }} <media:content type="image/png" medium="image" width="32" height="32" url="https://pat-s.github.io/files/avatar_32x32.png" /> {{ end }}
+    </item>
+    {{ end }}
+  </channel>
+</rss>
