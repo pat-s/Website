@@ -5,7 +5,7 @@
 date = "2016-04-20T00:00:00"
 draft = false
 
-title = "What to read"
+title = "Reading list"
 subtitle = ""
 widget = "custom"
 
