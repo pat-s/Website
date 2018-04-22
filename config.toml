@@ -210,14 +210,14 @@ defaultContentLanguageInSubdir = false
   weight = 2
 
 [[menu.main]]
-  name = "Reading list"
-  url = "#recommended_reading"
-  weight = 6
+  name = "Blog"
+  url = "#posts"
+  weight = 3
 
 [[menu.main]]
-  name = "Blog"
-  url = "#blog"
-  weight = 3
+  name = "Projects"
+  url = "#projects"
+  weight = 4
 
 [[menu.main]]
   name = "Talks"
@@ -225,9 +225,9 @@ defaultContentLanguageInSubdir = false
   weight = 5
 
 [[menu.main]]
-  name = "Projects"
-  url = "#projects"
-  weight = 4
+  name = "Reading list"
+  url = "#recommended_reading"
+  weight = 6
 
 [[menu.main]]
   name = "Teaching"

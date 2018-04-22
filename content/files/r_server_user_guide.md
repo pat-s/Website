@@ -2,6 +2,7 @@
 title = 'User guide for the R processing servers'
 author = 'Patrick Schratz'
 date = '2018-04-02'
+tags = ['r_server_user_guide']
 +++
 
 [NEWS](https://pat-s.github.io/files/changelog)

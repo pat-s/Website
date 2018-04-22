@@ -5,8 +5,8 @@ date = "2018-03-29"
 image_preview = ""
 math = true
 publication_types = ["2"]
-publication = "arxiv.org (preprint)"
-publication_short = "arxiv.org (preprint)"
+publication = "Ecological Modelling (submitted)"
+publication_short = "Ecological Modelling (submitted)"
 
 # Projects (optional).
 #   Associate this publication with one or more of your projects.
