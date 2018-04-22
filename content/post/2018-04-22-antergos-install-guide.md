@@ -49,10 +49,6 @@ Enjoy the power of Linux!
 - [4. R](#4-r)
 	- [4.1 General](#41-general)
 	- [4.2 R & RStudio](#42-r-rstudio)
-- [check() {](#check-)
-- [cd R-${pkgver}](#cd-r-pkgver)
-- [make check-recommended](#make-check-recommended)
-- [}](#)
 	- [4.3 Packages](#43-packages)
 		- [4.3.1 Task view "Spatial"](#431-task-view-spatial)
 		- [4.3.2 Task view "Machine Learning"](#432-task-view-machine-learning)
@@ -392,13 +388,6 @@ There is an AUR package that provides `R` compiled with `intel-mkl` named `r-mkl
 Most of it will stored in the swap (around 10 GB) so make sure your SWAP space is > 10 GB.
 
 Also to successfully install `intel-mkl`, you need to temporarly increase the `/tmp` directory as `intel-mkl` requires quite some space: `sudo mount -o remount,size=20G,noatime /tmp`.
-
-```
-# check() {
-#   cd R-${pkgver}
-#   make check-recommended
-# }
-```
 
 **RStudio**
 
