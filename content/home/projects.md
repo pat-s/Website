@@ -20,7 +20,7 @@ view = 0
 # Filter toolbar.
 
 # Default filter index (e.g. 0 corresponds to the first `[[filter]]` instance below).
-filter_default = 0
+filter_default = 1
 
 # Add or remove as many filters (`[[filter]]` instances) as you like.
 # Use "*" tag to show all projects or an existing tag prefixed with "." to filter by specific tag.
@@ -43,7 +43,7 @@ filter_default = 0
 
 [[filter]]
   name = "AUR Packages"
-  tag = ".AUR-packages"
+  tag = ".AUR-Packages"
 
 +++
 
