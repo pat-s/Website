@@ -3,7 +3,7 @@
 date = "2016-04-27"
 
 # Project title.
-title = "AUR package 'arara' (maintainer)"
+title = "rstudio-desktop-preview-bin"
 
 # Project summary to display on homepage.
 #summary = "Integrating R with QGIS"
