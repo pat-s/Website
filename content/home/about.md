@@ -16,6 +16,8 @@ weight = 1
     "Open-source development",
     "Statistical modeling and machine-learning",
     "Remote Sensing",
+    "Linux", 
+    "Server Administration"
   ]
 
 # List your qualifications (such as academic degrees).
