@@ -15,7 +15,7 @@ weight = 50
 # View.
 # Customize how projects are displayed.
 # Legend: 0 = list, 1 = cards.
-view = 1
+view = 0
 
 # Filter toolbar.
 
@@ -40,6 +40,10 @@ filter_default = 0
 [[filter]]
   name = "R Packages"
   tag = ".R-Packages"
+  
+[[filter]]
+  name = "AUR packages"
+  tag = ".AUR-packages"
 
 +++
 
