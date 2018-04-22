@@ -40,9 +40,9 @@ filter_default = 0
 [[filter]]
   name = "R Packages"
   tag = ".R-Packages"
-  
+
 [[filter]]
-  name = "AUR packages"
+  name = "AUR Packages"
   tag = ".AUR-packages"
 
 +++
