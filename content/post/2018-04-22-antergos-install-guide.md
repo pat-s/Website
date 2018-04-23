@@ -84,7 +84,6 @@ What makes Antergos a distribution rather than an "installer only" is the fact t
 
 First, create a installer by following [this guide](https://antergos.com/wiki/uncategorized/create-a-working-live-usb/).
 If you want to set up a dual boot, [guide](https://antergos.com/wiki/de/install/how-to-dual-boot-antergos-windows-uefi-expanded-by-linuxhat) is a good resource.
-
 Make sure to check out [the ArchWiki FAQs](https://wiki.archlinux.org/index.php/Frequently_asked_questions) and [Arch compared to other distributions - ArchWiki](https://wiki.archlinux.org/index.php/Arch_compared_to_other_distributions) to get a better understanding of Arch.
 
 # 1. Installation
@@ -92,7 +91,6 @@ Make sure to check out [the ArchWiki FAQs](https://wiki.archlinux.org/index.php/
 ## 1.1 Install options
 
 During installation you have several options to choose from.
-
 Some are up to personal liking (e.g. Browser choice), others are important for a solid system:
 
 - [x] SSH
@@ -128,10 +126,9 @@ cd trizen-git
 makepkg -si
 ```
 
-(We need the git version as it includes a fix for the wrapper functions below that is not yet included in the latest release when writing this guide.)
+(Whether to install the git version or the latest release is up to you).
 
 In `~/.config/trizen/trizen.conf` set "noedit" to "1" to not being prompted to edit source code on every install.
-
 (Optional) Install [cyclon](https://github.com/gavinlyonsrepo/cylon) -> Wrapper around `trizen` and other tasks (system maintenance, etc.) .
 
 ## 2.1 (Optional) Install and configure `zsh`
@@ -156,10 +153,8 @@ chsh -s /bin/zsh
 ```
 
 Logout/login.
-
 (I prefer using the `agnoster` theme.
 Simply set `theme: agnoster` in line 116 of `~/.zpreztorc`.)
-
 Afterwards set up some custom wrapper functions (`aliases`) around `trizen` to simplify usage:
 
 In `~/.zshrc`, append the following line:
@@ -171,7 +166,6 @@ source "${ZDOTDIR:-$HOME}/.zprezto/pac.zsh"
 Next, create the following script `.zprezto/pac.zsh`.
 KDE: `kate .zprezto/pac.zsh`
 GNOME: `sudo gedit .zprezto/pac.zsh`
-
 (Using `kate` (KDE) or `gedit` (GNOME) you can also solve all following "file opening/creation" tasks.)
 
 ```zsh
@@ -210,10 +204,7 @@ See [section 3.2](https://github.com/pat-s/antergos_setup_guide#32-apps) for a h
 ## 2.2 Enabling parallel compiling
 
 Compiling packages from source can take some time.
-To speed up the process by enabling parallel compiling, set the `MAKEVARS` variable in `/etc/makepkg.conf`:
-
-`MAKEFLAGS="-j$(nproc)"`
-
+To speed up the process by enabling parallel compiling, set the `MAKEVARS` variable in `/etc/makepkg.conf`: `MAKEFLAGS="-j$(nproc)"`.
 This will use all available cores on your machine for compiling.
 
 # 3. System related
@@ -226,7 +217,6 @@ While calling `trizen <package>` will first do a search in AUR and then install 
 **Never install python libraries via `pip`! All AUR packages try to install required python packages from AUR and if these have been installed via `pip` you will face conflicts.**
 
 Always install them via your package manager, e.g. for `numpy`: `pac install python-numpy`
-
 Python Modules for QGIS: QGIS needs some external python libraries to not throw errors on startup:
 
 ```
@@ -245,15 +235,15 @@ Other important system libraries:
 
 ## 3.2 Apps
 
-Opinionated applications :smile:
+Opinionated applications:
 
-Messaging: `pac install franz`
-Mail: `pac install mailspring`
-Notes: `pac install boostnote`
-Reference Manager: `pac install Jabref`
-Google Drive: `pac install insync`
-Dropbox: `pac install dropbox-nautilus`
-GIS: `pac install qgis` (careful, takes 30 min - 1h to compile)
+Messaging: `pac install franz`  
+Mail: `pac install mailspring`  
+Notes: `pac install boostnote`  
+Reference Manager: `pac install Jabref`  
+Google Drive: `pac install insync`  
+Dropbox: `pac install dropbox-nautilus`  
+GIS: `pac install qgis` (careful, takes 30 min - 1h to compile)  
 
 **Tip:** You can install both `QGIS2` and `QGIS3` and switch between them.
 To do so you need to build both once with `--movepkg` option from `trizen`.
@@ -265,15 +255,15 @@ E.g. to install `QGIS2` after you installed `QGIS3` :
 pacman -U ~/pkgs/qgis-ltr-2.18.17-1-x86_64.pkg.tar
 ```
 
-SAGA: `pac install saga-gis`
-Skype: `pac install skypeforlinux-preview-bin`
-Screenshot tool: `pac install shutter`
-Image viewer: `pac install xnviewmp`
-Virtualbox: [VirtualBox – wiki.archlinux.de](https://wiki.archlinux.de/title/VirtualBox)
-Terminal: `pac install tilix`
-Browser: `pac install vivaldi-snapshot`
-Dock: `pac install latte-dock` ([KDE only] If you prefer a dock layout over the default layout)
-Twitter client: `pac install corebird`
+SAGA: `pac install saga-gis`  
+Skype: `pac install skypeforlinux-preview-bin`  
+Screenshot tool: `pac install shutter`  
+Image viewer: `pac install xnviewmp`  
+Virtualbox: [VirtualBox – wiki.archlinux.de](https://wiki.archlinux.de/title/VirtualBox)  
+Terminal: `pac install tilix`  
+Browser: `pac install vivaldi-snapshot`  
+Dock: `pac install latte-dock` ([KDE only] If you prefer a dock layout over the default layout)  
+Twitter client: `pac install corebird`  
 
 ## 3.3 Editors
 
@@ -300,13 +290,14 @@ Some are more tailored towards programmers and command-line action, some are mor
 Recently I started to use [Sublime Text 3](www.sublimetext.com) as my system editor.
 This means all files that are not bound to a different application are opened by SublimeText3.
 Although SublimeText is not free anymore since v3, you can find free license keys on the web.
-I like it because its very fast, has nice extensions (packages that are well maintained) and comes with a killer feature (for all server admins): Opening of remote files via [rsub/rmate](https://github.com/henrikpersson/rsub).
 You can find my user settings [here](https://gist.github.com/pat-s/b6026fa370193b8ce260b0115903e022).
 A downside is that is is not capable of displaying HTML or PDF files and does not come with an auto-compile feature if you are editing markdown files.
+The biggest advantage is probably its speed. 
+Compared to `Atom` it is much faster in opening larger text files (e.g. logs).
 
 ### 3.3.2 Atom
 
-Thats why I use [Atom](https://atom.io) for all text editing + compiling.
+I use [Atom](https://atom.io) for all text editing + compiling.
 It is completely free and also relies heavily on user packages.
 However, finding properly maintained packages is a bit tedious.
 Once configured correctly, it does a great job for all kind of writing (LaTeX, Markdown) as it has some neat packages for auto-reload of HTML and PDF files.
@@ -356,10 +347,8 @@ See [this blog post](http://dirk.eddelbuettel.com/blog/2017/11/27/#011_faster_pa
 **R with optimized Openblas / LAPACK**
 
 Next, install either the "Intel MKL" or `libopenblas` to be used in favor of the standard "libRlapack/libRblas" libraries that are shipped with a default R installation.
-
 These libraries are responsible for numerical computations and have [impressive speedups](http://pacha.hk/2017-12-02_why_is_r_slow.html) compared to the default ones being used by R.
-Thanks @marcosci for the hint :yellowheart:
-
+Thanks @marcosci for the hint.
 While the "Intel MKL" library is the fasted according to the benchmarks, its also much more complicated to install.
 
 `libopenblas` will automatically be used if its installed since the default `R` installation [on Arch](https://git.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/r) is configured with the `--with-blas` option (see section A.3.1 in https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installation).
@@ -367,7 +356,7 @@ I recommend installing the AUR package `openblas-lapack` as its package cominbin
 
 To verify your installation in `R`, simply run `sessionInfo()` and check the printed information:
 
-```r
+```
 sessionInfo()
 
 R version 3.4.4 (2018-03-15)
@@ -381,7 +370,6 @@ BLAS/LAPACK: /usr/lib/libopenblas_haswellp-r0.2.20.so
 Nevertheless, if you want to try out the "Intel-MKL" library, follow these instructions:
 
 There is an AUR package that provides `R` compiled with `intel-mkl` named `r-mkl`.
-
 **Note:** The download size of `intel-mkl` is around 4 GB and takes a lot of memory during installation.
 Most of it will stored in the swap (around 10 GB) so make sure your SWAP space is > 10 GB.
 
@@ -417,7 +405,7 @@ Some R packages (`geojsonlite`, etc.) require the `V8` [package](https://github.
 
 For `rJava` we need to do `sudo R CMD javareconf`.
 
-Now you can install the `ctv` package and then do `ctv::install.views("Spatial").
+Now you can install the `ctv` package and then do `ctv::install.views("Spatial")`.
 This will install all packages listed in the [spatial](https://cran.r-project.org/web/views/Spatial.html) task view.
 
 Packages that error during installation (Please report back if you have a working solution):
@@ -468,18 +456,16 @@ Reboot.
 You can easily connect to all servers you have access to with a little one-time effort.
 
 Terminal applications are capable of storing "Profiles" that save the configuration to connect to a specific server.
+In this example I refer to the application `tilix`.
 
 1. Create a profile for each server
 2. Under `<profile name> -> Command -> [x] Run a custom command instead of my shell` put your `ssh` command in, e.g. `ssh <username>@<servername>`.
 3. Open all profiles in tabs: Select the desired profile and click "New session" (the left one of the three buttons at the top).
+4. Save each open profile with `save as` in a folder of your liking.
+5. Create a wrapper script that loads exactly this configuration:
 
 <img src="../../img/antergos_setup_guide/tilix1.png" style="width: 30%;">
-
-4. Save each open profile with `save as` in a folder of your liking.
-
 <img src="../../img/antergos_setup_guide/tilix2.png" style="width: 30%;">
-
-5. Create a wrapper script that loads exactly this configuration:
 
 ```bash
 #!/bin/bash
@@ -495,7 +481,7 @@ done
 tilix $TILIX_OPTS
 ```
 
-For convenience, set the execution of this script to an alias in `~/.zpreztorc`:
+For convenience, set the execution of this script as an alias in `~/.zpreztorc`:
 
 ```
 alias servers='bash ~/tilix_all.sh'
@@ -519,14 +505,11 @@ There are two main power optimization tools:
 * Powertop
 * TLP
 
-I prefer `tlp` as `powertop`often causes trouble with USB devices going into sleep mode.
+I prefer `tlp` as `powertop` often causes trouble with USB devices going into sleep mode.
 Also, applying the changes on boot is easier with `tlp`.
 
-`pac install tlp`
-
-Then follow the instructions on [TLP - ArchWiki](https://wiki.archlinux.org/index.php/TLP) to configure it correctly.
-
-`powertop`though is useful to check the applied settings. Do `sudo powertop` and go to the "tunables" section and check if most settings are "GOOD" (most are "BAD" before applying `tlp`).
+Do `pac install tlp` and then follow the instructions on [TLP - ArchWiki](https://wiki.archlinux.org/index.php/TLP) to configure it correctly.
+`powertop` though is useful to check the applied settings. Do `sudo powertop` and go to the "tunables" section and check if most settings are "GOOD" (most are "BAD" before applying `tlp`).
 
 
 # 8. Additional stuff
