@@ -1,5 +1,5 @@
 relativeurls = true
-baseurl = "https://pat-s.github.io/"
+baseurl = "https://pat-s.netlify.com/"
 title = "Patrick Schratz"
 copyright = "&copy; 2017-2018 Patrick Schratz"
 theme = "academic"
