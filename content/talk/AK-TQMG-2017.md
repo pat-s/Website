@@ -1,5 +1,5 @@
 +++
-time_start = 2017-02-25
+time_start = "2017-02-25"
 title = "[German]  R als GIS - Integration von GIS in R für räumliche Analysen mit Open-Source-Software"
 abstract = ""
 abstract_short = ""
