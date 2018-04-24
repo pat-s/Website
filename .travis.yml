@@ -1,33 +1,33 @@
-language: r
-dist: trusty
-sudo: false
-pandoc_version: 2.1.3
+# language: r
+# dist: trusty
+# sudo: false
+# pandoc_version: 2.1.3
 
-branches:
-  only:
-    - master
+# branches:
+#   only:
+#     - master
 
-r_packages:
-  - oddsratio
+# r_packages:
+#   - oddsratio
 
-cache:
-  packages: yes
-  directories:
-    - $HOME/bin
+# cache:
+#   packages: yes
+#   directories:
+#     - $HOME/bin
 
-before_script:
-  - "Rscript -e 'blogdown::install_hugo()'"
+# before_script:
+#   - "Rscript -e 'blogdown::install_hugo()'"
 
-script:
-  - "Rscript -e 'blogdown::build_site()'"
+# script:
+#   - "Rscript -e 'blogdown::build_site()'"
 
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  on:
-    branch: master
-  local_dir: public
-  # fqdn: travis-blogdown.yihui.name
-  repo: pat-s/pat-s.github.io
-  target_branch: master
+# deploy:
+#   provider: pages
+#   skip_cleanup: true
+#   github_token: $GITHUB_TOKEN
+#   on:
+#     branch: master
+#   local_dir: public
+#   # fqdn: travis-blogdown.yihui.name
+#   repo: pat-s/pat-s.github.io
+#   target_branch: master
