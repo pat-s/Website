@@ -1,0 +1,45 @@
+---
+title: Convert NEWS.md to ASCII NEWS
+author: Patrick Schratz
+date: '2018-03-20'
+slug: convert-news-md-to-ascii-news
+categories:
+  - R
+  - package-development
+tags:
+  - R
+  - r-bloggers
+header:
+  caption: ''
+  image: ''
+summary: "Maybe you know that for some packages in R there is an entry 'Package NEWS' in the help pane of RStudio. However, it is a bit of mistery how to provide this NEWS entry there for maintainers, especially since the recent wide spread use of NEWS.md in R package development."
+---
+
+
+
+<p>Maybe you know that for some packages in R you can view the NEWS file in the help pane of RStudio:</p>
+<p><img src="../../img/convert_to_ascii_news_1.png" style="width: 50%;"></p>
+<p>If you click on it, you can instantly see the NEWS file of a package.
+This is pretty neat if one of your most used packages was updated (maybe there was even a major version change!) and you want to see what changed.</p>
+<p><img src="../../img/convert_to_ascii_news_2.png" style="width: 50%;"></p>
+<p>To make this possible, the maintainer needs to have an ASCII NEWS file when he submits the package to CRAN.
+While having an ASCII NEWS file was the standard some years ago, nowadays almost everyone uses a markdown written <code>NEWS.md</code> file.
+This is good because its easier to read in the browser than a plain text file.</p>
+<p>Since 1 or 2 years, also CRAN started supporting <code>NEWS.md</code> files.
+You can find them on the CRAN overview page of any package.
+To stay with one package in this post, <a href="https://cran.r-project.org/web/packages/sperrorest/index.html">here</a> is the CRAN page for the sperrorest package (I am not sure why the latest news are missing though).</p>
+<p>However, the RStudio help page does not render <code>NEWS.md</code> and maintainers would need to maintain two news files if they would like to provide this service.
+To minimize the effort, I created a small <a href="https://gist.github.com/pat-s/7aa990030e0fd25a4eb727592da492d1">script</a> that only consists of a single <code>sed</code> call (<code>sed</code> is a search/replace function for Unix system).</p>
+<pre><code># 1.&#39;-e&#39; part: Replaces all level 2 headers and appends a &quot;:&quot; at the end of the line
+# 2.&#39;-e&#39; part: Indents all bullet points with a whitespace
+# 3.&#39;-e&#39; part: Removes all level 2 headers
+# 4.&#39;-e&#39; part: For all level 1 headers, add linebreak and 80 hyphens (not strictly required but clean)
+# 5.&#39;-e&#39; part: Remove all level 1 headers
+
+sed -e &#39;/^##/ s/$/:/&#39; -e &#39;s/^*/ */&#39; -e &#39;s/^## *//&#39; -e &quot;/^#/a\\--------------------------------------------------------------------------------&quot; -e &#39;s/^# *//&#39; &lt; NEWS.md &gt; NEWS</code></pre>
+<p>It will not fit every <code>NEWS.md</code> file but most.
+It depends on your formatting style (e.g. if you add a colon after each heading or not (I do not)).
+Just apply it, check the resulting NEWS file and tweak it if needed.</p>
+<p><strong>NOTE:</strong> You will only see “Package NEWS” entry in the RStudio help pane if the ASCII file is correctly formatted.
+So if you do not see it after building your package locally (e.g. <code>devtools::document()</code>), something is still wrong.
+See <a href="https://github.com/pat-s/sperrorest/blob/master/NEWS">this file</a> for a correct example.</p>

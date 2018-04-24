@@ -1,0 +1,120 @@
+---
+title: 'My working environment (2): Everything related to writing'
+author: Patrick Schratz
+date: '2018-03-01'
+#lastmod: ""
+categories: ["Data Science", "Linux", "KDE", "LaTeX", "Arch Linux", "Antergos"]
+tags: ["Data Science", "Linux", "KDE", "LaTeX", "Arch Linux", "Antergos"]
+output:
+  blogdown::html_page:
+    toc: true
+summary: "This is the second post in the series about my working environment. It will cover everything that is related to writing something: reports, papers, notes, code."
+image: "arara.png"
+preview: true  # Show a thumbnail in listings?
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#notes">Notes</a></li>
+<li><a href="#editors">Editors</a></li>
+<li><a href="#latex">LaTeX</a></li>
+<li><a href="#reference-mananger">Reference Mananger</a></li>
+</ul>
+</div>
+
+<p>This is the second post in the series about my working environment.
+It will cover everything that is in anyway related to writing: reports, papers, notes, code.</p>
+<p>In the previous post I <a href="https://pat-s.github.io/post/dolphin/">wrote</a> about my systems file-manager Dolphin (<a href="https://www.kde.org">KDE</a>).</p>
+<div id="notes" class="section level1">
+<h1>Notes</h1>
+<p>Every day there is so much information that you hear and think:
+“Ok, I got it. This sounds interesting and I should check this out some time”.
+Another case that appears often is: You solved an annoying problem getting something working which needed some custom commands (e.g. installing a library, applying a patch for your laptop model, etc.).
+You are happy that you solved it and think that you will not need it anymore in the future.
+But what if a you get a new laptop and the same problem occurs again?
+Or if your office college comes across the problem, asks you and you then have to say:
+“Wait, yes - I come across this already and I - forgot how I did it :(”.</p>
+<p>Save information like these in a note app!
+Group it into folders which store simple code snippets that once helped you and add a short description so that you know in which context you used it.
+Set up a list with all the small tasks that you have to do at work, that you want to do by your own motivation (e.g. ideas for blog posts) and that others asked you about (e.g. optimizing a user guide, implementing minor features in R packages).</p>
+<p>Your brain cannot store and process all this at once.
+It will become more and more information over the years (at least the programming notes).
+From a personal experience it also lets you relax more because you can be sure that you have not forgotten something because you stored everything in your notes app.</p>
+<p>A lot note apps exist.
+Whenever selecting an app, my main criterias are:</p>
+<ol style="list-style-type: decimal">
+<li>Open-source (support community driven development)</li>
+<li>Cross-platform: If the day will come when you want to switch your OS between the three players (Windows, macOS, Linux) you do not want to switch to a new application because of this move.
+Simply take your notes with you.
+This also applies to the availability on mobile phones.)</li>
+</ol>
+<p>Besides the widely-know ones such as Evernote, I enjoyed using <a href="http://www.bear-writer.com">Bear</a> on macOS.
+However, it is macOS only and to use it properly you have to pay.
+Since I switched to Linux, I use <a href="https://boostnote.io">Boostnote</a>.
+It was created by some asian geeks and already has more than 6k stars on Github.
+Development is active and it becomes better and better with every release.
+Lately, I created a <a href="https://snapcraft.io">snap</a> package for the app so that you can have an easy installation process on all Linux distributions.
+The snap implementation is still in review while writing this post.
+<a href="https://boostnote.io">Boostnote</a> is not perfect but does everything I want:</p>
+<ul>
+<li>Cross-platform</li>
+<li>Community-driven</li>
+<li>All sorts of themes</li>
+<li>Support for various programming languages (this is very important if you are dealing with code)</li>
+<li>Export to PDF, HTML, TXT and markdown</li>
+</ul>
+</div>
+<div id="editors" class="section level1">
+<h1>Editors</h1>
+<p>Editors are probably the most discussed app in a programmers world.
+There are <code>vim</code> and <code>emacs</code> which split the programming world in a similar way as Windows and Unix do.
+Since I am mostly a self-taught guy when it comes to programming, I never got introduced to these apps.
+I prefer coding in IDEs tailored to the respective programming language and use my standard editor only for saving some text snippets AND writing LaTeX documents.
+Currently, I don’t want to use fancy shortcus for doing everything but just need a graphical editor, for example <a href="https://kate-editor.org">Kate</a>.</p>
+<p><a href="https://kate-editor.org">Kate</a> is the built-in editor of <a href="https://www.kde.org">KDE</a>.
+Besides the standard features of every good programming editor, it comes with some neat plugins:</p>
+<ul>
+<li>Terminal view</li>
+<li>Projects and document viewer</li>
+<li>many more I do not use</li>
+</ul>
+<p>As said, I mainly use it for writing LaTeX documents.
+I compile these with a command line program called <a href="https://github.com/cereda/arara">arara</a> (more below).
+So I enjoy having a terminal integration directly below the editor pane which I can use to quickly compile my LaTeX documents.</p>
+</div>
+<div id="latex" class="section level1">
+<h1>LaTeX</h1>
+<p>As you might know, often you need more commands than a single <code>pdflatex</code> to compile your document.
+The bibliography needs to be compiled using <code>bibtex</code> or similar and to get all cross-references right, you need again call <code>pdflatex</code> or <code>xelatex</code>.</p>
+<p>Back then I started with Texmaker and Texstudio but I never found any of them fun to use.
+Additionally, they were slow and the PDF preview was somewhat ugly.</p>
+<p>So what happens if you use <a href="https://github.com/cereda/arara">arara</a> is that you specify specfic rules in the header of your LaTeX document that tell <a href="https://github.com/cereda/arara">arara</a> which commands need to be run for this document.</p>
+<p>A common header look like this (note that I use <a href="https://github.com/cereda/arara">arara</a> v4 which is not yet officially released):</p>
+<pre class="latex"><code>%%%% using &#39;arara&#39; 4.0
+% arara: xelatex: {synctex: yes, interaction: nonstopmode}
+% arara: bibtex
+% arara: xelatex: {synctex: yes, interaction: nonstopmode}
+% arara: xelatex: {synctex: yes, interaction: nonstopmode}
+
+% arara: indent: {overwrite: yes}
+
+% arara: clean: { extensions: [ aux, bbl, bcf, cod, blg, lof, lot, out, toc, log, xml, bak0 ] }</code></pre>
+<p>After the document was successfully compiled, I use my PDF viewer (<a href="https://okular.%5BKDE%5D(https://www.kde.org).org">Okular</a>) to open it.
+It has an automatic reload feature if the file changes.
+So all I need to do to see an updated PDF preview of my LaTeX document is to to recall the last command (usually the command is <code>arara &lt;document.tex&gt;</code>).</p>
+<p>Another neat feature of <a href="https://github.com/cereda/arara">arara</a> is that it has a rule which uses the <a href="https://github.com/cmhughes/latexindent.pl">latexindent.pl</a> script by Chris Hughes which automatically indents your LaTeX document on every compile call
+No chaotic LaTeX files anymore and suddenly writing LaTeX documents becomes fun!</p>
+<p>Furthermore <code>arara</code> is able to automatically clean all side-files that are produced during a LaTeX compilation run.
+So in the end you just end up with a single PDF file.
+Isn’t that nice?</p>
+</div>
+<div id="reference-mananger" class="section level1">
+<h1>Reference Mananger</h1>
+<p>I don’t want to say so much here.
+Most tool here do the same job: They simplify storing bibtex references.
+If you use LaTeX, that’s all there is.
+No need for fancy “insert into text” plugins as in Word.
+You just need to reference your <code>.bib</code> file in the LaTeX document and call the respective command suited for your citation style, e.g. <code>citep(&lt;bibtexkey&gt;)</code>.</p>
+<p>I use <a href="http://www.jabref.org">JabRef</a> because its open-source, cross-platform and actively delevoped.</p>
+</div>
