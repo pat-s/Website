@@ -2,7 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-content/**/*.html
+#content/**/*.html
 README.html
 public/
 .directory
