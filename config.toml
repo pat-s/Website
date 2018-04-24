@@ -67,11 +67,11 @@ defaultContentLanguageInSubdir = false
   organizations = [ { name = "Friedrich-Schiller-University Jena", url = "https://www.uni-jena.de/" } ]
   avatar = "avatar.jpg"
   email = "patrick.schratz@uni-jena.de"
-  address = "Grietgasse 6, Room 126, 07745 Jena (Germany)"
-  office_hours = "Monday - Friday: 9:00 to 18:00"
-  phone = "+49-3641-9-48973"
-  skype = ""
-  telegram = ""
+  #address = "Grietgasse 6, Room 126, 07745 Jena (Germany)"
+  #office_hours = "Monday - Friday: 9:00 to 18:00"
+  #phone = "+49-3641-9-48973"
+  #skype = ""
+  #telegram = ""
 
   # Enable Google Maps by entering your API key, latitude, and longitude.
   #   Get your API key: https://developers.google.com/maps/documentation/javascript/get-api-key
@@ -211,7 +211,7 @@ defaultContentLanguageInSubdir = false
 
 [[menu.main]]
   name = "Blog"
-  url = "#post"
+  url = "#posts"
   weight = 3
 
 [[menu.main]]

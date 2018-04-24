@@ -5,7 +5,7 @@
 date = 2016-04-20
 draft = false
 
-title = "Recent posts"
+title = "Recent blog posts"
 subtitle = ""
 widget = "posts"
 
