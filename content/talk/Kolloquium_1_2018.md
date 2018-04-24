@@ -1,5 +1,5 @@
 +++
-time_start = "2018-02-14"
+time_start = 2018-02-14
 title = "Performance evaluation and hyperparameter tuning of statistical and machine-learning models using spatial data"
 abstract = ""
 abstract_short = ""
