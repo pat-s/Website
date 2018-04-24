@@ -2,7 +2,7 @@
 # Recent Posts widget.
 # This widget displays recent posts from `content/post/`.
 
-date = "2016-04-20T00:00:00"
+date = 2016-04-20
 draft = false
 
 title = "Recent posts"
