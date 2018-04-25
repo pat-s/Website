@@ -1,5 +1,5 @@
 relativeurls = true
-baseurl = "https://www.pjs-web.de"
+baseurl = "https://pjs-web.de"
 title = "Patrick Schratz"
 copyright = "&copy; 2017-2018 Patrick Schratz"
 theme = "academic"
