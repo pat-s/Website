@@ -9,43 +9,12 @@ tags = ['r_server_user_guide']
 
 Acknowledgements:
 Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [1. Introduction](#1-introduction)
-- [2. Data and scripts](#2-data-and-scripts)
-- [3. Geospatial libraries](#3-geospatial-libraries)
-- [4. Accessing the servers](#4-accessing-the-servers)
-	- [4.1 Accessing the folders](#41-accessing-the-folders)
-		- [4.1.1 Windows](#411-windows)
-			- [4.1.1.1 Scripts](#4111-scripts)
-			- [4.1.1.2 Data](#4112-data)
-		- [4.1.2 Linux & Mac](#412-linux-mac)
-			- [4.1.2.1 Scripts](#4121-scripts)
-			- [4.1.2.2 Data](#4122-data)
-	- [4.2 Command-line access](#42-command-line-access)
-		- [4.2.1 Windows](#421-windows)
-		- [4.2.2 Linux & Mac](#422-linux-mac)
-- [5. RStudio Server Pro & Shiny Server](#5-rstudio-server-pro-shiny-server)
-	- [5.1 RStudio Server Pro](#51-rstudio-server-pro)
-	- [5.2 Shiny server](#52-shiny-server)
-- [6. Executing long running/parallel processing jobs](#6-executing-long-runningparallel-processing-jobs)
-	- [6.1 How to do it right](#61-how-to-do-it-right)
-	- [6.2 Killing processes](#62-killing-processes)
-- [7. Appendix: Admin notes (German)](#7-appendix-admin-notes-german)
-	- [7.1 Installation of R with Intel-mkl support](#71-installation-of-r-with-intel-mkl-support)
-	- [7.2 Remote file editing over ssh](#72-remote-file-editing-over-ssh)
-	- [7.3 `/data` folder](#73-data-folder)
-	- [7.4 `home` folders](#74-home-folders)
-	- [7.5 Shiny Server setup](#75-shiny-server-setup)
-	- [7.5 Installierte Bibliotheken (alle server)](#75-installierte-bibliotheken-alle-server)
-		- [7.5.1 mccoy only (rstudio server)](#751-mccoy-only-rstudio-server)
-		- [7.5.2 kirk, scotty, spock only](#752-kirk-scotty-spock-only)
 
 <!-- /TOC -->
 **Table of Contents**
 
 <!--ts-->
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 --><!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [1. Introduction](#1-introduction)
 - [2. Data and scripts](#2-data-and-scripts)
@@ -66,6 +35,8 @@ Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
 	- [5.2 Shiny server](#52-shiny-server)
 - [6. Executing long running/parallel processing jobs](#6-executing-long-runningparallel-processing-jobs)
 	- [6.1 How to do it right](#61-how-to-do-it-right)
+		- [6.1.1 screen/byobu](#611-screenbyobu)
+		- [6.1.2 nohup](#612-nohup)
 	- [6.2 Killing processes](#62-killing-processes)
 - [7. Appendix: Admin notes (German)](#7-appendix-admin-notes-german)
 	- [7.1 Installation of R with Intel-mkl support](#71-installation-of-r-with-intel-mkl-support)
@@ -76,10 +47,6 @@ Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
 	- [7.5 Installierte Bibliotheken (alle server)](#75-installierte-bibliotheken-alle-server)
 		- [7.5.1 mccoy only (rstudio server)](#751-mccoy-only-rstudio-server)
 		- [7.5.2 kirk, scotty, spock only](#752-kirk-scotty-spock-only)
-
-<!-- /TOC -->
-
-<!-- Added by: pjs, at: 2018-04-02T22:33+02:00 -->
 
 <!--te-->
 
@@ -295,33 +262,59 @@ Video with some usage instructions: https://www.rstudio.com/resources/videos/rst
 
 ## 6.1 How to do it right
 
-1. To ensure that your script is not tackled by any interference, please start it using `nohup`.
-This command ensures that no permanent connection is required between the source which started the script and the server.
-All settings will be stored on the server and you can close the connection, shut down your machine and the script will still continue running.
-All output which would have been printed to the console will be written to a file called `nohup.out` in the directory from which you started the job.
-2. If you use parallelization first make sure that nobody else is currently doing heavy processing on the server.
+1. If you use parallelization first make sure that nobody else is currently doing heavy processing on the server.
 Check by using `htop` that the server is "free enough" for your processing.
 That means, please checke the available RAM and that enough cores are idle in case you want to do parallel processing.
 If you see all cores working, simply start your script on one of the other servers (`MCCOY`, `KIRK`, `SCOTTY`, `SPOCK`).
 There will most likely be at least one server that is not fully loaded.
-3. Next, ‘nice’ the priority of your heavy processing jobs.
+2. Next, ‘nice’ the priority of your heavy processing jobs.
 This makes it possible that other small jobs will still work because they have a higher priority by default (default = 0).
 What happens in detail is that if a higher priority job is started by a user (e.g. copying of files) it gets prioritised over the long running jobs.
 Doing so, other users will not suffer from delays doing their normal work by the heavy processing.
 I always ‘nice’  my processes to a value of `19` (lowest possible = 20).
-4. R scripts can be started using `Rscript`. Be aware that `Rscript` [does not load the `methods` package](https://stackoverflow.com/questions/19680462/rscript-does-not-load-methods-package-r-does-why-and-what-are-the-consequen)!
-5. A full example could look as follows: `nohup nice -19 Rscript /path/to/script.R`
-6. If you forgot to ‘nice’ your processes during starting, you can renice them afterwards using `renice -19 -u <yourusername>`.
+3. R scripts can be started using `Rscript <path>`. Be aware that `Rscript` [does not load the `methods` package](https://stackoverflow.com/questions/19680462/rscript-does-not-load-methods-package-r-does-why-and-what-are-the-consequen)!
+5. If you forgot to ‘nice’ your processes during starting, you can renice them afterwards using `renice -19 -u <yourusername>`.
 However, note that this will ‘renice’ all processes of your user account including `RStudio Server` instances and other stuff.
-7. Assuming you want to start multiple `nohup` jobs on different servers, you need to specify a custom output file for `nohup`.
-Otherwise, all processes will write to the same file (`nohup.out`) at the same time.
-You can do so by appending `> nohup_kirk.out&`  at the end of your command.
-Of course you can change the name to your desires.
-The full example would then look like
 
-```
-nohup nice -19 Rscript /path/to/script.R > nohup_kirk.out&
-```
+### 6.1.1 screen/byobu
+
+`screen` and `byobu` (the latter being just an enhanced version of the former) are two window-manager libraries that overcome some limitations of the standard shell:
+
+* Sessions are not disconnected when the window is closed, i.e. your processes continue to run if their was a network disconnect or you turn off your computer
+* Sessions can be labeled so that you know whats currently running (very useful for if you have multiple windows open)
+* Sessions can be resumed
+
+Both libraries are installed on the server. I recommend to go with `byobu`. To start a new session, do `byobu -S <name>`. You will see that `byobu` will add some information about the server in the navbar at the bottom of the window (e.g. who is logged in, the IP address of the server, which operating system and much more).
+
+<img src="../../img/r_server_user_guide/byobu.png" style="width: 100%;">
+
+If you close the window now, it will still exist and all processes will continue running. To get back into it, you need to execute `byobu -r` (`r` stands for "resume"). If you created multiple sessions, you need to append the name as well. If you forget it, `byobu` will ask which session should be resumed. To close a session, you can enter `exit` when its running or use `CRTL+A` and then press `D`.
+
+For tiling windows and switching between them, see the "keybindings" section at http://byobu.co/documentation.html.
+
+**Note**: You can customize the navbar by pressing `F9`.
+
+### 6.1.2 nohup
+
+`nohup` is basically taking a command and executing it until its finished. The command line output is redirected to a `.txt` file that you can specify.
+Disadvantages compared to the `byobu` approach are that you will have no access to the shell once you executed the command. Also, to kill the process(es) you need to send a KILL signal to the process PID or (if there are parallel processes running) kill all your user processes using `killall -u <name>`. Furthermore, to see the progress, you always need to open the respective `.txt` file and reload it all the time.
+
+A working `nohup` example that redirects the output to a file called `nohup.out` with a priority of 19 would look as follows: `nohup nice -19 Rscript /path/to/script.R > nohup.out&`
+
+1. If you use parallelization first make sure that nobody else is currently doing heavy processing on the server.
+Check by using `htop` that the server is "free enough" for your processing.
+That means, please checke the available RAM and that enough cores are idle in case you want to do parallel processing.
+If you see all cores working, simply start your script on one of the other servers (`MCCOY`, `KIRK`, `SCOTTY`, `SPOCK`).
+There will most likely be at least one server that is not fully loaded.
+2. Next, ‘nice’ the priority of your heavy processing jobs.
+This makes it possible that other small jobs will still work because they have a higher priority by default (default = 0).
+What happens in detail is that if a higher priority job is started by a user (e.g. copying of files) it gets prioritised over the long running jobs.
+Doing so, other users will not suffer from delays doing their normal work by the heavy processing.
+I always ‘nice’  my processes to a value of `19` (lowest possible = 20).
+3. R scripts can be started using `Rscript <path>`. Be aware that `Rscript` [does not load the `methods` package](https://stackoverflow.com/questions/19680462/rscript-does-not-load-methods-package-r-does-why-and-what-are-the-consequen)!
+5. If you forgot to ‘nice’ your processes during starting, you can renice them afterwards using `renice -19 -u <yourusername>`.
+However, note that this will ‘renice’ all processes of your user account including `RStudio Server` instances and other stuff.
+
 
 ## 6.2 Killing processes
 
@@ -334,6 +327,8 @@ Type `htop`, select the process and press "Kill".
 # 7. Appendix: Admin notes (German)
 
 ## 7.1 Installation of R with Intel-mkl support
+
+NOTE: No effect on our servers as we have no Intel processors! Sticking to the `openblas` approach.
 
 Massive speedup, see [this benchmarking comparison](http://pacha.hk/2017-12-02_why_is_r_slow.html).
 **Note: We have AMD cores so the speedup of the `intel-mkl` library does not apply for our servers.

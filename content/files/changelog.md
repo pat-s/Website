@@ -5,6 +5,9 @@ date = '2018-04-02'
 tags = ['r_server_user_guide']
 +++
 
+# v3.2.0
+  * add screen/byobu section
+
 # v3.1.0
   * add Shiny Server instructions
   * set aliases for ports 3838 (shiny) and 8787 (rstudio)
