@@ -2,7 +2,7 @@
 title: Antergos/Arch Linux setup guide tailored towards data science, R and spatial analysis
 author: Patrick Schratz
 date: '2018-04-22'
-lastmod: '2018-04-22'
+lastmod: '2018-05-02'
 slug: antergos-install-guide
 categories:
   - Antergos
@@ -108,12 +108,14 @@ Several valid concepts exists on how to partition a Linux system.
 The following reflects my current view:
 
 1. Select "Manual" partitioning when being prompted
-2. Create a SWAP partition that is >= your amount of RAM (e.g. for 16 GB RAM use 16.5 GB partition size). Format: `Linux Swap`
-3. Create a 1 GB partition. Mount point: `/boot`. Format: `ext4`
-4. Create a 50 GB partition for "root". Mount point: `/`. Format: `ext4`
-5. With the remaining space create "home". Mount point: `/home`. Format: `ext4`
+2. Create a partition of 1 GB. Mount point: `/boot/efi`. Format: `fat32`
+5. Within the extended partition create a sub-partition of the remaining space (the remaining space should be slightly larger than your RAM size!) (e.g. for 16 GB RAM use 16.5 GB partition size). Format: `Linux Swap`
+6. Create a 50 - 100 GB GB partition for "root". Mount point: `/`. Format: `ext4`
+7. With the remainng space create "home". Mount point: `/home`. Format: `ext4`
 
 # 2. Installing the package manager
+
+(Sidenote: If you discover that your input source is missing (e.g. german keyboard layout), then do `sudo gedit /etc/locale` and remove the comment from your desired locale. Afterwards run `sudo locale-gen` and the locale is now selectable in "Region & Language".)
 
 I prefer `trizen`.
 Here is a list ([AUR helpers - ArchWiki](https://wiki.archlinux.org/index.php/AUR_helpers)) comparing more alternatives (scroll to the bottom).
@@ -242,7 +244,7 @@ Mail: `pac install mailspring`
 Notes: `pac install boostnote`  
 Reference Manager: `pac install Jabref`  
 Google Drive: `pac install insync`  
-Dropbox: `pac install dropbox-nautilus`  
+Dropbox: `pac install nautilus-dropbox`  
 GIS: `pac install qgis` (careful, takes 30 min - 1h to compile)  
 
 **Tip:** You can install both `QGIS2` and `QGIS3` and switch between them.
