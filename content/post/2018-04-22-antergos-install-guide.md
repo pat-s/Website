@@ -54,6 +54,7 @@ Enjoy the power of Linux!
 	- [4.3 Packages](#43-packages)
 		- [4.3.1 Task view "Spatial"](#431-task-view-spatial)
 		- [4.3.2 Task view "Machine Learning"](#432-task-view-machine-learning)
+	- [4.4 Github repos](#44-github-repos)
 - [5. Accessing remote servers](#5-accessing-remote-servers)
 	- [5.1 File access (file manager)](#51-file-access-file-manager)
 	- [5.2 Command-line access (Terminal)](#52-command-line-access-terminal)
@@ -426,6 +427,29 @@ Packages that error during installation (Please report back if you have a workin
 
 * interval (requires Icens from Bioconductor)
 * LTRCtrees (requires Icens from Bioconductor)
+
+## 4.4 Github repos
+
+I like the command line way of creating a repo from Github using the `usethis` package.
+To make this work, we need to make some prior steps:
+
+1. Make sure that the local directory in which you want to store your Github repos has 777 permissions.
+This usually is not the case if you create the directory. 
+If the permissions are wrong, `usethis::create_from_github()` will not be able to write files there.
+Example: `sudo chmod 777 ~/git`
+2. Make sure your ssh keys have the right permissions: `sudo chmod 600 ~/.ssh/id_rsa`, `sudo chmod 644 ~/.id_rsa.pub`
+3. Add your ssh-key to the keychain: `ssh-add -K ~/.ssh/id_rsa`
+4. For me, the `sshaskpass` does not work even though everything seems to be set up correctly. That's why I always have to hand over the information manually when using `create_from_github()`.
+To simplify this process, I have the following information in my `~/.Rprofile`: 
+
+`cred <- git2r::cred_ssh_key(publickey = "~/.ssh/id_rsa.pub", privatekey = "~/.ssh/id_rsa")`
+
+This object is then passed to the `credentials` argument in `create_from_github()`.
+
+Now clone all your repos from Github, e.g. `create_from_github(repo = "pat-s/oddsratio", destdir = "~/git", cred = credentials)`.
+
+The little overhead is really worth it: You have a working ssh setup and by reusing the command and just replacing the repo name the cloning off all your repos is done within minutes!
+
 
 # 5. Accessing remote servers
 
