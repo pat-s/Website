@@ -40,7 +40,7 @@ highlight_languages = ["r", "bash", "css"]
 highlight_style = "solarized-dark"
 
 # Enable comments by entering your Disqus shortname
-disqusShortname = "pat-s"
+disqusShortname = "pjs-web-de"
 
 # Enable analytics by entering your Google Analytics tracking ID
 googleAnalytics = "UA-35704082-2"
