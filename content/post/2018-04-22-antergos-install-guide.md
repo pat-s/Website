@@ -345,6 +345,8 @@ F77=$(CCACHE) gfortran$(VER)
 Additionally, install `ccache` on your system: `pac install ccache`.
 See [this blog post](http://dirk.eddelbuettel.com/blog/2017/11/27/#011_faster_package_installation_one) by Dirk Eddelbuettel as a reference.
 
+To use R from the shell without a prior defined mirror, you need the system libraries `tcl` and `tk` to launch the mirror selection popup (`pac install tcl tk`).
+
 ## 4.2 R & RStudio
 
 **R with optimized Openblas / LAPACK**
