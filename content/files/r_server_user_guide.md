@@ -10,11 +10,9 @@ tags = ['r_server_user_guide']
 Acknowledgements:
 Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
 
-<!-- /TOC -->
 **Table of Contents**
 
-<!--ts-->
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 --><!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [1. Introduction](#1-introduction)
 - [2. Data and scripts](#2-data-and-scripts)
@@ -30,25 +28,27 @@ Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
 	- [4.2 Command-line access](#42-command-line-access)
 		- [4.2.1 Windows](#421-windows)
 		- [4.2.2 Linux & Mac](#422-linux-mac)
-- [5. RStudio Server Pro & Shiny Server](#5-rstudio-server-pro-shiny-server)
-	- [5.1 RStudio Server Pro](#51-rstudio-server-pro)
-	- [5.2 Shiny server](#52-shiny-server)
-- [6. Executing long running/parallel processing jobs](#6-executing-long-runningparallel-processing-jobs)
-	- [6.1 How to do it right](#61-how-to-do-it-right)
-		- [6.1.1 screen/byobu](#611-screenbyobu)
-		- [6.1.2 nohup](#612-nohup)
-	- [6.2 Killing processes](#62-killing-processes)
-- [7. Appendix: Admin notes (German)](#7-appendix-admin-notes-german)
-	- [7.1 Installation of R with Intel-mkl support](#71-installation-of-r-with-intel-mkl-support)
-	- [7.2 Remote file editing over ssh](#72-remote-file-editing-over-ssh)
-	- [7.3 `/data` folder](#73-data-folder)
-	- [7.4 `home` folders](#74-home-folders)
-	- [7.5 Shiny Server setup](#75-shiny-server-setup)
-	- [7.5 Installierte Bibliotheken (alle server)](#75-installierte-bibliotheken-alle-server)
-		- [7.5.1 mccoy only (rstudio server)](#751-mccoy-only-rstudio-server)
-		- [7.5.2 kirk, scotty, spock only](#752-kirk-scotty-spock-only)
+- [5. Working with multiple R versions](#5-working-with-multiple-r-versions)
+- [6. RStudio Server Pro & Shiny Server](#6-rstudio-server-pro-shiny-server)
+	- [6.1 RStudio Server Pro](#61-rstudio-server-pro)
+	- [6.2 Shiny server](#62-shiny-server)
+- [7. Executing long running/parallel processing jobs](#7-executing-long-runningparallel-processing-jobs)
+	- [7.1 How to do it right](#71-how-to-do-it-right)
+		- [7.1.1 screen/byobu](#711-screenbyobu)
+		- [7.1.2 nohup](#712-nohup)
+	- [7.2 Killing processes](#72-killing-processes)
+- [8. Appendix: Admin notes (German)](#8-appendix-admin-notes-german)
+	- [8.1 Installed R versions](#81-installed-r-versions)
+	- [8.2 Remote file editing over ssh](#82-remote-file-editing-over-ssh)
+	- [8.3 `/data` folder](#83-data-folder)
+	- [8.4 `home` folders](#84-home-folders)
+	- [8.5 Shiny Server setup](#85-shiny-server-setup)
+	- [8.6 Installierte Bibliotheken (alle server)](#86-installierte-bibliotheken-alle-server)
+		- [8.6.1 mccoy only (rstudio server)](#861-mccoy-only-rstudio-server)
+		- [8.6.2 kirk, scotty, spock only](#862-kirk-scotty-spock-only)
 
-<!--te-->
+<!-- /TOC -->
+
 
 # 1. Introduction
 
@@ -222,9 +222,30 @@ You can further save arrangements of multiple profiles if your terminal applicat
 If you restore the arrangement, all your profiles will be loaded.
 This is extremely useful to log in to all servers with multiple windows with just one click.
 
-# 5. RStudio Server Pro & Shiny Server
 
-## 5.1 RStudio Server Pro
+# 5. Working with multiple R versions
+
+All R Versions starting from 3.4.3 are installed on the server under `/opt/<version>`.
+Why? For reproducibility! A good workflow looks like this:
+1. Create a new project with the most recent R version
+2. Update all packages and never do that until this project is finished (unless an update is essential for some tasks)
+3. Initialize a packrat project to bundle package versions only for this project
+
+While the versions for a project are automatically managed by RStudio Server when you open the respective project, this is not the case if you start R from the shell.
+
+Whenever you start an R process for your project that needs a different R version that the most current one, you need to explicitly tell the system.
+An example: You started your project with R version 3.4.4.
+Meanwhile R was updated to version 3.5.0 on the server.
+Now everytime you start R from the command line using `R`, it will use version 3.5.0.
+To use the packages associated with your project and its R version, you need to do two things:
+1. Change the directory to your project directory. This way the packrat packages are recognized when starting R
+2. Start the R version that is associated with the project. For R version 3.4.4 this would then be `/opt/R/3.4.4/bin/R`. You will see that during startup R will recognized the packrat libraries and everything will work. This will not be the case if you simply use `R` as this would start R version 3.5.0!
+
+Keep that in mind when using commands like `Rscript` in `nohup` or `byobu`! Always make sure to use the correct R version.
+
+# 6. RStudio Server Pro & Shiny Server
+
+## 6.1 RStudio Server Pro
 We have a license for `RStudio Server Pro` which runs on `MCCOY`.
 `RStudio Server Pro` enables you to work in your familiar `RStudio` environment while all processing is executed on the server and not on your local machine.
 This enables you to do other stuff at your local machine while the server is busy processing.
@@ -244,13 +265,13 @@ Please log in to the VPN using
 where “URZ_username” is your university username (not the one you use on the server!).
 This identifies you as a temporary member of our group and gives you the remote access rights for the RStudio Server port.
 
-## 5.2 Shiny server
+## 6.2 Shiny server
 
 Shiny server is running on MCCOY.
 To launch your shiny apps, simply put the respective `server.R` and `ui.R` files in a folder `ShinyApps` in your home directory, e.g. `~/patrick/ShinyApps/hello/server.R`.
 You can then access the shiny app via the following URLs: mccoy.geogr.uni-jena.de/shiny/patrick/hello or mccoy.geogr.uni-jena.de:3838/patrick/hello
 
-# 6. Executing long running/parallel processing jobs
+# 7. Executing long running/parallel processing jobs
 
 While these kind of processing can also be done in `RStudio Server`, I recommend to start long running jobs via the command line.
 Sometimes, jobs get killed/stuck by some interference in `RStudio Server`, especially if you use parallelization.
@@ -260,7 +281,7 @@ All this does not happen often but if your script crashes after several days, pl
 
 Video with some usage instructions: https://www.rstudio.com/resources/videos/rstudio-server-pro-1-1-new-features/
 
-## 6.1 How to do it right
+## 7.1 How to do it right
 
 1. If you use parallelization first make sure that nobody else is currently doing heavy processing on the server.
 Check by using `htop` that the server is "free enough" for your processing.
@@ -276,7 +297,7 @@ I always ‘nice’  my processes to a value of `19` (lowest possible = 20).
 5. If you forgot to ‘nice’ your processes during starting, you can renice them afterwards using `renice -19 -u <yourusername>`.
 However, note that this will ‘renice’ all processes of your user account including `RStudio Server` instances and other stuff.
 
-### 6.1.1 screen/byobu
+### 7.1.1 screen/byobu
 
 `screen` and `byobu` (the latter being just an enhanced version of the former) are two window-manager libraries that overcome some limitations of the standard shell:
 
@@ -294,7 +315,7 @@ For tiling windows and switching between them, see the "keybindings" section at 
 
 **Note**: You can customize the navbar by pressing `F9`.
 
-### 6.1.2 nohup
+### 7.1.2 nohup
 
 `nohup` is basically taking a command and executing it until its finished. The command line output is redirected to a `.txt` file that you can specify.
 Disadvantages compared to the `byobu` approach are that you will have no access to the shell once you executed the command. Also, to kill the process(es) you need to send a KILL signal to the process PID or (if there are parallel processes running) kill all your user processes using `killall -u <name>`. Furthermore, to see the progress, you always need to open the respective `.txt` file and reload it all the time.
@@ -316,7 +337,7 @@ I always ‘nice’  my processes to a value of `19` (lowest possible = 20).
 However, note that this will ‘renice’ all processes of your user account including `RStudio Server` instances and other stuff.
 
 
-## 6.2 Killing processes
+## 7.2 Killing processes
 
 **Single process:**
 Type `htop`, select the process and press "Kill".
@@ -324,58 +345,45 @@ Type `htop`, select the process and press "Kill".
 **Multiple/all processes:**
 `killall -u <username>`
 
-# 7. Appendix: Admin notes (German)
+# 8. Appendix: Admin notes (German)
 
-## 7.1 Installation of R with Intel-mkl support
+## 8.1 Installed R versions
 
-NOTE: No effect on our servers as we have no Intel processors! Sticking to the `openblas` approach.
+For reproducibility of projects it is important to have multiple R versions installed.
+New projects will always use the most recent version.
+However, RStudio-Server projects will always work with the version they have beenn initialized with.
 
-Massive speedup, see [this benchmarking comparison](http://pacha.hk/2017-12-02_why_is_r_slow.html).
-**Note: We have AMD cores so the speedup of the `intel-mkl` library does not apply for our servers.
-Going with `libopenblas` which has a similar speedup and is detected automatically.**
-
-
-First, install `intel-mkl`:
+The following script is used to install the respective version into `/opt/R/`.
+The reason for this directory is that it is automatically picked up by RStudio-Server and then selectable in the dropdown.
 
 ```bash
-wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB
-apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2019.PUB
+R_VERSION="3.5.0"
 
-sudo sh -c 'echo deb https://apt.repos.intel.com/mkl all main > /etc/apt/sources.list.d/intel-mkl.list'
-
-sudo apt-get install intel-mkl-64bit-2018.1-038 # the package name is version dependend
-
-sudo apt-get build-dep r-base # install R deps
-```
-
-Afterwards, install R from source with `intel-mkl`:
-
-```bash
-wget https://cran.r-project.org/src/base/R-3/R-3.4.3.tar.gz
-tar xzvf R-3.4.3.tar.gz
-rm R-3.4.3.tar.gz
-cd R-3.4.3
-
-source /opt/intel/mkl/bin/mklvars.sh intel64
-
-MKL="-L/opt/intel/mkl/lib/intel64 -Wl,--no-as-needed -lmkl_gf_lp64 -Wl,--start-group -lmkl_gnu_thread  -lmkl_core  -Wl,--end-group -fopenmp  -ldl -lpthread -lm"
-
-export LD_LIBRARY_PATH=/opt/intel/mkl/lib/intel64:$PATH
-./configure --with-blas="$MKL" --with-lapack --enable-shared --enable-R-shlib
-make
+sudo rm -rf /opt/R/$R_VERSION
+sudo mkdir -p /opt/R/
+cd /opt/R/
+sudo wget https://cloud.r-project.org/src/base/R-3/R-$R_VERSION.tar.gz
+sudo tar -xzf R-$R_VERSION.tar.gz
+sudo rm R-$R_VERSION.tar.gz
+cd R-$R_VERSION
+sudo ./configure --prefix=/opt/R/$R_VERSION --enable-R-shlib --with-blas --with-lapack
+sudo make
 sudo make install
+cd ..
+sudo rm -rf R-$R_VERSION
 ```
 
-**Note:** This was not working with `clusterssh`.
-Apparently the `configure` and `make` calls interfered with each other.
-Running them on each server sequetnially worked fine.
+The `PATH` variable is always set to the most recent installed version.
+For bash-login shells this is done in `/etc/profiles.d/app-bin-path.sh`.
+For z-login shells this is done in `/etc/zsh/zprofile`.
+After upgrading to a new version, the R version in these files should be changed (on every server!).
 
-## 7.2 Remote file editing over ssh
+## 8.2 Remote file editing over ssh
 
 Is supported via [rsub](https://github.com/henrikpersson/rsub)/[rmate](https://github.com/aurora/rmate).
 When `.ssh/config` is correctly set, one is logged in via ssh using remote port forwarding and has an editor that supports this (e.g. Atom, SublimeText3), simply calling `rsub/rmate <file.txt>` opens the file locally in SublimeText3.
 
-## 7.3 `/data` folder
+## 8.3 `/data` folder
 
 `/data` wird von `lossa.ads.uni-jena/data/data_mccoy_scotty_kirk`  (windows) mittels `cifs` zu `mccoy.geogr.uni-jena/data`, `scotty.geogr.uni-jena/data` und `kirk.geogr.uni-jena/data`(Debian) gemounted.
 
@@ -389,12 +397,12 @@ Alle Ordner gehören jedoch Nutzer "patrick", was `WinSCP` nicht gefällt.
 Daher wird momentan empfohlen die Verbindungen zu LOSSA über den Windows Explorer herzustellen.
 In Zukunft wäre es sinnvoll auch einen Linux Daten Server zu haben, damit dieser dann mit `nfs` gemounted werden kann und diese Probleme hoffentlich verschwinden.
 
-## 7.4 `home` folders
+## 8.4 `home` folders
 
 MCCOY dient als '`nfs` share für `SCOTTY`,`KIRK` und `SPOCK` für `/home` mit der Ziel directory `/home`.
 Die ursprüngliche `/home` directory von `SCOTTY`,`KIRK` und `SPOCK` ist nach `/home_local` verschoben.
 
-## 7.5 Shiny Server setup
+## 8.5 Shiny Server setup
 
 https://deanattali.com/2015/05/09/setup-rstudio-shiny-server-digital-ocean/#user-libraries
 
@@ -420,7 +428,7 @@ The "prox-pass" modifications are needed to suppress websocket related errors.
 
 The ability to give users the option to place apps in their home directory was enabled (http://docs.rstudio.com/shiny-server/#let-users-manage-their-own-applications).
 
-## 7.5 Installierte Bibliotheken (alle server)
+## 8.6 Installierte Bibliotheken (alle server)
 
 * 18/08/2017
 
@@ -504,13 +512,13 @@ The ability to give users the option to place apps in their home directory was e
 * 05/04/2018
   * nginx
 
-### 7.5.1 mccoy only (rstudio server)
+### 8.6.1 mccoy only (rstudio server)
 
 * gdebi-core
 * libssl1.0.0_1.0.1
 * nfs-kernel-server
 * nfs-server
 
-### 7.5.2 kirk, scotty, spock only
+### 8.6.2 kirk, scotty, spock only
 
 * nfs-common

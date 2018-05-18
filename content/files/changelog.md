@@ -5,6 +5,9 @@ date = '2018-04-02'
 tags = ['r_server_user_guide']
 +++
 
+# v3.2.1
+  * add instructions about installed R versions and how to use them correctly
+
 # v3.2.0
   * add screen/byobu section
 
