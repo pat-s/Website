@@ -52,10 +52,11 @@ Enjoy the power of Linux!
     - [ccache](#ccache)
   - [4.2 R & RStudio](#42-r--rstudio)
     - [R with optimized Openblas / LAPACK](#r-with-optimized-openblas--lapack)
-      - [RStudio](#rstudio)
+    - [RStudio](#rstudio)
   - [4.3 Packages](#43-packages)
     - [4.3.1 Task view "Spatial"](#431-task-view-spatial)
     - [4.3.2 Task view "Machine Learning"](#432-task-view-machine-learning)
+  - [4.4 Github repos](#44-github-repos)
 - [5. Accessing remote servers](#5-accessing-remote-servers)
   - [5.1 File access (file manager)](#51-file-access-file-manager)
   - [5.2 Command-line access (Terminal)](#52-command-line-access-terminal)
@@ -343,6 +344,8 @@ F77=$(CCACHE) gfortran$(VER)
 Additionally, install `ccache` on your system: `pac install ccache`.
 See [this blog post](http://dirk.eddelbuettel.com/blog/2017/11/27/#011_faster_package_installation_one) by Dirk Eddelbuettel as a reference.
 
+To use R from the shell without a prior defined mirror, you need the system libraries `tcl` and `tk` to launch the mirror selection popup (`pac install tcl tk`).
+
 ## 4.2 R & RStudio
 
 ### R with optimized Openblas / LAPACK
@@ -376,7 +379,7 @@ Most of it will stored in the swap (around 10 GB) so make sure your SWAP space i
 
 Also to successfully install `intel-mkl`, you need to temporarly increase the `/tmp` directory as `intel-mkl` requires quite some space: `sudo mount -o remount,size=20G,noatime /tmp`.
 
-#### RStudio
+### RStudio
 
 Use `pac search rstudio` and pick your favorite release channel.
 During installation R will get installed as a dependency (if you have not already done so).
@@ -425,6 +428,24 @@ Packages that error during installation (Please report back if you have a workin
 
 - interval (requires Icens from Bioconductor)
  LTRCtrees (requires Icens from Bioconductor)
+
+## 4.4 Github repos
+
+I like the command line way of creating a repo from Github using the `usethis` package.
+To make this work, we need to make some prior steps:
+
+1. Make sure that the local directory in which you want to store your Github repos has 777 permissions. This usually is not the case if you create the directory.  If the permissions are wrong, `usethis::create_from_github()` will not be able to write files there. Example: `sudo chmod 777 ~/git`
+2. Make sure your ssh keys have the right permissions: `sudo chmod 600 ~/.ssh/id_rsa`, `sudo chmod 644 ~/.id_rsa.pub`
+3. Add your ssh-key to the keychain: `ssh-add -K ~/.ssh/id_rsa`
+4. For me, the `sshaskpass` does not work even though everything seems to be set up correctly. That's why I always have to hand over the information manually when using `create_from_github()`. To simplify this process, I have the following information in my `~/.Rprofile`:
+
+`cred <- git2r::cred_ssh_key(publickey = "~/.ssh/id_rsa.pub", privatekey = "~/.ssh/id_rsa")`
+
+This object is then passed to the `credentials` argument in `create_from_github()`.
+
+Now clone all your repos from Github, e.g. `create_from_github(repo = "pat-s/oddsratio", destdir = "~/git", cred = credentials)`.
+
+The little overhead is really worth it: You have a working ssh setup and by reusing the command and just replacing the repo name the cloning off all your repos is done within minutes!
 
 # 5. Accessing remote servers
 
