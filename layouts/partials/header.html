@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ $v }}/styles/{{ . }}.min.css">
     {{ else }}
       {{ if eq ($scr.Get "light") true }}
-          <link rel="stylesheet" href="{{ .Site.BaseURL }}css/dracula.css">
+          <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/dracula.css">
       {{ else }}
           <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/{{ $v }}/styles/dracula.min.css">
       {{ end }}
