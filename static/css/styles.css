@@ -42,18 +42,6 @@ pre code { background: none; }
 /* expand dracula box color */
 pre{padding:0}
 
-
-body {
-  font-family: inherit;
-  font-size: 1rem;
-  line-height: inherit;
-  color: inherit;
-  background-color: {{ .Get "background" }};
-  margin-top: 75px; /* Offset body content by navbar height. */
-  padding-top: 0;
-  counter-reset: captions;
-}
-
 /* from themes/academic.css */
 .article-container {
   font-size: 15px;

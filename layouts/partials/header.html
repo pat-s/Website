@@ -73,6 +73,9 @@
   <link rel="stylesheet" href="{{ printf "//fonts.googleapis.com/css?family=%s" . }}">
   {{ end }}
   <link rel="stylesheet" href="{{ "styles.css" | relLangURL }}">
+  <link rel="stylesheet" href="{{ "/static/fonts/proxima-nova-regular.css" }}">
+  <link rel="stylesheet" href="{{ "/static/fonts/proxima-nova-bold.css"  }}">
+  <link rel="stylesheet" href="{{ "/static/fonts/proxima-nova-regular-italic.css" }}">
   {{ range .Site.Params.custom_css }}
   <link rel="stylesheet" href="{{ "/css/" | relURL }}{{ . }}">
   {{ end }}

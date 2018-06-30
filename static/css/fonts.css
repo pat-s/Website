@@ -1,5 +1,25 @@
 
 code {
-  font-family: "Fira Code", monospace;
-  font-size: 85%;
+  font-family: "Space Mono", monospace;
+}
+
+body {
+  font-family: "ProximaNova-Bold", sans-serif;
+  font-weight: 500;
+  line-height: inherit;
+  color: inherit;
+  background-color: {{ .Get "background" }};
+  margin-top: 75px;
+  padding-top: 0;
+  counter-reset: captions;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'ProximaNova-Bold', sans-serif;
+    font-weight: 400;
+    margin-bottom: .5rem;
+    line-height: 1.25;
+    color: #313131;
+    text-rendering: optimizeLegibility;
+    overflow-wrap: break-word;
 }
