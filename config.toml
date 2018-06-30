@@ -36,8 +36,8 @@ footnotereturnlinkcontents = "<sup>^</sup>"
   #   For more info on the highlighting options, see:
   #   https://sourcethemes.com/academic/post/writing-markdown-latex/#highlighting-options
 highlight = true
-highlight_languages = ["r", "bash", "css"]
-highlight_style = "solarized-dark"
+highlight_languages = ["r", "bash", "css", "html", "zsh"]
+highlight_style = "tomorrow"
 
 # Enable comments by entering your Disqus shortname
 disqusShortname = "pjs-web-de"
@@ -83,7 +83,7 @@ defaultContentLanguageInSubdir = false
 
   # Color theme.
   #   Choose from `default`, `ocean`, `forest`, or `coffee`.
-  color_theme = "default"
+  color_theme = "custom"
 
   # Font style.
   #   Choose from `default`, `classic`, or `playfair`.
@@ -108,7 +108,7 @@ defaultContentLanguageInSubdir = false
   section_pager = true
 
   # Enable native social sharing buttons?
-  sharing = false
+  sharing = true
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)

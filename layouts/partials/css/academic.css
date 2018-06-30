@@ -32,6 +32,12 @@ html {
   }
 }
 
+.caption {
+  margin-top: -50px;
+  font-size: 0.75em;
+  text-align: center;
+}
+
 body {
   font-family: inherit;
   font-size: 1rem;
