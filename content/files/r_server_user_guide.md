@@ -506,6 +506,12 @@ The ability to give users the option to place apps in their home directory was e
 
 * 05/04/2018
   * nginx
+  
+* 01/06/2018
+  * libsecret-1-dev
+
+- 24/06/2018
+  - libwxgtk3.0-dev
 
 ### 8.6.1 mccoy only (rstudio server)
 
