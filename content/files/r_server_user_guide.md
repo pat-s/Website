@@ -36,7 +36,7 @@ Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
     - [7.1.2 nohup](#712-nohup)
   - [7.2 Killing processes](#72-killing-processes)
 - [8. Appendix: Admin notes (German)](#8-appendix-admin-notes-german)
-  - [8.1 Installed R versions](#81-installed-r-versions)
+  - [8.1 Installed R versions & installing new R versions](#81-installed-r-versions--installing-new-r-versions)
   - [8.2 Remote file editing over ssh](#82-remote-file-editing-over-ssh)
   - [8.3 `/data` folder](#83-data-folder)
   - [8.4 `home` folders](#84-home-folders)
@@ -342,11 +342,11 @@ Type `htop`, select the process and press "Kill".
 
 # 8. Appendix: Admin notes (German)
 
-## 8.1 Installed R versions
+## 8.1 Installed R versions & installing new R versions
 
 For reproducibility of projects it is important to have multiple R versions installed.
 New projects will always use the most recent version.
-However, RStudio-Server projects will always work with the version they have beenn initialized with.
+However, RStudio-Server projects will always work with the version they have been initialized with.
 
 The following script is used to install the respective version into `/opt/R/`.
 The reason for this directory is that it is automatically picked up by RStudio-Server and then selectable in the dropdown.
