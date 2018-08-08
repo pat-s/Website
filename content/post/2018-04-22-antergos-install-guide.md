@@ -443,7 +443,7 @@ To make this work, we need to make some prior steps:
 
 This object is then passed to the `credentials` argument in `create_from_github()`.
 
-Now clone all your repos from Github, e.g. `create_from_github(repo = "pat-s/oddsratio", destdir = "~/git", cred = credentials)`.
+Now clone all your repos from Github, e.g. `create_from_github(repo = "pat-s/oddsratio", destdir = "~/git", credentials = cred)`.
 
 The little overhead is really worth it: You have a working ssh setup and by reusing the command and just replacing the repo name the cloning off all your repos is done within minutes!
 
