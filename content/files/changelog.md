@@ -7,7 +7,7 @@ tags = ['r_server_user_guide']
 
 # v4.0.0
   * Add "best practices" section (chapter 5)
-  * Update "access folders and scripts"
+  * Update "access folders and scripts" 
 
 # v3.2.1
   * add instructions about installed R versions and how to use them correctly

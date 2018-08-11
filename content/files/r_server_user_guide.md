@@ -5,7 +5,7 @@ date = '2018-08-11'
 tags = ['r_server_user_guide']
 +++
 
-[NEWS](https://pat-s.github.io/files/changelog)
+[NEWS](https://pjs-web.de/files/changelog)
 
 Acknowledgements:
 Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
