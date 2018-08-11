@@ -9,27 +9,24 @@ tags = ['r_server_user_guide']
 
 Acknowledgements:
 Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
-
-#### Table of Contents
-
 - [1. Introduction](#1-introduction)
 - [2. Data and scripts](#2-data-and-scripts)
 - [3. Geospatial libraries](#3-geospatial-libraries)
 - [4. Accessing the servers](#4-accessing-the-servers)
   - [4.1 Accessing the folders](#41-accessing-the-folders)
     - [4.1.1 Windows](#411-windows)
-      - [4.1.1.1 Scripts](#4111-scripts)
-      - [4.1.1.2 Data](#4112-data)
+      - [4.1.1.1 Access scripts and files on MCCOY](#4111-access-scripts-and-files-on-mccoy)
+      - [4.1.1.2 Access data on LOSSA](#4112-access-data-on-lossa)
     - [4.1.2 Linux & Mac](#412-linux--mac)
-      - [4.1.2.1 Scripts](#4121-scripts)
-      - [4.1.2.2 Data](#4122-data)
+      - [4.1.2.1 Access scripts and files on MCCOY](#4121-access-scripts-and-files-on-mccoy)
+      - [4.1.2.2 Access data on LOSSA](#4122-access-data-on-lossa)
   - [4.2 Command-line access](#42-command-line-access)
     - [4.2.1 Windows](#421-windows)
     - [4.2.2 Linux & Mac](#422-linux--mac)
 - [5. Working on the server - best practices](#5-working-on-the-server---best-practices)
   - [5.1 Enable packrat](#51-enable-packrat)
   - [5.2 Using R from the command line](#52-using-r-from-the-command-line)
-  - [5.3 Robust command line usage / heave processing tasks](#53-robust-command-line-usage--heave-processing-tasks)
+  - [5.3 Robust command line usage / heavy processing tasks](#53-robust-command-line-usage--heavy-processing-tasks)
   - [5.4 Monitoring / killing processes](#54-monitoring--killing-processes)
 - [6. RStudio Server Pro & Shiny Server](#6-rstudio-server-pro--shiny-server)
   - [6.1 RStudio Server Pro](#61-rstudio-server-pro)
@@ -285,7 +282,7 @@ Open a new shell window.
 Every time you call `R-paper1` now, the directory will automatically be changed and the correct R version will be used.
 Of course you are free to use any other name for the alias.
 
-## 5.3 Robust command line usage / heave processing tasks
+## 5.3 Robust command line usage / heavy processing tasks
 
 Now that you know how to use the correct R version together with your packrat library, the next step is processing.
 Do not just start a long running process using RStudio server (which runs on MCCOY).
