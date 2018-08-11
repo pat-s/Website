@@ -9,6 +9,7 @@ tags = ['r_server_user_guide']
 
 Acknowledgements:
 Thanks to Sven Kralisch and Benjamin Ludwig who helped me a lot!
+
 - [1. Introduction](#1-introduction)
 - [2. Data and scripts](#2-data-and-scripts)
 - [3. Geospatial libraries](#3-geospatial-libraries)
