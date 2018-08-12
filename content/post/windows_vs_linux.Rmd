@@ -1,6 +1,7 @@
 ---
 title: 'Why you should use Linux for Data Science and R'
 author: Patrick Schratz
+draft: true
 date: '2018-01-14'
 lastmod: "2018-01-20"
 categories: ["R", "Data Science", "Linux"]
