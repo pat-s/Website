@@ -213,7 +213,7 @@ This will use all available cores on your machine for compiling.
 
 ## 3.1 Installing system libraries
 
-A note before the installation process: If you only have 8 GB of RAM, you need to temporary increase the size of your `/tmp` folder. 
+A note before the installation process: If you only have 8 GB of RAM, you need to temporary increase the size of your `/tmp` folder.
 Otherwise it will be full due to all the package downloads and installations and you will get weird error message.
 Do so by calling `sudo mount -o remount,size=20G,noatime /tmp`.
 This increases the size for your current session to 20 GB.
@@ -524,8 +524,8 @@ cat .ssh/id_rsa.pub | ssh username@<server> 'cat >> .ssh/authorized_keys' # copi
 
 Every time you log in via command line now, you will not be prompted for your password.
 
-You can further simplify the login process. 
-Instead of having to type ```ssh <user>@<server>` you can store all of this information in your `~/.ssh/config` file:
+You can further simplify the login process.
+Instead of having to type `ssh <user>@<server>` you can store all of this information in your `~/.ssh/config` file:
 
 ```sh
 Host <name-you-wanna-use>
