@@ -5,7 +5,7 @@ date = "2017-01-01"
 # parent = LIFE Healthy Forest
 
 # Project title.
-title = "LIFE Healthy Forest"
+title = "LIFE Healthy Forest (2015 - 2019)"
 
 # Project summary to display on homepage.
 summary = "Early detection and advanced management systems to reduce forest decline caused by invasive and pathogenic agents"
