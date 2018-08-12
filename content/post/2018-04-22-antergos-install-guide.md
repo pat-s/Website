@@ -2,7 +2,7 @@
 title: Antergos/Arch Linux setup guide tailored towards data science, R and spatial analysis
 author: Patrick Schratz
 date: '2018-04-22'
-lastmod: '2018-05-02'
+lastmod: '2018-08-12'
 slug: antergos-install-guide
 categories:
   - Antergos
@@ -30,9 +30,6 @@ Enjoy the power of Linux!
 
 <img src="../../img/antergos_setup_guide/antergos.jpeg" style="width: 30%;">
 
-# Table of Contents
-
-- [Table of Contents](#table-of-contents)
 - [1. Installation](#1-installation)
   - [1.1 Install options](#11-install-options)
   - [1.2 Setting up the partitions](#12-setting-up-the-partitions)
@@ -54,12 +51,14 @@ Enjoy the power of Linux!
     - [R with optimized Openblas / LAPACK](#r-with-optimized-openblas--lapack)
     - [RStudio](#rstudio)
   - [4.3 Packages](#43-packages)
-    - [4.3.1 Task view "Spatial"](#431-task-view-spatial)
-    - [4.3.2 Task view "Machine Learning"](#432-task-view-machine-learning)
+    - [4.3.1 Task view "Spatial"](#431-task-view-%22spatial%22)
+    - [4.3.2 Task view "Machine Learning"](#432-task-view-%22machine-learning%22)
   - [4.4 Github repos](#44-github-repos)
 - [5. Accessing remote servers](#5-accessing-remote-servers)
   - [5.1 File access (file manager)](#51-file-access-file-manager)
   - [5.2 Command-line access (Terminal)](#52-command-line-access-terminal)
+    - [5.2.1 SSH setup](#521-ssh-setup)
+    - [5.2.2 Creating profiles in your terminal app](#522-creating-profiles-in-your-terminal-app)
 - [6. Desktop related](#6-desktop-related)
   - [KDE](#kde)
 - [7. Laptop battery life optimization](#7-laptop-battery-life-optimization)
@@ -71,6 +70,7 @@ Enjoy the power of Linux!
   - [8.5 Icon themes](#85-icon-themes)
   - [8.6 Desktop Themes](#86-desktop-themes)
   - [8.7 Presentations](#87-presentations)
+  - [8.8 Touchpad drivers](#88-touchpad-drivers)
 
 I recommend using [Antergos](https://antergos.com).
 Officially its a distribution but most people refer to it as a graphical installer for Arch Linux.
@@ -213,11 +213,17 @@ This will use all available cores on your machine for compiling.
 
 ## 3.1 Installing system libraries
 
+A note before the installation process: If you only have 8 GB of RAM, you need to temporary increase the size of your `/tmp` folder. 
+Otherwise it will be full due to all the package downloads and installations and you will get weird error message.
+Do so by calling `sudo mount -o remount,size=20G,noatime /tmp`.
+This increases the size for your current session to 20 GB.
+Usually the size is about half or your RAM size.
+
 For the following install calls, you can either use `trizen` or (if you added the `zsh` wrapper functions above) `pac`.
 While calling `trizen <package>` will first do a search in AUR and then install the package, the complementary function for this would be `pac search <package>`.
 Calling `pac install` will directly install the given package.
 
-**Never install python libraries via `pip`! All AUR packages try to install required python packages from AUR and if these have been installed via `pip` you will face conflicts.**
+**My advice: Never install python libraries via `pip`! All AUR packages try to install required python packages from AUR and if these have been installed via `pip` you will face conflicts.**
 
 Always install them via your package manager, e.g. for `numpy`: `pac install python-numpy`.  
 Python Modules for QGIS: QGIS needs some external python libraries to not throw errors on startup:
@@ -231,7 +237,7 @@ Other important system libraries:
 - `pac install gdal`
 - `pac install udunits`
 - `pac install postgis`
-- `pac install jdk8-openjdk openjdk8-src` (JDK9 still has problems with some R packages)
+- `pac install jdk10-openjdk openjdk10-src`
 - `pac install texlive-most` (this is a wrapper installation that installs the most important tex libraries. Similar to `texlive-full` on other Linux distributions.)
 - `pac install pandoc-bin pandoc-citeproc-bin` (for all kind of Rmarkdown stuff. Make sure to install this library as the one in the community repository comes with 1 GB Haskell dependencies!)
 - `pac install hugo` (if you are a blogger using the R package `blogdown`)
@@ -242,22 +248,22 @@ Opinionated applications:
 
 Messaging: `pac install franz`  
 Mail: `pac install mailspring`  
-Notes: `pac install boostnote`  
-Reference Manager: `pac install Jabref`  
+Notes: I use [Notion](https://www.notion.so/) which atm has not Linux Desktop app and can be used in the browser only.  
+Reference Manager: `pac install zotero`  
 Google Drive: `pac install insync`  
 Dropbox: `pac install nautilus-dropbox`  
 GIS: `pac install qgis`
 SAGA: `pac install saga-gis`  
-Skype: `pac install skypeforlinux-preview-bin`  
+Skype: `pac install skypeforlinux-stable-bin`  
 Screenshot tool: `pac install shutter`  
 Image viewer: `pac install xnviewmp`  
 Virtualbox: [VirtualBox – wiki.archlinux.de](https://wiki.archlinux.de/title/VirtualBox)  
 Terminal: `pac install tilix`  
-Browser: `pac install vivaldi-snapshot`  
+Browser: `pac install google-chrome`  
 Dock: `pac install latte-dock` ([KDE only] If you prefer a dock layout over the default layout)  
 Twitter client: `pac install corebird`  
 
-A note on Mailspring: If you are on battery, quit Mailspring because it consumes a lot of battery as of v1.2.2.
+A note on Mailspring: If you are on battery, quit Mailspring if you do not use it because it consumes a lot of battery as of v1.4.
 
 ## 3.3 Editors
 
@@ -431,10 +437,16 @@ Packages that error during installation (Please report back if you have a workin
 
 ## 4.4 Github repos
 
+If you have never set a “ssh keygen pair” at your local machine, please do so by calling `ssh-keygen -t rsa`.
+
+If you already have a file named `id_rsa.pub` in your `~/.ssh` folder at your local machine, skip this step! Otherwise it will override your existing one and may invalidate previous ssh connections you set up.
+You now have an `id_rsa.pub` file in a (hidden!) folder named `.ssh` within `/home` (at your local machine).
+You can enable viewing hidden files/folders in the file-manager with the shortcut `ALT + .`.
+
 I like the command line way of creating a repo from Github using the `usethis` package.
 To make this work, we need to make some prior steps:
 
-1. Make sure that the local directory in which you want to store your Github repos has 777 permissions. This usually is not the case if you create the directory.  If the permissions are wrong, `usethis::create_from_github()` will not be able to write files there. Example: `sudo chmod 777 ~/git`
+1. Make sure that the local directory in which you want to store your Github repos has 777 permissions. This usually is not the case if you create the directory.  If the permissions are wrong, `usethis::create_from_github()` will not be able to write files there. Example: `sudo chmod 777 ~/git`.
 2. Make sure your ssh keys have the right permissions: `sudo chmod 600 ~/.ssh/id_rsa`, `sudo chmod 644 ~/.id_rsa.pub`
 3. Add your ssh-key to the keychain: `ssh-add -K ~/.ssh/id_rsa`
 4. For me, the `sshaskpass` does not work even though everything seems to be set up correctly. That's why I always have to hand over the information manually when using `create_from_github()`. To simplify this process, I have the following information in my `~/.Rprofile`:
@@ -444,8 +456,27 @@ To make this work, we need to make some prior steps:
 This object is then passed to the `credentials` argument in `create_from_github()`.
 
 Now clone all your repos from Github, e.g. `create_from_github(repo = "pat-s/oddsratio", destdir = "~/git", credentials = cred)`.
+Alternatively, you can also check if `git2r::check_ssh_key()` returns the correct credentials.
+If it returns
 
-The little overhead is really worth it: You have a working ssh setup and by reusing the command and just replacing the repo name the cloning off all your repos is done within minutes!
+```r
+git2r::cred_ssh_key()
+$publickey
+[1] "/home/pjs/.ssh/id_rsa.pub"
+
+$privatekey
+[1] "/home/pjs/.ssh/id_rsa"
+
+$passphrase
+character(0)
+
+attr(,"class")
+[1] "cred_ssh_key"
+```
+
+you can also use `create_from_github(repo = "pat-s/oddsratio", destdir = "~/git", credentials = git2r::cred_ssh_key())`.
+
+The little overhead is really worth it: You have a working `ssh` setup and by reusing the command and just replacing the repo name the cloning off all your repos is done within minutes!
 
 # 5. Accessing remote servers
 
@@ -475,7 +506,37 @@ Reboot.
 
 ## 5.2 Command-line access (Terminal)
 
+### 5.2.1 SSH setup
+
+SSH again.
+Again we use `ssh`, this time to log into remote servers rather than downloading Github repos.
+
+If you have never set a “ssh keygen pair” at your local machine, please do so by calling `ssh-keygen -t rsa`.
+
+If you already have a file named `id_rsa.pub` in your `~/.ssh` folder at your local machine, skip this step! Otherwise it will override your existing one and may invalidate previous ssh connections you set up.
+You now have an `id_rsa.pub` file in a (hidden!) folder named `.ssh` within /home (at your local machine).
+Now you need to copy this file (`id_rsa.pub`) to the server so that you can be identified:
+
+```sh
+ssh username@<server> 'test -d ~/.ssh && mkdir ~/.ssh' # creates the .ssh directory if it does not exist
+cat .ssh/id_rsa.pub | ssh username@<server> 'cat >> .ssh/authorized_keys' # copies your local public key to the server
+```
+
+Every time you log in via command line now, you will not be prompted for your password.
+
+You can further simplify the login process. 
+Instead of having to type ```ssh <user>@<server>` you can store all of this information in your `~/.ssh/config` file:
+
+```sh
+Host <name-you-wanna-use>
+    user <username>
+    Hostname <server>
+    IdentityFile /path/to/.ssh/id_rsa
+```
+
 You can easily connect to all servers you have access to with a little one-time effort.
+
+### 5.2.2 Creating profiles in your terminal app
 
 Terminal applications are capable of storing "Profiles" that save the configuration to connect to a specific server.
 In this example I refer to the application `tilix`.
@@ -511,12 +572,14 @@ alias servers='bash ~/tilix_all.sh'
 
 Now all you need to do is typing `servers` to load a terminal configuration with all your server connections.
 
+Caution: Always have the "standard" profile set to load a normal session on your local machine.
+
 # 6. Desktop related
 
 ## KDE
 
 If you want to use an automatic login to a VPN and the networkmanager-daemon (e.g. Openconnect) does not store your password, try the `network-manager-applet` package.
-It is the GNOME network-manager and has for some reason no problems with storing the password.
+It is the GNOME network-manager and has (for whatever reason) no problems with storing the password.
 
 # 7. Laptop battery life optimization
 
@@ -538,18 +601,22 @@ Do `pac install tlp` and then follow the instructions on [TLP - ArchWiki](https:
 ## 8.1 arara
 
 [GitHub - cereda/arara: arara is a TeX automation tool based on rules and directives.](https://github.com/cereda/arara)
-An automatization tool for TeX: `pac install arara-git`
+An automatization tool for TeX: `pac install arara-git`.
+However, lately I use the `latex-workshop` extention in Visual Studio Code for all my LaTex stuff.
 
 ## 8.2 latexindent.pl: Required perl modules
 
 `latexindent` is a library which automatically indents your LaTeX document during compilation: [GitHub - cmhughes/latexindent.pl](https://github.com/cmhughes/latexindent.pl)
 
-`pac install perl-log-dispatch perl-dbix-log4perl perl-file-homedir perl-unicode-linebreak`
+`pac install perl-log-dispatch perl-dbix-log4perl perl-file-homedir perl-unicode-linebreak`.
+
+It's also integrad in the `latex-workshop` extention in Visual Studio Code.
 
 ## 8.3 Editor schemes
 
 I use the [Dracula](https://draculatheme.com) scheme in almost all applications.
 While its comes integrated into RStudio, here are installation instructions for [Kate](https://draculatheme.com/kate/) and [Tilix](https://github.com/krzysztofzuraw/dracula-tilix).
+Alternatively I like the [tomorrow-night-eighties](https://github.com/chriskempson/tomorrow-theme) theme lately.
 
 ## 8.4 Fonts
 
@@ -558,8 +625,6 @@ I use it as a coding font in all editors (monospace ftw) but also as a system wi
 Another great monospace coding font is [Iosevka](https://github.com/be5invis/Iosevka).  
 
 `pac search fira-code`
-
-In browsers I like to use `Asana math`.
 
 ## 8.5 Icon themes
 
@@ -581,3 +646,8 @@ To install these, simply click on "Get new looks" on the bottom right when you a
 
 To create presentations I use the R package [xaringan](https://github.com/yihui/xaringan).
 Usually I convert the resulting HTML slides to PDF using [decktape](https://github.com/astefanutti/decktape) (install with `pac install nodejs-decktape`) and present the talk using [impressive](http://impressive.sourceforge.net) (install with `pac install impressive`).
+
+## 8.8 Touchpad drivers
+
+Some devices need to install the "synaptic touchpad drivers" to enable the a "soft-click" window activation.
+`pac install xf86-input-synaptics`.
