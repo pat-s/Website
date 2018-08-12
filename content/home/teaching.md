@@ -14,28 +14,27 @@ weight = 80
 
 +++
 
-# M.Sc. Geoinformatics
+# Munich R Courses (University of Munich)
+
+I contribute to various courses of the [Münchner R Kurse](http://www.muenchner-r-kurse.de/kursangebot/) hosted by the [Computational Stats group](http://www.compstat.statistik.uni-muenchen.de/) of LMU Munich.
+Currently, I teach the [ggplot2](http://www.muenchner-r-kurse.de/fortgeschrittene-visualisierung-mit-ggplot2/) course.
+
+# M.Sc. Geoinformatics (University of Jena)
 
 ## Winter term 2017/2018
 
 - Geo 404: Applied Geoinformatics
-    - R Introduction
-    - Handling of raster data in R
-    - Literate Programming in R
-    - Big data handling & parallelization in R
+  - R Introduction
+  - Handling of raster data in R
+  - Literate Programming in R
+  - Big data handling & parallelization in R
 
-# B.Sc. Geography
+# B.Sc. Geography (University of Jena)
 
 ## Winter term 2016/2017
 
 - Geo 311 (3rd year B.Sc.): Geoinformatics III 
-    - Introduction to Python
-    - Python for geoprocessing -> `arcpy`
-    - Introduction to scientific reporting using Rmarkdown
-    - Tools: `R`, `Python`, `ArcGIS`, `arcpy`
-
-# List of internships (Geoinformatics/Remote Sensing)
-
-I maintain a list of internships undertaken in the Geoinformatics or Remote Sensing field by B.Sc. Geography & M.Sc. Geoinformatics students.  
-There will be no online version of this document due to possibly sensible contact data.
-If you want to add your intership to the list, please contact me.
+  - Introduction to Python
+  - Python for geoprocessing -> `arcpy`
+  - Introduction to scientific reporting using Rmarkdown
+  - Tools: `R`, `Python`, `ArcGIS`, `arcpy`
