@@ -130,7 +130,7 @@ makepkg -si
 
 (Whether to install the git version or the latest release is up to you).
 
-In `~/.config/trizen/trizen.conf` set "noedit" to "1" to not being prompted to edit source code on every install.
+In `~/.config/trizen/trizen.conf` set "noedit" and "install_built_with_noconfirm" to "1" to not being prompted whether to edit source code or if you really want to install the package.
 (Optional) Install [cyclon](https://github.com/gavinlyonsrepo/cylon) -> Wrapper around `trizen` and other tasks (system maintenance, etc.) .
 
 ## 2.1 (Optional) Install and configure `zsh`
