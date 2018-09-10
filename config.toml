@@ -8,6 +8,9 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 preserveTaxonomyNames = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 
+[context.production.environment]
+  HUGO_VERSION = "0.48"
+
 # Highlight.js options
   #   highlight
   #     Enable global source code highlighting?  If false, you can
