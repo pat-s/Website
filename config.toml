@@ -50,8 +50,30 @@ defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 
 [outputs]
-  home = [ "HTML", "CSS", "RSS" ]
+  home = [ "HTML", "CSS", "RSS", "search" ]
   section = [ "HTML", "RSS" ]
+
+[outputFormats.search]
+  baseName = "search"
+  isPlainText = true
+  mediaType = "application/json"
+  notAlternative = true
+
+# Search.
+[params.search]
+  # Search provider:
+  #   0: No search engine
+  #   1: Built-in (Fuse)
+  #   2: Algolia (https://www.algolia.com)
+  engine = 1
+   # Configuration of Algolia search engine.
+  # Paste the values from your Algolia dashboard.
+  [params.search.algolia]
+    app_id = ""
+    api_key = ""
+    index_name = ""
+    show_logo = false
+
 
 [blackfriday]
   hrefTargetBlank = true  # `true` opens external links in a new tab.
