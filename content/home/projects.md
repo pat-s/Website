@@ -23,27 +23,27 @@ view = 0
 filter_default = 1
 
 # Add or remove as many filters (`[[filter]]` instances) as you like.
-# Use "*" tag to show all projects or an existing tag prefixed with "." to filter by specific tag.
-# To remove toolbar, delete/comment all instances of `[[filter]]` below.
+# To show all items, set `tag` to "*".
+# To filter by a specific tag, set `tag` to an existing tag name.
 [[filter]]
   name = "All"
   tag = "*"
   
 [[filter]]
   name = "Science"
-  tag = ".science"
+  tag = "science"
 
 [[filter]]
   name = "Finished"
-  tag = ".finished"
+  tag = "finished"
   
 [[filter]]
   name = "R Packages"
-  tag = ".R-Packages"
+  tag = "R-Packages"
 
 [[filter]]
   name = "AUR Packages"
-  tag = ".AUR-Packages"
+  tag = "AUR-Packages"
 
 +++
 
