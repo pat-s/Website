@@ -178,7 +178,7 @@ defaultContentLanguageInSubdir = false
 
   [[params.social]]
     icon = "envelope"
-    icon_pack = "fa"
+    icon_pack = "fas"
     link = "mailto:patrick.schratz@uni-jena.de"
 
   [[params.social]]
@@ -198,7 +198,7 @@ defaultContentLanguageInSubdir = false
 
   [[params.social]]
     icon = "twitter"
-    icon_pack = "fa"
+    icon_pack = "fas"
     link = "//twitter.com/pjs_228"
 
   # [[params.social]]
@@ -208,12 +208,12 @@ defaultContentLanguageInSubdir = false
 
   [[params.social]]
     icon = "github"
-    icon_pack = "fa"
+    icon_pack = "fas"
     link = "//github.com/pat-s"
 
   [[params.social]]
     icon = "stack-exchange"
-    icon_pack = "fa"
+    icon_pack = "fas"
     link = "http://stackexchange.com/users/5237716/pat-s?tab=accounts"
 
 # Navigation Links
