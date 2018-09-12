@@ -130,7 +130,7 @@ defaultContentLanguageInSubdir = false
   section_pager = true
 
   # Enable native social sharing buttons?
-  sharing = true
+  sharing = false
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
@@ -156,21 +156,22 @@ defaultContentLanguageInSubdir = false
 
   # Social/Academic Networking
   #
-  # Icon pack "fa" includes the following social network icons:
+  # Icon pack "fab" includes the following social network icons:
   #
   #   twitter, weibo, linkedin, github, facebook, pinterest, google-plus,
   #   youtube, instagram, soundcloud
   #
-  #   For email icon, use "fa" icon pack, "envelope" icon, and
+  #   For email icon, use "fas" icon pack, "envelope" icon, and
   #   "mailto:your@email.com" as the link.
   #
-  #   Full list: https://fortawesome.github.io/Font-Awesome/icons/
+  #   Full list: https://fontawesome.com/icons
   #
-  # Icon pack "ai" includes the following academic network icons:
+  # Icon pack "ai" includes the following academic icons:
   #
-  #   google-scholar, arxiv, orcid, researchgate, mendeley
+  #   cv, google-scholar, arxiv, orcid, researchgate, mendeley
   #
   #   Full list: https://jpswalsh.github.io/academicons/
+
 
   [params.menus]
   # Align the main menu to the right of the page? (true/false)
