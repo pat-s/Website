@@ -37,7 +37,7 @@ footnotereturnlinkcontents = "<sup>^</sup>"
   #   https://sourcethemes.com/academic/post/writing-markdown-latex/#highlighting-options
 highlight = true
 highlight_languages = ["r", "bash", "css", "html", "zsh"]
-highlight_style = "tomorrow"
+highlight_style = "tomorrow-night-eighties"
 
 # Enable comments by entering your Disqus shortname
 disqusShortname = "pjs-web-de"
@@ -183,7 +183,7 @@ defaultContentLanguageInSubdir = false
 
   [[params.social]]
     icon = "linkedin"
-    icon_pack = "fa"
+    icon_pack = "fab"
     link = "https://www.linkedin.com/in/patrick-schratz-94666b101?trk=hp-identity-name"
 
   [[params.social]]
@@ -198,7 +198,7 @@ defaultContentLanguageInSubdir = false
 
   [[params.social]]
     icon = "twitter"
-    icon_pack = "fas"
+    icon_pack = "fab"
     link = "//twitter.com/pjs_228"
 
   # [[params.social]]
@@ -208,12 +208,12 @@ defaultContentLanguageInSubdir = false
 
   [[params.social]]
     icon = "github"
-    icon_pack = "fas"
+    icon_pack = "fab"
     link = "//github.com/pat-s"
 
   [[params.social]]
     icon = "stack-exchange"
-    icon_pack = "fas"
+    icon_pack = "fab"
     link = "http://stackexchange.com/users/5237716/pat-s?tab=accounts"
 
 # Navigation Links
