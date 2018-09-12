@@ -20,6 +20,7 @@
   {{ $scr.Set "description" .Params.summary }}
   {{ else if .IsPage }}
   {{ $scr.Set "description" .Summary }}
+  {{ end }}
   <meta name="description" content="{{ $scr.Get "description" }}">
 
   {{ range .Translations }}
@@ -33,6 +34,7 @@
   {{ if ne ($scr.Get "primary") "#fff" }}
   <meta name="theme-color" content="{{ $scr.Get "primary" }}">
   {{ end }}
+
   {{/* Attempt to load local vendor CSS, otherwise load from CDN. */}}
   {{ $scr.Set "vendor_css_filename" "main.min.css" }}
   {{ $scr.Set "vendor_js_filename" "main.min.js" }}
@@ -98,18 +100,18 @@
   {{ end }}
 
   {{ end }}
-  {{/* We cannot use SRI with Google Fonts because the CSS is dynamically generated according to the user agent */}}
+
+  {{/* We cannot use SRI with Google Fonts because the CSS is dynamically generated according to the user agent. */}}
   {{ with ($scr.Get "google_fonts") }}
   <link rel="stylesheet" href="{{ printf "//fonts.googleapis.com/css?family=%s" . }}">
   {{ end }}
+
   <link rel="stylesheet" href="{{ "styles.css" | relLangURL }}">
-  <link rel="stylesheet" href="{{ "/static/fonts/proxima-nova-regular.css" }}">
-  <link rel="stylesheet" href="{{ "/static/fonts/proxima-nova-bold.css"  }}">
-  <link rel="stylesheet" href="{{ "/static/fonts/proxima-nova-regular-italic.css" }}">
   {{ range .Site.Params.custom_css }}
   <link rel="stylesheet" href="{{ "/css/" | relURL }}{{ . }}">
   {{ end }}
 
+  {{ if not .Site.IsServer }}
   {{ if .Site.GoogleAnalytics }}
   <script>
     window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
@@ -126,9 +128,6 @@
   <script async src=\"%s\" integrity=\"%s\" crossorigin=\"anonymous\"></script>" (printf $js.autotrack.url
   $js.autotrack.version) $js.autotrack.sri | safeHTML }}
   {{ end }}
-  $sri.js.autotrack.version $sri.js.autotrack.sri | safeHTML }}
-  {{ else }}
-  <script async src="//cdnjs.cloudflare.com/ajax/libs/autotrack/{{- $sri.js.autotrack.version -}}/autotrack.js"></script>
   {{ end }}
   {{ end }}
 
@@ -138,8 +137,8 @@
   {{ end }}
 
   <link rel="manifest" href="{{ "site.webmanifest" | relURL }}">
-  <link rel="icon" type="image/png" href="{{ "favicon.ico" | relURL }}">
-  <link rel="apple-touch-icon" type="image/png" href="{{ "favicon.ico" | relURL }}">
+  <link rel="icon" type="image/png" href="{{ "/img/icon.png" | relURL }}">
+  <link rel="apple-touch-icon" type="image/png" href="{{ "/img/icon-192.png" | relURL }}">
 
   <link rel="canonical" href="{{ .Permalink }}">
 
