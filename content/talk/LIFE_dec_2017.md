@@ -11,7 +11,6 @@ selected = false
 math = true
 
 url_pdf = "slides/LIFE/2017_12_Vitoria.pdf"
-url_slides = "slides/LIFE/2017_12_Vitoria.html"
 url_video = ""
 
 +++
