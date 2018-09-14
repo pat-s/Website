@@ -10,7 +10,7 @@ location = "Vitoria, Spain"
 selected = false
 math = true
 
-url_pdf = "slides/LIFE/2017_12_Vitoria.pdf"
+url_pdf = "slides/LIFE/2017_12_Vitoria/2017_12_Vitoria.pdf"
 url_video = ""
 
 +++
