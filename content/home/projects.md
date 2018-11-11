@@ -1,4 +1,4 @@
-+++
+<!-- +++
 # Projects widget.
 # This widget displays all projects from `content/project/`.
 
@@ -21,7 +21,8 @@ view = 1
 # Widget layout
 # Legend: 0 = two columns (default), 1 = single column
 widget_layout = 0
- # For Showcase view, flip alternate rows?
+
+# For Showcase view, flip alternate rows?
 flip_alt_rows = false
 
 # Filter toolbar.
@@ -52,4 +53,4 @@ filter_default = 1
   name = "AUR Packages"
   tag = "AUR-Packages"
 
-+++
++++ -->

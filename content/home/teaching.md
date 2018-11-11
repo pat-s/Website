@@ -14,27 +14,11 @@ weight = 80
 
 +++
 
-# Munich R Courses (University of Munich)
+# University of Munich
 
-I contribute to various courses of the [Münchner R Kurse](http://www.muenchner-r-kurse.de/kursangebot/) hosted by the [Computational Stats group](http://www.compstat.statistik.uni-muenchen.de/) of LMU Munich.
-Currently, I teach the [ggplot2](http://www.muenchner-r-kurse.de/fortgeschrittene-visualisierung-mit-ggplot2/) course.
+I teach within the [Münchner R Kurse](http://www.muenchner-r-kurse.de/kursangebot/) hosted by the [Computational Stats group](http://www.compstat.statistik.uni-muenchen.de/) of LMU Munich.
 
-# M.Sc. Geoinformatics (University of Jena)
+# University of Jena
 
-## Winter term 2017/2018
-
-- Geo 404: Applied Geoinformatics
-  - R Introduction
-  - Handling of raster data in R
-  - Literate Programming in R
-  - Big data handling & parallelization in R
-
-# B.Sc. Geography (University of Jena)
-
-## Winter term 2016/2017
-
-- Geo 311 (3rd year B.Sc.): Geoinformatics III 
-  - Introduction to Python
-  - Python for geoprocessing -> `arcpy`
-  - Introduction to scientific reporting using Rmarkdown
-  - Tools: `R`, `Python`, `ArcGIS`, `arcpy`
+- Geo 404: Applied Geoinformatics (WS 17/18, M.Sc.)
+- Geo 311: Geoinformatics III (WS 16/17, B.Sc.)

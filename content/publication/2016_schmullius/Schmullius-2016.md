@@ -15,6 +15,7 @@ math = true
 # 4 = Report
 # 5 = Book
 # 6 = Book section
+
 publication_types = ["1"]
 publication = "In *Proc.'Dragon 3 Final Results & Dragon 4 Kick-Off Symposium', Wuhan, PR China*"
 publication_short = "In *Proc.'Dragon 3 Final Results & Dragon 4 Kick-Off Symposium', Wuhan, PR China*"

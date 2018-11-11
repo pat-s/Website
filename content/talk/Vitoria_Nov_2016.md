@@ -1,5 +1,7 @@
 +++
-time_start = 2016-11-08
+date = 2016-11-08
+time_start = 2016-11-08T11:00:00
+time_end = 2016-11-08T11:30:00
 title = "LIFE Healthy Forest: Modeling the Spatial Distribution of Hail Damage in Pine Plantations of Northern Spain as a Major Risk Factor for Forest Disease"
 abstract = ""
 abstract_short = ""

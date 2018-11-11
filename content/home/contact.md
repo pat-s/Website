@@ -1,4 +1,4 @@
-+++
+<!-- +++
 # Contact widget.
 
 date = 2016-04-20
@@ -15,4 +15,4 @@ weight = 90
 autolink = true
 
 +++
-
+ -->

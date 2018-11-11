@@ -1,5 +1,7 @@
 +++
-time_start = 2017-12-14
+date = 2017-12-14
+time_start = 2017-12-14T10:00:00
+time_end = 2017-12-14T11:00:00
 title = "LIFE Healthy Forest: FSU activity report: March - December 2017"
 abstract = ""
 abstract_short = ""
