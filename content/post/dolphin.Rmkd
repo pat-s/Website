@@ -10,7 +10,7 @@ output:
   blogdown::html_page:
     toc: true
 summary: "I use [KDE](https://www.kde.org) as my Desktop environment (DE). For those who are unfamiliar what a desktop environment is: Every OS has at least one. Its the application that is responsible for the look of the OS, the customization options and the login screen. However, on Windows and macOS you do not have a choice to choose or change the DE, you simply have to use what Windows or Apple provide you with."
-image: "dolphin2.png"
+# image: "dolphin2.png"
 preview: true  # Show a thumbnail in listings?
 ---
 
@@ -24,7 +24,7 @@ This is part 1 of the series in which I'll talk about the file manager, [Dolphin
 
 #### Excurse
 
-I use [KDE](https://www.kde.org) as my Desktop environment (DE). 
+I use [KDE](https://www.kde.org) as my Desktop environment (DE).
 For those who are unfamiliar what a desktop environment is:
 Every OS has at least one.
 Its the application that is responsible for the look of the OS, the customization options and the login screen.
@@ -46,7 +46,7 @@ They are just named differently (e.g. [Nautilus](https://projects.gnome.org/naut
 
 ### Display options
 
-[Dolphin](https://userbase.kde.org/Dolphin) has great folder display options. 
+[Dolphin](https://userbase.kde.org/Dolphin) has great folder display options.
 You can choose between a icon view, a compact view and a detailed view.
 The latter is basically the same as the compact view but you can expand folders to see their contents without actually entering it.
 

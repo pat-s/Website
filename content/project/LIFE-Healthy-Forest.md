@@ -10,8 +10,15 @@ title = "LIFE Healthy Forest (2015 - 2019)"
 # Project summary to display on homepage.
 summary = "Early detection and advanced management systems to reduce forest decline caused by invasive and pathogenic agents"
 
-# Optional image to display on homepage (relative to `static/img/` folder).
-image_preview = "life.jpg" 
+# Featured image
+# To use, add an image named `featured.jpg/png` to your project's folder. 
+[image]
+  # Caption (optional)
+  caption = "Photo by Toa Heftiba on Unsplash"
+
+  # Focal point (optional)
+  # Options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
+  focal_point = "Smart"
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
@@ -22,11 +29,6 @@ external_link = ""
 
 # Does the project detail page use math formatting?
 math = false
-
-# Optional featured image (relative to `static/img/` folder).
-[header]
-image = "healthyforest.png"
-# caption = "My caption :smile:"
 
 +++
 

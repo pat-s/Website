@@ -8,8 +8,15 @@ title = "Forest-DRAGON 3 (2013 - 2016)"
 # Project summary to display on homepage.
 summary = "ESA-MOST Dragon 3 cooperation program"
 
-# Optional image to display on homepage (relative to `static/img/` folder).
-image_preview = "dragon1.jpg"
+# Featured image
+# To use, add an image named `featured.jpg/png` to your project's folder. 
+[image]
+  # Caption (optional)
+  caption = ""
+
+  # Focal point (optional)
+  # Options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
+  focal_point = "Smart"
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
@@ -20,11 +27,6 @@ external_link = ""
 
 # Does the project detail page use math formatting?
 math = false
-
-# Optional featured image (relative to `static/img/` folder).
-# [header]
-# image = "headers/bubbles-wide.jpg"
-# caption = "My caption :smile:"
 
 +++
 

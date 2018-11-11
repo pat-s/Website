@@ -50,29 +50,8 @@ defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 
 [outputs]
-  home = [ "HTML", "CSS", "RSS", "search" ]
+  home = [ "HTML", "CSS", "RSS", "JSON" ]
   section = [ "HTML", "RSS" ]
-
-[outputFormats.search]
-  baseName = "search"
-  isPlainText = true
-  mediaType = "application/json"
-  notAlternative = true
-
-# Search.
-[params.search]
-  # Search provider:
-  #   0: No search engine
-  #   1: Built-in (Fuse)
-  #   2: Algolia (https://www.algolia.com)
-  engine = 1
-   # Configuration of Algolia search engine.
-  # Paste the values from your Algolia dashboard.
-  [params.search.algolia]
-    app_id = ""
-    api_key = ""
-    index_name = ""
-    show_logo = false
 
 
 [blackfriday]
@@ -82,7 +61,7 @@ defaultContentLanguageInSubdir = false
 
 [params]
   name = ""
-  role = "Data Scientist (PhD Candidate)"
+  role = "Data Scientist"
 
   # Organizations/Affiliations.
   #   Separate multiple entries with a comma, using the form: `[ {name="Org1", url=""}, {name="Org2", url=""} ]`.
@@ -105,14 +84,23 @@ defaultContentLanguageInSubdir = false
 
   # Color theme.
   #   Choose from `default`, `ocean`, `forest`, or `coffee`.
-  color_theme = "custom"
+  color_theme = "default"
 
   # Font style.
   #   Choose from `default`, `classic`, or `playfair`.
   font = "default"
 
+  # Description for social sharing and search engines. If undefined, author role is used in place.
+  description = ""
+
+  # Default image for social sharing and search engines. Place image in `static/img/` folder and specify image name here.
+  sharing_image = ""
+
   # Enable Keybase in Contact section by entering your keybase.io username.
   keybase = ""
+
+  # Twitter username (without @). Used when a vistor shares your site on Twitter.
+  twitter = "pjs_228"
 
   # Diplay a logo in navigation bar rather than title (optional).
   #   To enable, place an image in `static/img/` and reference its filename below. To disable, set the value to "".
@@ -137,6 +125,17 @@ defaultContentLanguageInSubdir = false
   custom_css = ["styles.css", "fonts.css"]
   custom_js  = []
 
+  #   1 = Detailed
+  #   2 = APA
+  #   3 = MLA
+  #   4 = Stream
+  publication_format = 4
+  # Talk list format.
+  #   0 = Simple
+  #   1 = Detailed
+  #   2 = Stream
+  talk_format = 2
+
   # Publication types.
   #   Used to categorize publications.
   #   The index of the publication type in the list is used as its unique numerical identifier.
@@ -153,21 +152,59 @@ defaultContentLanguageInSubdir = false
     'Book chapter'  # 6
   ]
 
+    # Post list format.
+    #   0 = Simple
+    #   1 = Detailed
+    #   2 = Stream
+    post_format = 2
 
-  # Social/Academic Networking
+  # Configuration of publication pages.
+  [params.publications]
+    # Date format (refer to https://sourcethemes.com/academic/docs/customization/#date-format )
+    #   Examples: "Mon, Jan 2, 2006" or "2006-01-02"
+    date_format = "January, 2006"
+
+  # Configuration of talk pages.
+  [params.talks]
+    # Show talk time?
+    time = true
+
+# Search.
+[params.search]
+  # Search provider:
+  #   0: No search engine
+  #   1: Built-in (Fuse)
+  #   2: Algolia (https://www.algolia.com)
+  engine = 1
+
+  # Configuration of Algolia search engine.
+  # Paste the values from your Algolia dashboard.
+  [params.search.algolia]
+    app_id = ""
+    api_key = ""
+    index_name = ""
+    show_logo = false
+
+
+ # Social/Academic Networking
   #
+  # Icon pack "fa" includes the following social network icons:
   # Icon pack "fab" includes the following social network icons:
   #
   #   twitter, weibo, linkedin, github, facebook, pinterest, google-plus,
   #   youtube, instagram, soundcloud
   #
+  #   For email icon, use "fa" icon pack, "envelope" icon, and
   #   For email icon, use "fas" icon pack, "envelope" icon, and
   #   "mailto:your@email.com" as the link.
   #
+  #   Full list: https://fortawesome.github.io/Font-Awesome/icons/
   #   Full list: https://fontawesome.com/icons
   #
+  # Icon pack "ai" includes the following academic network icons:
   # Icon pack "ai" includes the following academic icons:
   #
+  #   google-scholar, arxiv, orcid, researchgate, mendeley
   #   cv, google-scholar, arxiv, orcid, researchgate, mendeley
   #
   #   Full list: https://jpswalsh.github.io/academicons/
@@ -200,7 +237,7 @@ defaultContentLanguageInSubdir = false
   [[params.social]]
     icon = "twitter"
     icon_pack = "fab"
-    link = "//twitter.com/pjs_228"
+    link = "https://twitter.com/pjs_228"
 
   # [[params.social]]
   #  icon = "google-scholar"
@@ -210,7 +247,7 @@ defaultContentLanguageInSubdir = false
   [[params.social]]
     icon = "github"
     icon_pack = "fab"
-    link = "//github.com/pat-s"
+    link = "https://github.com/pat-s"
 
   [[params.social]]
     icon = "stack-exchange"

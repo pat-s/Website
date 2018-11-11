@@ -16,9 +16,6 @@ tags:
   - Linux
   - R
   - r-bloggers
-header:
-  caption: ''
-  image: ''
 summary: "This guide reflects my view on how to setup a working Arch Linux system tailored towards data science, R and spatial analysis. If you have suggestions for modifications, please open an issue at https://github.com/pat-s/antergos_setup_guide.
 Enjoy the power of Linux!"
 ---
