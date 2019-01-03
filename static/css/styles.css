@@ -44,8 +44,8 @@ pre{padding:0}
 
 /* from themes/academic.css */
 .article-container {
-  font-size: 0.9em;
-  max-width: 1000px;
+  font-size: 13pt;
+  max-width: 850px;
   padding: 1rem 20px 0 20px;
   margin: 0 auto 0 auto;
 }
@@ -108,6 +108,7 @@ a {
 /* code block highlighting */
 .hljs {
     display: block;
+    font-size: 10pt;
     overflow-x: auto;
     padding: 0.5em;
     color: black;
@@ -117,6 +118,7 @@ a {
 /* code inline highlighting */
 pre, code {
     font-family: 'Roboto Mono', monospace;
+    font-size: 10pt;
     color: black;
     background-color: #e1e4e8c7;
     padding: 0.0em .3em;
