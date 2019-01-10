@@ -692,7 +692,7 @@ KDE apps in GNOME (and the other way round) usually have an odd appearance becau
 
 1. Install `qt5ct` 
 2. Set the environment variable `QT_QPA_PLATFORMTHEME` to  `"qt5ct"` (add `set -gx QT_QPA_PLATFORMTHEME "qt5ct"` in `.config/fish/config.fish`).
-3. Run `qt5ct` and change the settings to your liking. Note: The default GNOME font is "Cantarell Regular 11pt".
+3. Run `qt5ct` and change the settings to your liking. Note: The default GNOME font is "Cantarell Regular 11pt". To select the default KDE "Adwaita" theme, you need to install it first: `trizen -s adwaita-qt5`.
 
 Now you can enjoy KDE apps such as `Dolphin` or `Okular`. However, you have to start them from the command line. A convenient workaround is to autostart them at boot. Create a file called `.config/autostart/dolphin.desktop` with the following content:
 
