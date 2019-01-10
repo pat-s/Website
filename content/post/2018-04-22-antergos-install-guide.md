@@ -688,13 +688,22 @@ To install these, simply click on "Get new looks" on the bottom right when you a
 
 * [Flat Remix GTK theme](https://www.gnome-look.org/p/1214931/): Darkest-solid
 
-Using KDE apps in GNOME (and the other way round) usually look odd because they are powered by different graphical libraries. To make KDE apps look not completely odd in GNOME, do the following:
+KDE apps in GNOME (and the other way round) usually have an odd appearance because they are powered by different graphical libraries. To make KDE apps look acceptable in GNOME, do the following:
 
 1. Install `qt5ct` 
 2. Set the environment variable `QT_QPA_PLATFORMTHEME` to  `"qt5ct"` (add `set -gx QT_QPA_PLATFORMTHEME "qt5ct"` in `.config/fish/config.fish`).
 3. Run `qt5ct` and change the settings to your liking. Note: The default GNOME font is "Cantarell Regular 11pt".
 
-Now you can enjoy KDE apps such as `Dolphin` or `Okular`.
+Now you can enjoy KDE apps such as `Dolphin` or `Okular`. However, you have to start them from the command line. A convenient workaround is to autostart them at boot. Create a file called `.config/autostart/dolphin.desktop` with the following content:
+
+```bash
+[Desktop Entry]
+Name=dolphin
+Comment=Run dolphin
+Exec=dolphin
+Terminal=false
+Type=Application⏎
+```
 
 ## 8.7 Presentations
 
