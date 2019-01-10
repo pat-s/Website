@@ -2,7 +2,7 @@
 title: Antergos/Arch Linux setup guide tailored towards data science, R and spatial analysis
 author: Patrick Schratz
 date: '2018-04-22'
-lastmod: '2019-01-03'
+lastmod: '2019-01-10'
 slug: antergos-install-guide
 categories:
   - Antergos
@@ -687,6 +687,14 @@ To install these, simply click on "Get new looks" on the bottom right when you a
 ### 8.6.2 GNOME
 
 * [Flat Remix GTK theme](https://www.gnome-look.org/p/1214931/): Darkest-solid
+
+Using KDE apps in GNOME (and the other way round) usually look odd because they are powered by different graphical libraries. To make KDE apps look not completely odd in GNOME, do the following:
+
+1. Install `qt5ct` 
+2. Set the environment variable `QT_QPA_PLATFORMTHEME` to  `"qt5ct"` (add `set -gx QT_QPA_PLATFORMTHEME "qt5ct"` in `.config/fish/config.fish`).
+3. Run `qt5ct` and change the settings to your liking. Note: The default GNOME font is "Cantarell Regular 11pt".
+
+Now you can enjoy KDE apps such as `Dolphin` or `Okular`.
 
 ## 8.7 Presentations
 
