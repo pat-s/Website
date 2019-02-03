@@ -1,0 +1,633 @@
+---
+title: Arch Linux setup guide tailored towards data science, R and spatial analysis
+author: Patrick Schratz
+date: '2018-04-22'
+lastmod: '2019-02-02'
+slug: arch-install-guide-for-r
+categories:
+  - Antergos
+  - Arch Linux
+  - Linux
+  - R
+  - r-bloggers
+tags:
+  - Antergos
+  - Manjaro
+  - Arch Linux
+  - Linux
+  - R
+  - r-bloggers
+summary: "This guide reflects my view on how to setup a working Arch Linux system tailored towards data science, R and spatial analysis. If you have suggestions for modifications, please open an issue at https://github.com/pat-s/antergos_setup_guide. Enjoy the power of Linux!"
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#installation">1. Installation</a><ul>
+<li><a href="#setting-up-the-partitions">1.1 Setting up the partitions</a></li>
+</ul></li>
+<li><a href="#installing-the-package-manager">2. Installing the package manager</a><ul>
+<li><a href="#choose-your-shell">2.1 Choose your shell</a><ul>
+<li><a href="#zsh">2.1.1 <code>zsh</code></a></li>
+<li><a href="#fish">2.1.2 <code>fish</code></a></li>
+</ul></li>
+<li><a href="#enabling-parallel-compiling">2.2 Enabling parallel compiling</a></li>
+</ul></li>
+<li><a href="#system-related">3. System related</a><ul>
+<li><a href="#installing-system-libraries">3.1 Installing system libraries</a></li>
+<li><a href="#apps">3.2 Apps</a></li>
+<li><a href="#editors">3.3 Editors</a></li>
+<li><a href="#office">3.4 Office</a></li>
+</ul></li>
+<li><a href="#r">4. R</a><ul>
+<li><a href="#general">4.1 General</a><ul>
+<li><a href="#ccache">ccache</a></li>
+</ul></li>
+<li><a href="#r-rstudio">4.2 R &amp; RStudio</a><ul>
+<li><a href="#r-with-optimized-openblas-lapack">R with optimized Openblas / LAPACK</a></li>
+<li><a href="#rstudio">RStudio</a></li>
+</ul></li>
+<li><a href="#packages">4.3 Packages</a><ul>
+<li><a href="#task-view-spatial">4.3.1 Task view “Spatial”</a></li>
+<li><a href="#task-view-machine-learning">4.3.2 Task view “Machine Learning”</a></li>
+</ul></li>
+<li><a href="#git-repos">4.4 Git* repos</a><ul>
+<li><a href="#ssh-configuration">4.4.1 SSH configuration</a></li>
+</ul></li>
+<li><a href="#r-from-the-command-line">4.5 R from the command line</a></li>
+<li><a href="#rprofile">4.6 Rprofile</a></li>
+</ul></li>
+<li><a href="#accessing-remote-servers">5. Accessing remote servers</a><ul>
+<li><a href="#file-access-file-manager">5.1 File access (file manager)</a><ul>
+<li><a href="#fstab">5.1.1 <code>fstab</code></a></li>
+<li><a href="#manual-mount">5.1.2 Manual mount</a></li>
+<li><a href="#executing-the-mount">5.1.3 Executing the mount</a></li>
+</ul></li>
+<li><a href="#command-line-access-terminal">5.2 Command-line access (Terminal)</a><ul>
+<li><a href="#ssh-setup">5.2.1 SSH setup</a></li>
+<li><a href="#using-tmux-and-tmuxinator-for-terminal-automatization">5.2.2 Using tmux and tmuxinator for terminal automatization</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#desktop-related">6. Desktop related</a><ul>
+<li><a href="#kde">6.1 KDE</a></li>
+<li><a href="#gnome">6.2 GNOME</a></li>
+</ul></li>
+<li><a href="#laptop-battery-life-optimization">7. Laptop battery life optimization</a></li>
+<li><a href="#miscellaneous">8. Miscellaneous</a><ul>
+<li><a href="#backup-your-config-files-and-settings">8.1 Backup your config files and settings</a></li>
+<li><a href="#arara">8.1 arara</a></li>
+<li><a href="#latexindent.pl-required-perl-modules">8.2 latexindent.pl: Required perl modules</a></li>
+<li><a href="#editor-schemes">8.3 Editor schemes</a></li>
+<li><a href="#fonts">8.4 Fonts</a></li>
+<li><a href="#icon-themes">8.5 Icon themes</a></li>
+<li><a href="#desktop-themes">8.6 Desktop Themes</a><ul>
+<li><a href="#kde-1">8.6.1 KDE</a></li>
+<li><a href="#gnome-1">8.6.2 GNOME</a></li>
+</ul></li>
+<li><a href="#presentations">8.7 Presentations</a></li>
+<li><a href="#touchpad-drivers">8.8 Touchpad drivers</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p>This guide does not claim to be complete.
+It reflects my view on how to setup a working Arch Linux system tailored towards data science, R and spatial analysis.
+If you have suggestions for modifications, please open an <a href="https://github.com/pat-s/antergos_setup_guide">issue</a>.
+Enjoy the power of Linux!</p>
+<p>Setting up Arch Linux the old-school way (i.e. configuring all yourself) is quite tedious. To be honest, I’ve never done it myself. I’ve always used distributions like <a href="https://antergos.com/try-it/">Antergos</a> or <a href="https://de.manjaro.org/">Manjaro</a>. These function on the one hand as an installation wrapper for Arch and on the other hand provide their own repositories. Both come with all kind of desktop environments to choose from (GNOME, KDE, XFCE, etc.). I will not go into details of desktop environments in this post. I will outline my personal setup in a separate post in the future.</p>
+<p>Make sure to check out <a href="https://wiki.archlinux.org/index.php/Frequently_asked_questions">the ArchWiki FAQs</a> and <a href="https://wiki.archlinux.org/index.php/Arch_compared_to_other_distributions">Arch compared to other distributions - ArchWiki</a> to get a better understanding of Arch.</p>
+<div id="installation" class="section level1">
+<h1>1. Installation</h1>
+<div id="setting-up-the-partitions" class="section level2">
+<h2>1.1 Setting up the partitions</h2>
+<p>Several valid concepts exists on how to partition a Linux system.
+The following reflects my current view:</p>
+<ol style="list-style-type: decimal">
+<li>Select “Manual” partitioning when being prompted</li>
+<li>Create a partition of 1 GB. Mount point: <code>/boot/efi</code>. Format: <code>fat32</code></li>
+<li>Create a SWAP partition which is slightly larger than your RAM size. (e.g. for 16 GB RAM use 16.5 GB partition size). Format: <code>Linux Swap</code></li>
+<li>Create a 50 - 100 GB GB partition for “root”. Mount point: <code>/</code>. Format: <code>ext4</code></li>
+<li>With the remainng space create “home”. Mount point: <code>/home</code>. Format: <code>ext4</code></li>
+</ol>
+</div>
+</div>
+<div id="installing-the-package-manager" class="section level1">
+<h1>2. Installing the package manager</h1>
+<p>Currently the best wrapper around <code>pacman</code> is <code>trizen</code>.
+Here is a list (<a href="https://wiki.archlinux.org/index.php/AUR_helpers">AUR helpers - ArchWiki</a>) comparing alternatives (scroll to the bottom).</p>
+<p>Install <code>trizen</code>:</p>
+<pre class="bash"><code>git clone https://aur.archlinux.org/trizen.git
+cd trizen
+makepkg -si</code></pre>
+<p>In <code>~/.config/trizen/trizen.conf</code> set <code>no_edit =&gt; 1</code>. Until v1.55 there was also a switch that saved you the prompt asking whether you really want to install the package (<code>install_built_with_noconfirm =&gt; 1</code>). Unfortunately it has been <a href="https://github.com/trizen/trizen/releases">removed in v1.56</a> and now you need to pass <code>--noconfirm</code> to <code>trizen</code> commands. The first settings saves you the confirmation prompt asking whether you want to edit a PKGBUILD (i.e. the scripts that specify how to download and install a package).</p>
+<div id="choose-your-shell" class="section level2">
+<h2>2.1 Choose your shell</h2>
+<p>All Linux system come with <code>bash</code> (Bourne-again shell) as default. While this shell is not bad, there are better alternatives. You have to decide whether investing the time to change the shell and learn the new syntax will make a difference for you. Since you will (hopefully) use the terminal quite often (from now on), I would recommend to at least try it :) My current favorite is the <a href="https://rootnroll.com/d/fish-shell/"><code>fish</code></a> shell.</p>
+<div id="zsh" class="section level3">
+<h3>2.1.1 <code>zsh</code></h3>
+<p>The <code>zsh</code> (Z-shell) is highly customizable but its settings are a bit complicated.
+It has several advantages (file globbing, visual appearance, etc.) to <code>bash</code>.</p>
+<p>A good <code>zsh</code> helper is <code>prezto</code>: <a href="https://github.com/sorin-ionescu/prezto">GitHub - sorin-ionescu/prezto: The configuration framework for Zsh</a>).
+Install (<code>trizen zsh</code>) and use it (<code>zsh</code>).
+My favorite theme is <code>agnoster</code>.</p>
+</div>
+<div id="fish" class="section level3">
+<h3>2.1.2 <code>fish</code></h3>
+<p>The <code>fish</code> shell is similar to <code>zsh</code> but comes with better defaults and an easier syntax. The <code>omf</code> package manager is great for installing additional plugins that simplify the shell usage. Check <a href="https://github.com/oh-my-fish/oh-my-fish">Oh-my-fish</a> for an introduction.</p>
+<p>The shell is available in the standard repos and can be installed with <code>trizen fish</code>.</p>
+<p>A great way to get started is to call <code>fish_config</code> in a fish session to configure <code>fish</code> to your needs in a graphical browser window.</p>
+<p>My current theme is <a href="https://github.com/oh-my-fish/theme-bobthefish">bobthefish</a>.</p>
+</div>
+</div>
+<div id="enabling-parallel-compiling" class="section level2">
+<h2>2.2 Enabling parallel compiling</h2>
+<p>Compiling packages from source can take time.
+To speed up the process by enabling parallel compiling, set the <code>MAKEVARS</code> variable in <code>/etc/makepkg.conf</code>: <code>MAKEFLAGS="-j$(nproc)"</code>.
+This will use all available cores on your machine for compiling.</p>
+<p>(This options seems to be enabled by default now. However, it is still good to verify this.)</p>
+</div>
+</div>
+<div id="system-related" class="section level1">
+<h1>3. System related</h1>
+<div id="installing-system-libraries" class="section level2">
+<h2>3.1 Installing system libraries</h2>
+<p>A note before the installation process: If you only have 8 GB of RAM, you need to temporary increase the size of your <code>/tmp</code> folder.
+Otherwise the <code>tmp</code> folder will run out of space due to all the package downloads and installations and you will face weird error messages if you do all the installations without a reboot.
+Increasing the <code>/tmp</code> folder temporarily can be done by <code>sudo mount -o remount,size=20G,noatime /tmp</code>.
+This increases the size for your current session to 20 GB.
+Usually the size is about half or your RAM size. The size will be resetted when you restart your machine next time.</p>
+<p>For the following installation calls, you can either use <code>trizen</code> or your personally defined wrappers.
+When calling <code>trizen &lt;package&gt;</code> a search in the official repos AND the AUR is done. This is different to <code>pacman</code> which only search in the official repos. Now you know why you need a wrapper :-)</p>
+<p><strong>A note of caution: Try to avoid installing python libraries via <code>pip</code>. If you install libraries via <code>pacman</code> that have python dependencies, <code>pacman</code> will try to install the respective <code>python-&lt;package&gt;</code>. If you installed this package via <code>pip</code> before, you will face conflicts. First search if the package is available in the repos and if not, you can safely install it via <code>pip</code>.</strong></p>
+<p>While already at python packages, <code>QGIS</code> needs some external python libraries for its plugins. Otherwise it will throw errors during startup.</p>
+<pre class="bash"><code>trizen -S python-gdal python-yaml python-jinja python-psycopg2 python-owslib python-numpy python-pygments</code></pre>
+<p>Other important system libraries for spatial applications:</p>
+<p><code>trizen -S gdal udunits postgis jdk10-openjdk openjdk10-src texlive-most pandoc-bin pandoc-citeproc-bin</code></p>
+<ul>
+<li><code>texlive-most</code> (wrapper package that installs the most important tex libraries. Similar to <code>texlive-full</code> on other Linux distributions.)</li>
+<li><code>pandoc-bin pandoc-citeproc-bin</code> (for all kind of Rmarkdown stuff. Make sure to install this library as the one in the community repository comes with 1 GB Haskell dependencies!)</li>
+</ul>
+</div>
+<div id="apps" class="section level2">
+<h2>3.2 Apps</h2>
+<p>Here is a list of applications I use. Choose for yourself which could be helpful for your.</p>
+<ul>
+<li><strong>Messaging</strong>: <a href="https://meetfranz.com">franz</a></li>
+<li><strong>Mail</strong>: <a href="https://github.com/Foundry376/Mailspring">mailspring</a></li>
+<li><strong>Browser</strong>: Google Chrome</li>
+<li><strong>Reference Manager</strong>: <a href="https://www.zotero.org">zotero</a></li>
+<li><strong>Google Drive</strong>: I use the paid service <a href="https://www.insynchq.com">insync</a>.<br />
+</li>
+<li><strong>Dropbox</strong>: <code>trizen -S dropbox</code> (<code>dropbox-cli</code> for command line access)<br />
+</li>
+<li><strong>GIS</strong>: <a href="https://www.qgis.org/de/site/">qgis</a></li>
+<li><strong>Screenshot tool</strong>: <a href="http://shutter-project.org">shutter</a></li>
+<li><strong>Image viewer</strong>: <a href="https://www.xnview.com/de/xnviewmp/">xnviewmp</a></li>
+<li><strong>Virtualbox</strong>: <a href="https://wiki.archlinux.de/title/VirtualBox">VirtualBox – wiki.archlinux.de</a></li>
+<li><strong>Terminal</strong>: <a href="https://gnunn1.github.io/tilix-web/">tilix</a></li>
+<li><strong>Writing</strong>: <a href="https://typora.io">Typora</a></li>
+<li><strong>Notes</strong>:
+<ul>
+<li>I use <a href="https://www.notion.so/">Notion</a> which atm has not Linux Desktop app and can be used in the browser only.<br />
+</li>
+<li><a href="https://github.com/fabiospampinato/notable">notable</a></li>
+<li>[Boostnote](</li>
+</ul></li>
+</ul>
+<p>A note on <em>Mailspring</em>: If you are on battery, quit the app as it consume a lot of energy while steadily trying to sync your mails.</p>
+</div>
+<div id="editors" class="section level2">
+<h2>3.3 Editors</h2>
+<p>Editors are an important topic so I devote an extra section to them.
+You can use editors to only edit text files but they can also be used as an IDE for coding.
+There are many editors out there, all loved by a certain group of people.</p>
+<p>Here’s a list of the most popular ones (this list does not claim to be complete). Also some of the listed apps are actually IDEs while some are only text editors.</p>
+<ul>
+<li>Vim</li>
+<li>Emacs</li>
+<li>Sublime Text (very fast)</li>
+<li>Visual Studio Code (my default for all non-R work)</li>
+<li>Atom</li>
+<li>Kate (KDE default)</li>
+<li>Gedit (GNOME defaul)</li>
+<li>Nano</li>
+<li>etc.</li>
+</ul>
+<p>I currently use <a href="https://neovim.io/">Neovim</a> which is a fork of <code>vim</code> for quick editing on the command line. My general purpose IDE is <a href="https://code.visualstudio.com/">Visual Studio Code</a> and for R development I use <code>RStudio</code>.</p>
+</div>
+<div id="office" class="section level2">
+<h2>3.4 Office</h2>
+<p><code>trizen --noconfirm libreoffice-fresh</code></p>
+<p>If you are on a KDE Desktop, <em>LibreOffice</em> may flicker black/white.
+This is caused by <em>OpenGl</em>.</p>
+<p>To solve it, set the <code>value</code> item in following two lines of <code>~/.config/libreoffice/4/user/registrymodifications.xcu</code> to <code>false</code>:</p>
+<pre class="html"><code>&lt;item oor:path=&quot;/org.openoffice.Office.Common/VCL&quot;&gt;&lt;prop oor:name=&quot;ForceOpenGL&quot; oor:op=&quot;fuse&quot;&gt;&lt;value&gt;false&lt;/value&gt;&lt;/prop&gt;&lt;/item&gt;
+&lt;item oor:path=&quot;/org.openoffice.Office.Common/VCL&quot;&gt;&lt;prop oor:name=&quot;UseOpenGL&quot; oor:op=&quot;fuse&quot;&gt;&lt;value&gt;false&lt;/value&gt;&lt;/prop&gt;&lt;/item&gt;</code></pre>
+<p>Additionally, I recommend to install the <a href="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme">Papirus Icon theme</a> for Libreoffice: <code>trizen -S --noconfirm papirus-libreoffice-theme</code>.</p>
+</div>
+</div>
+<div id="r" class="section level1">
+<h1>4. R</h1>
+<div id="general" class="section level2">
+<h2>4.1 General</h2>
+<div id="ccache" class="section level3">
+<h3>ccache</h3>
+<p>This library caches all C compiled code, making reoccuring package installations that use C code a lot faster.</p>
+<p>Put the following into <code>~/.R/Makevars</code> (create it if missing):</p>
+<pre class="r"><code>VER=
+CCACHE=ccache
+CC=$(CCACHE) gcc$(VER)
+CXX=$(CCACHE) g++$(VER)
+C11=$(CCACHE) g++$(VER)
+C14=$(CCACHE) g++$(VER)
+FC=$(CCACHE) gfortran$(VER)
+F77=$(CCACHE) gfortran$(VER)</code></pre>
+<p>Additionally, install <code>ccache</code> on your system: <code>trizen ccache</code>.
+See <a href="http://dirk.eddelbuettel.com/blog/2017/11/27/#011_faster_package_installation_one">this blog post</a> by Dirk Eddelbuettel as a reference.</p>
+<p>To use R from the shell without a prior defined mirror, you need the system libraries <code>tcl</code> and <code>tk</code> to launch the mirror selection popup (<code>trizen -S tcl tk</code>).</p>
+</div>
+</div>
+<div id="r-rstudio" class="section level2">
+<h2>4.2 R &amp; RStudio</h2>
+<div id="r-with-optimized-openblas-lapack" class="section level3">
+<h3>R with optimized Openblas / LAPACK</h3>
+<p>Next, install either the “Intel MKL” or <code>libopenblas</code> to be used in favor of the standard “libRlapack/libRblas” libraries that are shipped with the default R installation.
+These libraries are responsible for numerical computations and have <a href="http://pacha.hk/2017-12-02_why_is_r_slow.html">impressive speedups</a> compared to the default libraries.
+Thanks <span class="citation">[@marcosci]</span>(<a href="https://github.com/marcosci" class="uri">https://github.com/marcosci</a>) for the hint.
+While the “Intel MKL” library is the fasted according to the benchmarks, its also much more complicated to install.</p>
+<p><code>libopenblas</code> will automatically be used if its installed since the default <code>R</code> installation <a href="https://git.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/r">on Arch</a> is configured with the <code>--with-blas</code> option (see section A.3.1 in <a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installation">https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installation</a>).
+I recommend installing the AUR package <code>openblas-lapack</code> as its package cominbing multiple libraries: <code>trizen -S --noconfirm openblas-lapack</code>.</p>
+<p>To verify your installation in <code>R</code>, simply run <code>sessionInfo()</code> and check the printed information:</p>
+<pre class="r"><code>sessionInfo()
+
+R version 3.4.4 (2018-03-15)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Arch Linux
+
+Matrix products: default
+BLAS/LAPACK: /usr/lib/libopenblas_haswellp-r0.2.20.so</code></pre>
+<p>If you want to try out the “Intel-MKL” library, follow these instructions:</p>
+<p>There is an AUR package that provides <code>R</code> compiled with <code>intel-mkl</code> named <code>r-mkl</code>.
+<strong>Note:</strong> The download size of <code>intel-mkl</code> is around 4 GB and takes a lot of memory during installation.
+Most of it will stored in the swap (around 10 GB) so make sure your SWAP space is &gt; 10 GB.</p>
+<p>Also to successfully install <code>intel-mkl</code>, you need to temporarly increase the <code>/tmp</code> directory as <code>intel-mkl</code> requires quite some space: <code>sudo mount -o remount,size=30G,noatime /tmp</code>.</p>
+</div>
+<div id="rstudio" class="section level3">
+<h3>RStudio</h3>
+<p>Use <code>trizen -s rstudio</code> and pick your favorite release channel.
+During installation R will get installed as a dependency (if you have not already done so).</p>
+</div>
+</div>
+<div id="packages" class="section level2">
+<h2>4.3 Packages</h2>
+<p>Open RStudio and install the R package <code>usethis</code> (it will install quite a few dependencies, get a coffee) and then call <code>usethis::browse_github_pat()</code>.
+Follow the instructions to set up a valid <code>GITHUB_PAT</code> environment variable that will be used for installing packages from Github.</p>
+<div id="task-view-spatial" class="section level3">
+<h3>4.3.1 Task view “Spatial”</h3>
+<p>Of course you it is not required to install all packages of a task view.
+You will never use all packages of a task view.
+In my opinion, however, it is pretty neat to have one command that installs (almost) all packages I use of a certain field.
+I do not care about the additional packages installed.</p>
+<p>Required system libraries:</p>
+<ul>
+<li>jq</li>
+<li>fortran</li>
+<li>v8-3.14 (Some R packages (<code>geojsonlite</code>, etc.) require the <code>V8</code> <a href="https://github.com/jeroen/V8">package</a> which depends on the outdated <code>v8-314</code> library)</li>
+<li>tk</li>
+<li>nlopt</li>
+<li>gsl</li>
+</ul>
+<p><code>trizen -S jq gcc-fortran tk nlopt gsl</code></p>
+<p><code>trizen -s nlopt</code></p>
+<p><code>trizen -s v8-3.14</code></p>
+<p>For <code>rJava</code> we need to do <code>sudo R CMD javareconf</code>.</p>
+<p>Now you can install the <code>ctv</code> package and then call <code>ctv::install.views("Spatial")</code>.
+This will install all packages listed in the <a href="https://cran.r-project.org/web/views/Spatial.html">spatial</a> task view.</p>
+<p>Packages that error during installation (Please report back if you have a working solution):</p>
+<ul>
+<li>ProbitSpatial</li>
+<li>spaMM</li>
+<li>RPyGeo (Windows only)</li>
+</ul>
+</div>
+<div id="task-view-machine-learning" class="section level3">
+<h3>4.3.2 Task view “Machine Learning”</h3>
+<p>Required system libraries:</p>
+<ul>
+<li>nlopt</li>
+</ul>
+<p>Packages that error during installation (Please report back if you have a working solution):</p>
+<ul>
+<li>interval (requires Icens from Bioconductor)
+LTRCtrees (requires Icens from Bioconductor)</li>
+</ul>
+</div>
+</div>
+<div id="git-repos" class="section level2">
+<h2>4.4 Git* repos</h2>
+<p>The easiest way (in my opinion) is to use <em>SSH</em> and <code>usethis::create_from_github()</code>.</p>
+<div id="ssh-configuration" class="section level3">
+<h3>4.4.1 SSH configuration</h3>
+<p>If you have never set a “ssh keygen pair” at your local machine, please do so by calling <code>ssh-keygen -t rsa</code>.</p>
+<p>If you already have a file named <code>id_rsa.pub</code> in your <code>~/.ssh</code> folder at your local machine, skip this step! Otherwise it will override your existing one and may invalidate previous ssh connections you set up.
+You now have an <code>id_rsa.pub</code> file in a (hidden!) folder named <code>.ssh</code> within <code>/home</code> (at your local machine).
+(You can enable viewing hidden files/folders in the file-manager with the shortcut <code>ALT + .</code> (Dolphin) or <code>CTRL + h</code> (Nautilus)).</p>
+<p>Next, make sure that the permissions of the ssh files <a href="https://superuser.com/questions/215504/permissions-on-private-key-in-ssh-folder/925859">are correct</a>:</p>
+<ol style="list-style-type: decimal">
+<li>The local directory in which you want to store your Github repos should have 777 permissions. This usually is not the case if you create the directory. If the permissions are wrong, <code>usethis::create_from_github()</code> will not be able to write files there. <code>sudo chmod 777 ~/git</code>.</li>
+<li>Make sure your ssh keys have the right permissions: <code>sudo chmod 600 ~/.ssh/id_rsa</code>, <code>sudo chmod 644 ~/.id_rsa.pub</code></li>
+<li>Add your ssh-key to the keychain: <code>ssh-add -K ~/.ssh/id_rsa</code></li>
+</ol>
+<p>Sometimes, the “ssh agent” is not initialized when starting a new shell. You can force this behavior by putting the following either into your <code>~/.bash_profile</code> (if you are using the <code>bash</code> shell)</p>
+<pre class="bash"><code>if [ -f ~/.ssh/agent.env ] ; then
+    . ~/.ssh/agent.env &gt; /dev/null
+    if ! kill -0 $SSH_AGENT_PID &gt; /dev/null 2&gt;&amp;1; then
+        echo &quot;Stale agent file found. Spawning new agent… &quot;
+        eval `ssh-agent | tee ~/.ssh/agent.env`
+        ssh-add
+    fi
+else
+    echo &quot;Starting ssh-agent&quot;
+    eval `ssh-agent | tee ~/.ssh/agent.env`
+    ssh-add
+fi</code></pre>
+<p>or into <code>~/.config/fish/config.fish</code> (for the <code>fish</code> shell):</p>
+<pre class="bash"><code># SSH AGENT
+setenv SSH_ENV $HOME/.ssh/environment
+
+function start_agent                                                                                                                                                                    
+    echo &quot;Initializing new SSH agent ...&quot;
+    ssh-agent -c | sed &#39;s/^echo/#echo/&#39; &gt; $SSH_ENV
+    echo &quot;succeeded&quot;
+    chmod 600 $SSH_ENV 
+    . $SSH_ENV &gt; /dev/null
+    ssh-add
+end
+
+function test_identities                                                                                                                                                                
+    ssh-add -l | grep &quot;The agent has no identities&quot; &gt; /dev/null
+    if [ $status -eq 0 ]
+        ssh-add
+        if [ $status -eq 2 ]
+            start_agent
+        end
+    end
+end
+
+if [ -n &quot;$SSH_AGENT_PID&quot; ] 
+    ps -ef | grep $SSH_AGENT_PID | grep ssh-agent &gt; /dev/null
+    if [ $status -eq 0 ]
+        test_identities
+    end  
+else
+    if [ -f $SSH_ENV ]
+        . $SSH_ENV &gt; /dev/null
+    end  
+    ps -ef | grep $SSH_AGENT_PID | grep -v grep | grep ssh-agent &gt; /dev/null
+    if [ $status -eq 0 ]
+        test_identities
+    else 
+        start_agent
+    end  
+end</code></pre>
+<p>You can also hand over the information manually if it does not work at all:</p>
+<p><code>cred &lt;- git2r::cred_ssh_key(publickey = "~/.ssh/id_rsa.pub", privatekey = "~/.ssh/id_rsa")</code></p>
+<p>This object is then passed to the <code>credentials</code> argument in <code>create_from_github()</code>.</p>
+<p>Now clone all your repos from Github, e.g. <code>create_from_github(repo = "pat-s/oddsratio", destdir = "~/git", credentials = cred)</code>.
+Alternatively, you can also check if <code>git2r::check_ssh_key()</code> returns the correct credentials.
+If it returns</p>
+<pre class="r"><code>git2r::cred_ssh_key()
+$publickey
+[1] &quot;/home/pjs/.ssh/id_rsa.pub&quot;
+
+$privatekey
+[1] &quot;/home/pjs/.ssh/id_rsa&quot;
+
+$passphrase
+character(0)
+
+attr(,&quot;class&quot;)
+[1] &quot;cred_ssh_key&quot;</code></pre>
+<p>you can also use <code>create_from_github(repo = "pat-s/oddsratio", destdir = "~/git", credentials = git2r::cred_ssh_key())</code>.</p>
+<p>The little overhead is really worth it: You have a working <code>ssh</code> setup and by reusing the command and just replacing the repo name the cloning off all your repos is done within minutes!</p>
+</div>
+</div>
+<div id="r-from-the-command-line" class="section level2">
+<h2>4.5 R from the command line</h2>
+<p>While most people use R from within <em>RStudio</em>, it is important to have a proper command line setup. I often call R in a second session (besides <em>RStudio</em>) to update packages, run <code>R CMD check</code> on a package, etc. The native R command line that you get when typing <code>R</code> in your shell lacks a lot of features. Fortunately, there is <a href="https://github.com/randy3k/radian">radian</a>. Its advantages are listed in the README of the repo.</p>
+<p>I’ve set an alias that maps <code>r</code> to <code>radian</code>. So whenever I type <code>r</code> into the console and hit enter, I get a “21st century ready” R console.</p>
+<p><code>trizen -S --noconfirm radian</code></p>
+</div>
+<div id="rprofile" class="section level2">
+<h2>4.6 Rprofile</h2>
+<p>The <code>~/.Rprofile</code> holds several options that will be applied during R startup. However, specifying all custom functions, options and other calls in one R file can get messy. Fortunately, there is the <a href="https://github.com/HenrikBengtsson/startup">startup</a> package. You can put several .R files into the <code>~/.Rprofile.d</code> directory. This way you can organize your custom R startup better. Also, by running <code>startup::startup(debug = TRUE)</code> you can actually see what happens if you start R.</p>
+<p>You can find my settings <a href="https://www.dropbox.com/home/Mackup">in my Dropbox</a>.</p>
+</div>
+</div>
+<div id="accessing-remote-servers" class="section level1">
+<h1>5. Accessing remote servers</h1>
+<div id="file-access-file-manager" class="section level2">
+<h2>5.1 File access (file manager)</h2>
+<div id="fstab" class="section level3">
+<h3>5.1.1 <code>fstab</code></h3>
+<p>There are multiple approaches how to achieve this (<a href="https://pat-s.github.io/post/autofs/">Auto-mount network shares (cifs, sshfs, nfs) on-demand using autofs | Patrick Schratz</a>, <a href="https://wiki.archlinux.org/index.php/fstab">fstab - ArchWiki</a>).</p>
+<p>Here is an example of a <code>fstab</code> setup for a <code>sshfs</code> (to Linux server) and <code>cifs</code> (to Windows server) mount.
+Append those lines to <code>/etc/fstab</code>; don’t overwrite the existing content as this will result in boot errors otherwise!</p>
+<pre class="bash"><code># sshfs
+sshfs#&lt;username&gt;@&lt;ip&gt;:&lt;remote mount point&gt; &lt;local mount point&gt; fuse        reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0,_netdev,x-systemd.after=network-online.target   0 0
+
+# cifs
+//&lt;ip&gt;/&lt;remote mount point&gt; &lt;local mount point&gt; cifs        credentials=/etc/.smbcredentials.txt,uid=1000,file_mode=0775,dir_mode=0775,gid=100,sec=ntlm,vers=1.0,dom=ads.uni-jena.de,forcegid,_netdev,x-systemd.after=network-online.target 0 0</code></pre>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>(cifs) Depending how new the Windows server is, you do not need <code>vers=1.0</code>.</li>
+<li>(cifs) Store your login credentials for the windows server in a file, e.g. <code>/etc/.smbcredentials.txt</code> with contents being <code>username = &lt;username&gt;</code> and <code>password = &lt;password&gt;</code>.</li>
+<li>(sshfs) Copy <code>.ssh/id_rsa</code> to <code>root/.ssh/</code> as the mount will be executed by the root user.</li>
+<li>(cifs) Install the Arch Linux kernel headers for the <code>cifs</code> package to work (and later on for Virtualbox): <code>trizen linux-headers</code></li>
+</ul>
+<p>Reboot.</p>
+<p>Both advantage and disadvantage of using <code>fstab</code> are that it tries to mount the directories during boot. However, often this fails. Either because of a missing network connection at this point or because you need a VPN to access a server remotely.</p>
+</div>
+<div id="manual-mount" class="section level3">
+<h3>5.1.2 Manual mount</h3>
+<p>You can also put this information in a different file and do a manual mount when everything is ready (i.e. your machine is booted, your VPN connected). The syntax looks a bit different then:</p>
+<pre class="bash"><code>sudo sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 &lt;username&gt;@&lt;server ip&gt;:/ &lt;local mount point&gt;
+
+sudo mount -t cifs -o credentials=&lt;location of credentials file&gt;,uid=1000,file_mode=0775,dir_mode=0775,gid=100,sec=ntlm,vers=1.0,dom=&lt;domain name&gt;,forcegid //&lt;server ip&gt;/&lt;shared folder&gt;     &lt;local mount point&gt;</code></pre>
+<p>I won’t go into details of all options I used here. Check out the manual pages of the respective protocols if you are facing errors.</p>
+</div>
+<div id="executing-the-mount" class="section level3">
+<h3>5.1.3 Executing the mount</h3>
+<p>If you use <code>fstab</code>, you can mount all mounts with <code>sudo mount -a</code>.</p>
+<p>The manual approach needs to be saved in a <code>bash</code> script and called from your shell with <code>bash &lt;filename&gt;.sh</code>.</p>
+<p>To avoid conflicts when remounting (after a network disconnect or similar), my wrapper script looks as follows:</p>
+<pre class="bash"><code>#! /bin/bash
+
+sudo pkill -kill -f &quot;sshfs&quot;
+sudo umount -f /mnt/&lt;name&gt;
+sudo umount -l /mnt//&lt;name&gt;
+sudo umount -a -t cifs -l
+sudo bash `&lt;name of mount file`.sh</code></pre>
+<p>Some operations in this file may be redundant or ineffective.</p>
+<p>So in summary, I call my wrapper script which does the following:</p>
+<ol style="list-style-type: decimal">
+<li>Unmount all mounts</li>
+<li>Mount all mounts specified in <code>&lt;name of mount file&gt;.sh</code>.</li>
+</ol>
+</div>
+</div>
+<div id="command-line-access-terminal" class="section level2">
+<h2>5.2 Command-line access (Terminal)</h2>
+<div id="ssh-setup" class="section level3">
+<h3>5.2.1 SSH setup</h3>
+<p>Again we use <code>ssh</code>, this time to log into remote servers rather than downloading Github repos. If you have never set a “ssh keygen pair” at your local machine, please do so by calling <code>ssh-keygen -t rsa</code>.</p>
+<p>If you already have a file named <code>id_rsa.pub</code> in your <code>~/.ssh</code> folder at your local machine, skip this step! Otherwise it will override your existing one and may invalidate previous ssh connections you set up.
+You now have an <code>id_rsa.pub</code> file in a (hidden!) folder named <code>.ssh</code> within <code>/home</code> (at your local machine).
+Now you need to copy this file (<code>id_rsa.pub</code>) to the server so that you can be identified:</p>
+<pre class="sh"><code>ssh username@&lt;server ip&gt; &#39;test -d ~/.ssh &amp;&amp; mkdir ~/.ssh&#39; # creates the .ssh directory if it does not exist
+scp .ssh/id_rsa.pub username@&lt;server&gt;:/home/&lt;username&gt;/.ssh/ # copies your local public key to the server</code></pre>
+<p>Every time you log in via command line now, you will not be prompted for your password.</p>
+<p>You can further simplify the login process.
+Instead of having to type <code>ssh &lt;user&gt;@&lt;server&gt;</code> you can store all of this information in your <code>~/.ssh/config</code> file:</p>
+<pre class="sh"><code>Host &lt;name-you-wanna-use&gt;
+    user &lt;username&gt;
+    Hostname &lt;server&gt;
+    IdentityFile /path/to/.ssh/id_rsa</code></pre>
+<p>You can easily connect to all servers you have access to with a little one-time effort.</p>
+</div>
+<div id="using-tmux-and-tmuxinator-for-terminal-automatization" class="section level3">
+<h3>5.2.2 Using tmux and tmuxinator for terminal automatization</h3>
+<p><a href="https://github.com/tmux/tmux/wiki">tmux</a> is a terminal multiplexer that lets you create complex terminal arrangements. Additionally, you can use keybindings to quickly move between panes and a lot of extensions exists to save and restore layouts.</p>
+<p>One extension, namely <a href="https://github.com/tmuxinator/tmuxinator">tmuxinator</a> gives you the power to write template files for server connections. This makes it possible to load several server connections with just one command.</p>
+<p>For example, I currently have connections to six different servers stored in my config file. Executing <code>tmuxinator start servers</code> opens 6 windows with 3 panes each for each server. Here is a screenshot:</p>
+</div>
+</div>
+</div>
+<div id="desktop-related" class="section level1">
+<h1>6. Desktop related</h1>
+<div id="kde" class="section level2">
+<h2>6.1 KDE</h2>
+<p>KDE is probably the DE (Desktop environment) that is most customizable. By default it comes with a Windows-like navigation panel. However, you can have a dock by using <a href="https://github.com/psifidotos/Latte-Dock">latte-dock</a>. I used KDE for quite some time and I was satisfied with most of it.</p>
+<p><strong>Networkmanager</strong></p>
+<p>If you want to use an automatic login to a VPN and the networkmanager-daemon (e.g. Openconnect) does not store your password, try the <code>network-manager-applet</code> package.
+It is the GNOME network-manager and has (for whatever reason) no problems with storing the password.</p>
+</div>
+<div id="gnome" class="section level2">
+<h2>6.2 GNOME</h2>
+<p>GNOME looks more like macOS. Clean, fresh, smooth. However, it needs a bit more love in my opinion to get a proper working setup. You need to find which <a href="https://extensions.gnome.org">gnome-extensions</a> you need for your work. Most of them are present in the AUR.</p>
+<p>Also (and this is the biggest downside) it consumes a lot of memory. I ditched it in the end because of this. On my 16 GB machine, I could hardly have all my standard apps open with now hitting my RAM limit. In contrast, on my current Desktop Environment (i3) I really cross the 8 GB mark.</p>
+<p>I had the following extensions installed:</p>
+<pre class="bash"><code>trizen -Q | grep &quot;gnome-shell&quot;                                                                                                                   
+gnome-shell 1:3.30.2-1
+gnome-shell-extension-appindicator-git 1:21+15+g7bd97d4-1
+gnome-shell-extension-arch-update 28-1
+gnome-shell-extension-cpufreq-git v30.0.r0.g17e0861-1
+gnome-shell-extension-dash-to-dock 1:64-1
+gnome-shell-extension-freon-git 35.r16.g2cf167a-1
+gnome-shell-extension-gravatar 4-1
+gnome-shell-extension-multi-monitors-add-on-git 20171018-1
+gnome-shell-extension-status-menu-buttons 0.3-2
+gnome-shell-extension-system-monitor-git 884.21ae32a-1
+gnome-shell-extension-taskbar 57.0-1
+gnome-shell-extension-topicons 1:20-1
+gnome-shell-extension-topicons-plus-git 21+23+g1766933-1
+gnome-shell-extension-weather-git 1:r589.ea2d56a-1
+gnome-shell-extensions 3.30.1-1</code></pre>
+<p>You can control the settings via the “Tweak tool” that comes with GNOME by default.</p>
+<p>Note that GNOME comes with <a href="https://wayland.freedesktop.org">Wayland</a> as the desktop compositor library while KDE still uses <a href="https://www.x.org/wiki/">X</a>. I am not an expert in both but the future is said to be Wayland. You might run into some troubles with driver support for Wayland and there is much better documentation and help for X. You can also run GNOME with X if you are facing too many issues.</p>
+</div>
+</div>
+<div id="laptop-battery-life-optimization" class="section level1">
+<h1>7. Laptop battery life optimization</h1>
+<p>Although the Linux kernel has a lot of power saving options, they are not all enabled by default.</p>
+<p>There are two main power optimization tools:</p>
+<ul>
+<li>Powertop</li>
+<li>TLP</li>
+</ul>
+<p>I prefer <code>tlp</code> as <code>powertop</code> often causes trouble with USB devices going into sleep mode.
+Also, applying the changes on boot is easier with <code>tlp</code>.</p>
+<p>Do <code>trizen -S --noconfirm tlp</code> and then follow the instructions on <a href="https://wiki.archlinux.org/index.php/TLP">TLP - ArchWiki</a> to configure it correctly.
+<code>powertop</code> though is useful to check the applied settings. Do <code>sudo powertop</code> and go to the “tunables” section and check if most settings are “GOOD” (most are “BAD” before applying <code>tlp</code>).</p>
+</div>
+<div id="miscellaneous" class="section level1">
+<h1>8. Miscellaneous</h1>
+<div id="backup-your-config-files-and-settings" class="section level2">
+<h2>8.1 Backup your config files and settings</h2>
+<p>A machine can crash any time. It is not only important to backup your data and scripts (or to have them stored in the cloud). You also want to backup all configurations of your apps so that you can restore them easily with a click. This is also important and useful if you want to sync all your configurations across multiple machines.</p>
+<p><a href="https://github.com/lra/mackup">mackup</a> is a great tool for this. It syncs a variety of config files and uploads these to a cloud of your choice. Under the hood, the config files will get soft-linked to your cloud which means that updating it on one machine will also trigger a change on all other machines.</p>
+<p>On a new machine, you only need to run <code>mackup restore</code> to have all your settings back. Unfortunately it does not work with Windows but if you are reading this guide, you are most likely not on Windows anymore ;-).</p>
+</div>
+<div id="arara" class="section level2">
+<h2>8.1 arara</h2>
+<p><a href="https://github.com/cereda/arara">GitHub - cereda/arara: arara is a TeX automation tool based on rules and directives.</a>
+An automatization tool for TeX: <code>pac install arara-git</code>.
+However, lately I use the <code>latex-workshop</code> extention in Visual Studio Code for all my LaTex stuff.</p>
+</div>
+<div id="latexindent.pl-required-perl-modules" class="section level2">
+<h2>8.2 latexindent.pl: Required perl modules</h2>
+<p><code>latexindent</code> is a library which automatically indents your LaTeX document during compilation: <a href="https://github.com/cmhughes/latexindent.pl">GitHub - cmhughes/latexindent.pl</a></p>
+<p><code>trizen -S perl-log-dispatch perl-dbix-log4perl perl-file-homedir perl-unicode-linebreak</code>.</p>
+<p>It’s also integrad in the <code>latex-workshop</code> extention in Visual Studio Code.</p>
+</div>
+<div id="editor-schemes" class="section level2">
+<h2>8.3 Editor schemes</h2>
+<p>I use the <a href="https://draculatheme.com">Dracula</a> scheme in almost all applications.
+While its comes integrated into RStudio, here are installation instructions for <a href="https://draculatheme.com/kate/">Kate</a> and <a href="https://github.com/krzysztofzuraw/dracula-tilix">Tilix</a>.
+Alternatively I like the <a href="https://github.com/chriskempson/tomorrow-theme">tomorrow-night-eighties</a> theme lately.</p>
+</div>
+<div id="fonts" class="section level2">
+<h2>8.4 Fonts</h2>
+<p>I enjoy using <a href="https://github.com/tonsky/FiraCode">Fira Code</a>.
+I use it as a coding font in all editors (monospace ftw) but also as a system wide font (the “medium” variant) with size 10.
+Another great monospace coding font is <a href="https://github.com/be5invis/Iosevka">Iosevka</a>.</p>
+</div>
+<div id="icon-themes" class="section level2">
+<h2>8.5 Icon themes</h2>
+<p>There are two awesome icon themes: <a href="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme">Papirus</a> and <a href="http://numixproject.org">numix</a>.</p>
+<p>Try them and choose for yourself.
+You will see what a tremendous impact good icons can have on your daily work.</p>
+</div>
+<div id="desktop-themes" class="section level2">
+<h2>8.6 Desktop Themes</h2>
+<div id="kde-1" class="section level3">
+<h3>8.6.1 KDE</h3>
+<p>My overall desktop theme favorite is “Adapta”.
+Set it via “System Settings -&gt; Workspace theme -&gt; Desktop Theme”.
+For “Look and Feel” I prefer “Arc Dark”.</p>
+<p>To install these, simply click on “Get new looks” on the bottom right when you are in “System Settings -&gt; Workspace theme”.</p>
+</div>
+<div id="gnome-1" class="section level3">
+<h3>8.6.2 GNOME</h3>
+<ul>
+<li><a href="https://www.gnome-look.org/p/1214931/">Flat Remix GTK theme</a>: Darkest-solid</li>
+</ul>
+<p>KDE apps in GNOME (and the other way round) usually have an odd appearance because they are powered by different graphical libraries. To make KDE apps look acceptable in GNOME, do the following:</p>
+<ol style="list-style-type: decimal">
+<li>Install <code>qt5ct</code></li>
+<li>Set the environment variable <code>QT_QPA_PLATFORMTHEME</code> to <code>"qt5ct"</code> (add <code>set -gx QT_QPA_PLATFORMTHEME "qt5ct"</code> in <code>.config/fish/config.fish</code>).</li>
+<li>Run <code>qt5ct</code> and change the settings to your liking. Note: The default GNOME font is “Cantarell Regular 11pt”. To select the default KDE “Adwaita” theme, you need to install it first: <code>trizen -s adwaita-qt5</code>.</li>
+</ol>
+<p>Now you can enjoy KDE apps such as <code>Dolphin</code> or <code>Okular</code>. However, you have to start them from the command line. A convenient workaround is to autostart them at boot. Create a file called <code>.config/autostart/dolphin.desktop</code> with the following content:</p>
+<pre class="bash"><code>[Desktop Entry]
+Name=dolphin
+Comment=Run dolphin
+Exec=dolphin
+Terminal=false
+Type=Application⏎</code></pre>
+</div>
+</div>
+<div id="presentations" class="section level2">
+<h2>8.7 Presentations</h2>
+<p>To create presentations I use the R package <a href="https://github.com/yihui/xaringan">xaringan</a>.
+Usually I convert the resulting HTML slides to PDF using <a href="https://github.com/astefanutti/decktape">decktape</a> (install with <code>trizen -s nodejs-decktape</code>) and present the talk using <a href="http://impressive.sourceforge.net">impressive</a> (install with <code>trizen -s impressive</code>).</p>
+</div>
+<div id="touchpad-drivers" class="section level2">
+<h2>8.8 Touchpad drivers</h2>
+<p>Some devices need to install the “synaptic touchpad drivers” to enable the a “soft-click” window activation.
+<code>trizen -s xf86-input-synaptics</code>.</p>
+</div>
+</div>
