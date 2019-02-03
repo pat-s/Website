@@ -660,3 +660,8 @@ Usually I convert the resulting HTML slides to PDF using [decktape](https://gith
 
 Some devices need to install the "synaptic touchpad drivers" to enable the a "soft-click" window activation.
 `trizen -s xf86-input-libinput`.
+
+## 8.9 Other helpful tools
+
+- [pacmanity](https://github.com/DerekTBrown/pacmanity): Each time you install a package, this tool adds the package to a Github Gist. 
+This Gist stores all of your installed packages. Here's [mine](https://gist.github.com/pat-s/6509f87cf380cbe81631e444079e90e2).
