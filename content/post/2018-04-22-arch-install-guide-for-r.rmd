@@ -659,4 +659,4 @@ Usually I convert the resulting HTML slides to PDF using [decktape](https://gith
 ## 8.8 Touchpad drivers
 
 Some devices need to install the "synaptic touchpad drivers" to enable the a "soft-click" window activation.
-`trizen -s xf86-input-synaptics`.
+`trizen -s xf86-input-libinput`.
