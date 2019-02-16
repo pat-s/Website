@@ -1,0 +1,107 @@
+---
+title: 'i3wm: Introducing my Linux desktop setup'
+author: Patrick Schratz
+date: '2019-02-05'
+slug: i3wm-introducing-my-desktop-setup
+categories:
+  - Arch Linux
+  - Linux
+tags:
+  - Arch Linux
+  - Linux
+  - Manjaro
+  - i3wm
+  - i3
+image:
+  caption: ''
+  focal_point: ''
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+# Introduction
+
+After switching from Windows/macOS to Linux  about 1.5 years ago I tried many different Linux distributions and desktop environments.
+I do not want to go into details why I am running Arch Linux (Manjaro) in this post but rather talk about the "visual engine" in the background: the desktop environment. 
+Strictly said, _i3wm_ is not even a desktop environment but rather "only" a tiling window-manager^[https://www.zdnet.com/article/how-to-customize-your-linux-desktop-i3-window-manager/]. 
+The key point is that most navigation is done via the keyboard.
+Windows cannot be re-sized with the mouse (by default) as they do not open in floating mode but only in full-size unless they are split in half (or further) by opening other applications.
+
+You may sound surprised: Why choose an environment in which you cannot start an application with your mouse? 
+Aren't all the major desktop environments (DE) trying to make the graphical look and feel, app startup and accessibility better from day to day?
+Sure, that is the main goal. 
+And the KDE and GNOME team (and all other Linux developers that invest their free time) are making an important improvement for the Linux Desktop world to compete against Windows + macOS.
+Linux Desktop is continuously becoming easier to use, even for non-programmers.
+
+So, what exactly is the problem then?
+
+![](https://media.giphy.com/media/d9rGLfxrh1Rfy/giphy.gif)
+
+All graphical libraries that provide features such as animations, slide effects or in general a lot of customization will take quite some time to load.
+That's why programmers prefer the terminal in the first place.
+Running any code from the shell is quicker than running it within an IDE with graphical overhead.
+
+So while the two major Linux DE's nowadays (KDE and GNOME) provide more and more options in every update, optimize their look and feel and so on, they also take quite an amount of memory. 
+This scales up with all applications that a user opens.
+Also, both DE's come with their own GUI-toolkits (GTK <-> QT) which softly force the user to use apps built with their toolkit. The other one usually looks odd^[There are workarounds to this, but they usually require some work and applications still look not fully equal in terms of their graphical appearance.].
+
+# The advantages of i3wm
+
+The most important advantages are: **Usability** (with respect to the keyboard),  **speed** and **memory consumption**. 
+Everything (ok, almost) has a key-binding in _i3wm_.
+Whether its opening apps, tiling/stacking windows, switching to workspaces, maintaining the system, shutting down the machine.
+Using the keyboard for these kind of events saves you so much time throughout the day.
+Think about how much time it takes to move your mouse to button in a window, click it, wait for the next button to appear and to repeat the same task again.
+It is a lot quicker to just hit two keys on your keyboard. 
+After some time, you will be so fast in hitting these keys because it just becomes a habit for your brain.
+
+![](https://media.giphy.com/media/ule4vhcY1xEKQ/giphy.gif)
+
+
+
+From time to time you might be only using your laptop on your knees (while you're traveling, while sitting on the balcony). In these cases you might realize the moments when you "need" to use the touchpad to navigate somewhere. In this case, the "mouse overhead" is even larger than on a desktop machine.
+
+Once you trained your brain on your keybindings, navigating on the laptop becomes so easy.  You can even observe your new skill when you see other persons scrolling and navigating with their touchpad. Your brain immediately starts to think "Oh, I would just hit one/two keys to do this. It takes person X 5 seconds.". Nevertheless, I concede that I still use the touchpad - e.g. for scrolling webpages sometimes (even though I mainly use the "Site up", "Site down" keys).
+
+# The disadvantages of i3wm
+
+Of course, there are also downsides. Everything in _i3wm_ uses [X](https://de.wikipedia.org/wiki/Xlib), which is quite outdated and will be replaced by [Wayland](https://wayland.freedesktop.org/) in the future. 
+Also, configuring multiple displays is not as easy as you might know it from Windows, KDE or GNOME. 
+You need to do it from the command line with X-based tools such as `arandr`, `xlayoutdisplay` and so on. 
+Auto-detection of new monitors (e.g. beamers) does not work out of the box and you might get annoyed by this shortcoming. Using `arandr` is getting the job done but there is always "work" involved. 
+
+While thinking about this section, I do not really find another things that annoys me. _i3wm_  is really doing a great job so far.
+
+# My I3wm setup
+
+I started with the default of [Manjaro i3](https://wiki.manjaro.org/index.php?title=I3_-_Installation_und_Konfiguration). It comes with neat default keybindings, a helpful status bar and even some help commands on the desktop background. 
+
+However, defaults are usually just "defaults" and you might want to modify them. I did so by reading various blog posts and projects that focus on i3 modification. Here is a list of useful resources:
+
+- https://confluence.jaytaala.com/display/TKB/My+Manjaro+i3+setup#MyManjaroi3setup-Ifyouuselibinput
+- https://unix.stackexchange.com/questions/234734/set-the-default-browser-system-wide-on-manjaro
+- https://github.com/DaveDavenport/rofi/
+- https://github.com/enkore/j4-dmenu-desktop
+- https://github.com/ultrabug/py3status
+
+There are a lot more and it is of course up to you how much you want to change, what is important for you and what is just "acceptable" from the Manjaro default.
+
+You can find the latest version of my config files in my Dropbox:
+
+- [~/.config/i3/config](https://www.dropbox.com/s/n16lr8f2vqhmbxs/config?dl=0)
+- [~/.i3status.conf](https://www.dropbox.com/s/9jm0owxaensvif6/.i3status.conf?dl=0)
+
+The hotkeys I use most are the following:
+
+- <Super + b> Toggle between the last two workspaces
+- <Super + <1-8> Switch between workspaces
+- <Super + Space> Launch app launcher via rofi
+- <Super + d> Launch app/command launcher via `dmenu`
+- <Super + Tab> Switch between windows of any workspace 
+- <Alt + Tab> Switch between windows of the current workspace
+- <Super + w> Switch between tiled and stacked mode for windows in a workspace
+
+Last, a screenshot of my current desktop. As said above, the status bars are configures using [`py3status`](https://github.com/ultrabug/py3status) and the widgets are made with [`conky`](https://github.com/brndnmtthws/conky). 
+
+![](/post/2019-02-05-i3wm-introducing-my-desktop-setup_files/desktop-screenshot.png)
