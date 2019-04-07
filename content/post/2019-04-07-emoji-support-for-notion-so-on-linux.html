@@ -1,0 +1,173 @@
+---
+title: Emoji support for Notion.so on Linux
+author: ''
+date: '2019-04-07'
+slug: emoji-support-for-notion-so-on-linux
+categories:
+  - Arch Linux
+  - Linux
+tags:
+  - Linux
+  - Arch Linux
+image:
+  caption: ''
+  focal_point: ''
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+
+<p><a href="https://www.notion.so/">Notion.so</a> is a great tool for various tasks.
+I use it as a personal wiki but also for work-related notes.</p>
+<p>Unfortunately there is no native support for Linux and even though this point has been mentioned quite often by the community, the Notion team did not provide a Linux Desktop App yet.
+Maybe it will never be shipped.</p>
+<p>The Linux Desktop world can be evil when you have to make money selling applications.
+A lot of distributions with many different packaging standards and a small user base (compared to MacOS and Windows).</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+Hey we don't want to release on platforms that we cannot ensure the quality – the team is still small and we don't use Linux ourselves 🙊
+</p>
+— Notion (<span class="citation">@NotionHQ</span>) <a href="https://twitter.com/NotionHQ/status/912737143327301634?ref_src=twsrc%5Etfw">September 26, 2017</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Luckily, Notion is built with <code>electron</code> and the Desktop app is just a wrapper around the Web app.
+Even though I have no clue about <code>electron</code>, I adapted some approaches from other people on the web and created a PKGBUILD for Arch Linux.</p>
+<blockquote class="reddit-card" data-card-created="1554639761">
+<a href="https://www.reddit.com/r/NotionSo/comments/awsgq1/aur_package_available/">AUR Package available</a> from <a href="http://www.reddit.com/r/NotionSo">r/NotionSo</a>
+</blockquote>
+<script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
+<p>While this works fine and I am happy to use Notion as a Desktop app rather than searching for the specific tab in my browser’s tab mess, things were not perfect yet.</p>
+<p>One major point was the lack of emoji suppport.
+I cannot say whether this applies to Arch Linux only (or is even caused by my desktop environment (i3)).
+Let me know if you have native emoji support in Notion on GNOME/KDE.</p>
+<p>One point of Notion is to have a visual appearing collection of your notes and this includes adding emoji here and there.
+Going through all the emoji content on Arch is a bit tedious and it took me quite some time to find a working setup.</p>
+<p>Here is my solution:</p>
+<ol style="list-style-type: decimal">
+<li>Install required fonts.</li>
+</ol>
+<pre class="sh"><code># pacman -S ttf-liberation noto-fonts noto-fonts-emoji</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Create a <code>75-noto-color-emoji.conf</code> file in <code>/etc/fonts/conf.avail/</code> with the following:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
+</ol>
+<pre class="sh"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE fontconfig SYSTEM &quot;fonts.dtd&quot;&gt;
+&lt;fontconfig&gt;
+
+    &lt;!-- Add generic family. --&gt;
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;emoji&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;!-- This adds Noto Color Emoji as a final fallback font for the default font families. --&gt;
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test name=&quot;family&quot;&gt;&lt;string&gt;sans&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;append&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test name=&quot;family&quot;&gt;&lt;string&gt;serif&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;append&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test name=&quot;family&quot;&gt;&lt;string&gt;sans-serif&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;append&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test name=&quot;family&quot;&gt;&lt;string&gt;monospace&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;append&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;!-- Block Symbola from the list of fallback fonts. --&gt;
+    &lt;selectfont&gt;
+        &lt;rejectfont&gt;
+            &lt;pattern&gt;
+                &lt;patelt name=&quot;family&quot;&gt;
+                    &lt;string&gt;Symbola&lt;/string&gt;
+                &lt;/patelt&gt;
+            &lt;/pattern&gt;
+        &lt;/rejectfont&gt;
+    &lt;/selectfont&gt;
+
+    &lt;!-- Use Noto Color Emoji when other popular fonts are being specifically requested. --&gt;
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;Apple Color Emoji&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;Segoe UI Emoji&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;Segoe UI Symbol&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;Android Emoji&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;Twitter Color Emoji&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;Twemoji&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;Twemoji Mozilla&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;TwemojiMozilla&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;EmojiTwo&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;Emoji Two&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;EmojiSymbols&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+    &lt;match target=&quot;pattern&quot;&gt;
+        &lt;test qual=&quot;any&quot; name=&quot;family&quot;&gt;&lt;string&gt;Symbola&lt;/string&gt;&lt;/test&gt;
+        &lt;edit name=&quot;family&quot; mode=&quot;assign&quot; binding=&quot;same&quot;&gt;&lt;string&gt;Noto Color Emoji&lt;/string&gt;&lt;/edit&gt;
+    &lt;/match&gt;
+
+&lt;/fontconfig&gt;</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Now enable above by issuing the following:</li>
+</ol>
+<pre class="sh"><code>sudo ln -sf /etc/fonts/conf.avail/75-noto-color-emoji.conf /etc/fonts/conf.d/</code></pre>
+<p>Some notes about this:</p>
+<p>If you omit to install <code>ttf-liberation</code>, all numbers will be shown as emojis which will make the approach unusable.
+For some reason, <code>ttf-liberation</code> is the Font that Notion as the <code>sans-serif</code> if it is available.
+However, you will also have emoji support due to <code>noto-font-emoji</code>.
+I tried other <code>sans-serif</code> fonts but could not get it working</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Credit to <a href="https://www.reddit.com/r/archlinux/comments/9q8dlj/how_to_better_enable_color_emojis/" class="uri">https://www.reddit.com/r/archlinux/comments/9q8dlj/how_to_better_enable_color_emojis/</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
