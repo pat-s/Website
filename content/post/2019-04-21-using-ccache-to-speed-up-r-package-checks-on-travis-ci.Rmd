@@ -1,0 +1,103 @@
+---
+title: Using ccache to speed up R package checks on Travis CI
+author: Patrick Schratz
+date: '2019-04-21'
+slug: using-ccache-to-speed-up-r-package-checks-on-travis-ci
+categories:
+  - r-bloggers
+  - R
+tags:
+  - R
+  - ccache
+  - CI
+  - package-development
+image:
+  caption: ''
+  focal_point: ''
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+# Introduction
+
+Continuous integration checking for R packages is usually done on [Travis CI](https://travis-ci.org/) because the R community has established a community driven [build framework for R](https://github.com/travis-ci/travis-build/blob/master/lib/travis/build/script/r.rb). 
+In case you are not aware, there are also [other tools](https://github.com/ropenscilabs/tic) that try to simplify the CI tasks for R even more.
+
+This works great for simple checking of small R packages but once it comes to packages that have a lot of dependencies, developers sometimes run into troubles regarding build time.
+
+Luckily, one can cache the installed packages using `cache: packages` or 
+
+```yml
+cache:
+  - packages: true
+```
+
+in the `.travis.yml` file so that in the next run, packages will be loaded from the cache rather than installed again.
+
+# The problem
+
+R packages are updated regularly by developers and this also needs to be done on Travis.
+Usually this is done automatically in the background by the build script.
+However, sometimes multiple packages get updated which trigger a re-installation of its dependencies as well.
+This is one case in which `ccache` can help.
+
+The other one relates to the situation introduced above: The first Travis run in which the cache is build.
+Here, a lot of calls to `install.packages()` are executed.
+Since we are on Linux (Ubuntu), all packages are installed from source.
+Due to the nature of `install.packages()`, direct dependencies of an R package will be installed again even if this specific package is already installed.
+Now if this dependency is an R package that takes quite some time to install (e.g. _dplyr_  or _stringi_) this is wasted life (travis) time.
+
+## The mlr use case 
+
+A special use case is the package [mlr](https://github.com/mlr-org/mlr).
+The installation of all dependencies on Travis takes over one hour.
+If you take a look at its [DESCRIPTION](https://github.com/mlr-org/mlr/blob/master/DESCRIPTION), you know why.
+Usually, the build time limit on Travis is one hour.
+By asking kindly, we got an extension from Travis.
+
+Anyhow, we had to reduce the installation time of dependencies as much as possible. 
+But how? 
+This was a real problem.
+You might think: "Why do you care? Once the cache has been built.." 
+Yes. 
+Once the cache has been built, everything is fine.
+However, from time to time you have to rebuild the package cache or even just ensure that your build is able to make it in time if there is the need for it (otherwise Travis will not even cache the installed packages).
+
+# The solution
+
+I got reminded of [this blog post](http://dirk.eddelbuettel.com/blog/2017/11/27/) by Dirk Eddelbuettel. in which he suggests using `ccache` to speed up the installation of packages using compiled code.
+Instead of recompiling the compiled code, `ccache` loads it from the cache, resulting in tremendous speed ups for certain packages.
+In fact, I am using this approach since then in my dev setup.
+So I thought: "Why not do the same on Travis?"
+
+After a bit of fiddling, I got a working solution.
+Especially for the _mlr_ use case it had a significant effect on our dependency installation time.
+
+You might not notice the difference for smaller packages with few dependencies only.
+Nevertheless, there is no harm in adding it to your Travis setup and profit from it even just a little.
+
+# Code
+
+There are two important parts.
+First, you need to tell Travis to install `ccache` and cache its directory:
+
+```yml
+cache:
+  - ccache
+
+addons:
+  apt:
+    packages:
+     - ccache
+```
+
+Second, you need to create the required `~/.R/Makevars` file with the contents specified in Dirks post:
+
+```yml
+before_install:
+  - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)' > $HOME/.R/Makevars
+```
+
+You can simply copy/paste the lines above and it will just work in your Travis builds.
+Happy developing!

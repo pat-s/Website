@@ -1,0 +1,98 @@
+---
+title: Using ccache to speed up R package checks on Travis CI
+author: Patrick Schratz
+date: '2019-04-21'
+slug: using-ccache-to-speed-up-r-package-checks-on-travis-ci
+categories:
+  - r-bloggers
+  - R
+tags:
+  - R
+  - ccache
+  - CI
+  - package-development
+image:
+  caption: ''
+  focal_point: ''
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#the-problem">The problem</a><ul>
+<li><a href="#the-mlr-use-case">The mlr use case</a></li>
+</ul></li>
+<li><a href="#the-solution">The solution</a></li>
+<li><a href="#code">Code</a></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Continuous integration checking for R packages is usually done on <a href="https://travis-ci.org/">Travis CI</a> because the R community has established a community driven <a href="https://github.com/travis-ci/travis-build/blob/master/lib/travis/build/script/r.rb">build framework for R</a>.
+In case you are not aware, there are also <a href="https://github.com/ropenscilabs/tic">other tools</a> that try to simplify the CI tasks for R even more.</p>
+<p>This works great for simple checking of small R packages but once it comes to packages that have a lot of dependencies, developers sometimes run into troubles regarding build time.</p>
+<p>Luckily, one can cache the installed packages using <code>cache: packages</code> or</p>
+<pre class="yml"><code>cache:
+  - packages: true</code></pre>
+<p>in the <code>.travis.yml</code> file so that in the next run, packages will be loaded from the cache rather than installed again.</p>
+</div>
+<div id="the-problem" class="section level1">
+<h1>The problem</h1>
+<p>R packages are updated regularly by developers and this also needs to be done on Travis.
+Usually this is done automatically in the background by the build script.
+However, sometimes multiple packages get updated which trigger a re-installation of its dependencies as well.
+This is one case in which <code>ccache</code> can help.</p>
+<p>The other one relates to the situation introduced above: The first Travis run in which the cache is build.
+Here, a lot of calls to <code>install.packages()</code> are executed.
+Since we are on Linux (Ubuntu), all packages are installed from source.
+Due to the nature of <code>install.packages()</code>, direct dependencies of an R package will be installed again even if this specific package is already installed.
+Now if this dependency is an R package that takes quite some time to install (e.g. <em>dplyr</em> or <em>stringi</em>) this is wasted life (travis) time.</p>
+<div id="the-mlr-use-case" class="section level2">
+<h2>The mlr use case</h2>
+<p>A special use case is the package <a href="https://github.com/mlr-org/mlr">mlr</a>.
+The installation of all dependencies on Travis takes over one hour.
+If you take a look at its <a href="https://github.com/mlr-org/mlr/blob/master/DESCRIPTION">DESCRIPTION</a>, you know why.
+Usually, the build time limit on Travis is one hour.
+By asking kindly, we got an extension from Travis.</p>
+<p>Anyhow, we had to reduce the installation time of dependencies as much as possible.
+But how?
+This was a real problem.
+You might think: “Why do you care? Once the cache has been built..”
+Yes.
+Once the cache has been built, everything is fine.
+However, from time to time you have to rebuild the package cache or even just ensure that your build is able to make it in time if there is the need for it (otherwise Travis will not even cache the installed packages).</p>
+</div>
+</div>
+<div id="the-solution" class="section level1">
+<h1>The solution</h1>
+<p>I got reminded of <a href="http://dirk.eddelbuettel.com/blog/2017/11/27/">this blog post</a> by Dirk Eddelbuettel. in which he suggests using <code>ccache</code> to speed up the installation of packages using compiled code.
+Instead of recompiling the compiled code, <code>ccache</code> loads it from the cache, resulting in tremendous speed ups for certain packages.
+In fact, I am using this approach since then in my dev setup.
+So I thought: “Why not do the same on Travis?”</p>
+<p>After a bit of fiddling, I got a working solution.
+Especially for the <em>mlr</em> use case it had a significant effect on our dependency installation time.</p>
+<p>You might not notice the difference for smaller packages with few dependencies only.
+Nevertheless, there is no harm in adding it to your Travis setup and profit from it even just a little.</p>
+</div>
+<div id="code" class="section level1">
+<h1>Code</h1>
+<p>There are two important parts.
+First, you need to tell Travis to install <code>ccache</code> and cache its directory:</p>
+<pre class="yml"><code>cache:
+  - ccache
+
+addons:
+  apt:
+    packages:
+     - ccache</code></pre>
+<p>Second, you need to create the required <code>~/.R/Makevars</code> file with the contents specified in Dirks post:</p>
+<pre class="yml"><code>before_install:
+  - mkdir $HOME/.R &amp;&amp; echo -e &#39;CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)&#39; &gt; $HOME/.R/Makevars</code></pre>
+<p>You can simply copy/paste the lines above and it will just work in your Travis builds.
+Happy developing!</p>
+</div>
