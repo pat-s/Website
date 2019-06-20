@@ -8,6 +8,7 @@ draft = false
 title = "Reading list"
 subtitle = ""
 widget = "custom"
+headless = true
 
 # Order that this section will appear in.
 weight = 70
@@ -34,7 +35,7 @@ weight = 70
 
 - **Zuur A.F. et al.** (2008): Mixed Effects Models and Extensions in Ecology with R. *Springer*. [http://www.springer.com/de/book/9780387874579](http://www.springer.com/de/book/9780387874579)
 
-# Single Blog Posts
+# Blog posts
 
 Mixed Models in R: http://m-clark.github.io/docs/mixedModels/mixedModels.html
 
