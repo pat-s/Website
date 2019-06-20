@@ -9,6 +9,7 @@ ignoreFiles:
   - \.Rmarkdown$
   - _files$
   - _cache$
+min_version: 0.55
 
 preserveTaxonomyNames: true
 footnotereturnlinkcontents: <sup>^</sup>
