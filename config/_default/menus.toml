@@ -10,7 +10,7 @@
 
 [[main]]
   name = "Publications"
-  url = "#featured"
+  url = "#bibbase"
   weight = 20
 
 [[main]]
