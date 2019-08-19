@@ -2,7 +2,7 @@
 title: Arch Linux setup guide tailored towards data science, R and spatial analysis
 author: Patrick Schratz
 date: '2018-04-22'
-lastmod: '2019-02-02'
+lastmod: '2019-08-19'
 slug: arch-install-guide-for-r
 categories:
   - Antergos
@@ -17,18 +17,22 @@ tags:
   - Linux
   - R
   - r-bloggers
-summary: "This guide reflects my view on how to setup a working Arch Linux system tailored towards data science, R and spatial analysis. If you have suggestions for modifications, please open an issue at https://github.com/pat-s/antergos_setup_guide. Enjoy the power of Linux!"
+summary: "This guide reflects my view on how to setup a working Arch Linux system tailored towards data science, R and spatial analysis. If you have suggestions for modifications, please open an issue at https://github.com/rbind/pat-s_web/. Enjoy the power of Linux!"
 output:
   blogdown::html_page:
     toc: true
 ---
 
 This guide does not claim to be complete.
-It reflects my view on how to setup a working Arch Linux system tailored towards data science, R and spatial analysis.
-If you have suggestions for modifications, please open an [issue](https://github.com/pat-s/antergos_setup_guide).
+It reflects my view on how to setup a working Arch Linux system tailored towards data science, R and spatial analysis at the time of writing.
+If you have suggestions for modifications, please open an [issue](https://github.com/rbind/pat-s_web/).
 Enjoy the power of Linux!
 
-Setting up Arch Linux the old-school way (i.e. configuring all yourself) is quite tedious. To be honest, I've never done it myself. I've always used distributions like [Antergos](https://antergos.com/try-it/) or [Manjaro](https://de.manjaro.org/). These function on the one hand as an installation wrapper for Arch and on the other hand provide their own repositories. Both come with all kind of desktop environments to choose from (GNOME, KDE, XFCE, etc.). I will not go into details of desktop environments in this post. I will outline my personal setup in a separate post in the future.
+Setting up Arch Linux the old-school way (i.e. configuring all yourself) is quite tedious. 
+To be honest, I've never done it myself. 
+I always used distributions like [Antergos](https://antergos.com/try-it/) or [Manjaro](https://de.manjaro.org/). 
+Another layer which sits on top of the operating system is the _desktop environment_ (DE) (e.g. GNOME, KDE, XFCE, etc).
+I will only briefly touch this point and focus on points which apply to all DE's.
 
 Make sure to check out [the ArchWiki FAQs](https://wiki.archlinux.org/index.php/Frequently_asked_questions) and [Arch compared to other distributions - ArchWiki](https://wiki.archlinux.org/index.php/Arch_compared_to_other_distributions) to get a better understanding of Arch.
 
@@ -47,7 +51,7 @@ The following reflects my current view:
 
 # 2. Installing the package manager
 
-Currently  the best wrapper around `pacman`  is `trizen`.
+One of the best wrappers around `pacman` is [`trizen`](https://github.com/trizen/trizen).
 Here is a list ([AUR helpers - ArchWiki](https://wiki.archlinux.org/index.php/AUR_helpers)) comparing alternatives (scroll to the bottom).
 
 Install `trizen`:
@@ -58,38 +62,48 @@ cd trizen
 makepkg -si
 ```
 
-In `~/.config/trizen/trizen.conf` set `no_edit => 1`.  Until v1.55 there was also a switch that saved you the prompt asking whether you really want to install the package (`install_built_with_noconfirm => 1`). Unfortunately it has been [removed in v1.56](https://github.com/trizen/trizen/releases) and now you need to pass `--noconfirm` to `trizen` commands. The first settings saves you the confirmation prompt asking whether you want to edit a PKGBUILD (i.e. the scripts that specify how to download and install a package).
+In `~/.config/trizen/trizen.conf` set `no_edit => 1`.
+This setting saves you the confirmation prompt asking whether you want to edit a PKGBUILD (i.e. the scripts that specify how to download and install a package).
+
+(Until v1.55 there was also a switch that saved you the prompt asking whether you really want to install the package (`install_built_with_noconfirm => 1`). 
+Unfortunately it has been [removed in v1.56](https://github.com/trizen/trizen/releases) and now you need to pass `--noconfirm` to `trizen` commands to skip the re-occuring confirmation prompts.)
 
 ## 2.1 Choose your shell
 
-All Linux system come with `bash` (Bourne-again shell) as default. While this shell is not bad, there are better alternatives. You have to decide whether investing the time to change the shell and learn the new syntax will make a difference for you. Since you will (hopefully) use the terminal quite often (from now on), I would recommend to at least try it :) My current favorite is the [`fish`](https://rootnroll.com/d/fish-shell/) shell.
+Almost all Linux distros come with `bash` (Bourne-again shell) as the default. 
+While `bash` is not bad, there are better alternatives. 
+If you are already used to `bash` you have to decide whether it is worth investing the time to switch to a new shell.
+Most things will be identical and if you have not written scripts with that specific shell, you will not probably not face any problems.
+
+My favorite is the [`fish`](https://rootnroll.com/d/fish-shell/) shell.
 
 ### 2.1.1   `zsh `
 
-The `zsh` (Z-shell) is highly customizable but its settings are a bit complicated.
+The `zsh` (Z-shell) is highly customizable but configuration is a bit complicated.
 It has several advantages (file globbing, visual appearance, etc.) to `bash`.
 
 A good `zsh` helper is `prezto`: [GitHub - sorin-ionescu/prezto: The configuration framework for Zsh](https://github.com/sorin-ionescu/prezto)).
-Install (`trizen zsh`) and use it (`zsh`).
+Install it via (`trizen zsh`).
 My favorite theme is `agnoster`.
 
 ### 2.1.2 `fish`
 
-The `fish` shell is similar to `zsh` but comes with better defaults and an easier syntax. The `omf` package manager is great for installing additional plugins that simplify the shell usage. Check [Oh-my-fish](https://github.com/oh-my-fish/oh-my-fish) for an introduction. 
+The `fish` shell is similar to `zsh` but comes with better defaults and an easier syntax. 
+The `omf` package manager is great for installing additional plugins that simplify the shell usage. 
+Check [Oh-my-fish](https://github.com/oh-my-fish/oh-my-fish) for an introduction. 
 
-The shell is available in the standard repos and can be installed with `trizen fish`.
+The shell is available in the standard repositories and can be installed with `trizen fish`.
 
 A great way to get started is to call `fish_config` in a fish session to configure `fish` to your needs in a graphical browser window.
 
-My current theme is [bobthefish](https://github.com/oh-my-fish/theme-bobthefish).
-
 ## 2.2 Enabling parallel compiling
 
-Compiling packages from source can take time.
-To speed up the process by enabling parallel compiling, set the `MAKEVARS` variable in `/etc/makepkg.conf`: `MAKEFLAGS="-j$(nproc)"`.
+Compiling certain libraries from source can take time.
+To speed up the process via parallelization, set the `MAKEVARS` variable in `/etc/makepkg.conf`: `MAKEFLAGS="-j$(nproc)"`.
 This will use all available cores on your machine for compiling.
 
-(This options seems to be enabled by default now. However, it is still good to verify this.)
+(This options seems to be enabled by default in some distros. 
+However, you might want to verify this.)
 
 # 3. System related
 
@@ -101,12 +115,14 @@ Increasing the `/tmp` folder temporarily can be done by `sudo mount -o remount,s
 This increases the size for your current session to 20 GB.
 Usually the size is about half or your RAM size. The size will be resetted when you restart your machine next time.
 
-For the following installation calls, you can either use `trizen` or your personally defined wrappers.
-When calling `trizen <package>` a search in the official repos AND the AUR is done.  This is different to `pacman` which only search in the official repos. Now you know why you need a wrapper :-) 
+When calling `trizen <package>` a search in the official repos AND the AUR is done.
+This is different to `pacman` which only searches in the official repos. 
+Now you know why a `pacman`-wrapper is convenient :-) 
 
-**A note of caution: Try to avoid installing python libraries via `pip`.  If you install libraries via `pacman` that have python dependencies, `pacman` will try to install the respective `python-<package>`. If you installed this package via `pip` before, you will face conflicts. First search if the package is available in the repos and if not, you can safely install it via `pip`.**
+**A word of caution: Try to avoid installing python libraries via `pip`. If you install libraries via `pacman` that have python dependencies, `pacman` will try to install the respective `python-<package>`. If you installed this package via `pip` before, you will face conflicts. First search if the package is available in the repos and if not, you can safely install it via `pip`.**
 
-While already at python packages, `QGIS` needs some external python libraries for its plugins. Otherwise it will throw errors during startup.
+While already talking about python packages, `QGIS` needs some external python libraries for its plugins. 
+Otherwise it will throw errors during startup.
 
 ```bash
 trizen -S python-gdal python-yaml python-jinja python-psycopg2 python-owslib python-numpy python-pygments
@@ -114,31 +130,14 @@ trizen -S python-gdal python-yaml python-jinja python-psycopg2 python-owslib pyt
 
 Other important system libraries for spatial applications:
 
-`trizen -S gdal udunits postgis jdk10-openjdk openjdk10-src texlive-most pandoc-bin pandoc-citeproc-bin`
+`trizen -S gdal udunits postgis jdk-openjdk openjdk-src texlive-most pandoc pandoc-citeproc pandoc-crossref`
 
-- `texlive-most` (wrapper package that installs the most important tex libraries. Similar to `texlive-full` on other Linux distributions.)
-- `pandoc-bin pandoc-citeproc-bin` (for all kind of Rmarkdown stuff. Make sure to install this library as the one in the community repository comes with 1 GB Haskell dependencies!)
+`texlive-most` (wrapper package that installs the most important tex libraries. 
+Similar to `texlive-full` on other Linux distributions.)
 
 ## 3.2 Apps
 
-Here is a list of applications I use. Choose for yourself which could be helpful for your.
-
-- **Messaging**: [franz](https://meetfranz.com) 
-- **Mail**: [mailspring](https://github.com/Foundry376/Mailspring)
-- **Browser**: Google Chrome
-- **Reference Manager**: [zotero](https://www.zotero.org)
-- **Google Drive**:  I use the paid service [insync](https://www.insynchq.com).  
-- **Dropbox**: `trizen -S dropbox` (`dropbox-cli` for command line access)  
-- **GIS**: [qgis](https://www.qgis.org/de/site/)
-- **Screenshot tool**: [shutter](http://shutter-project.org)
-- **Image viewer**: [xnviewmp](https://www.xnview.com/de/xnviewmp/)
-- **Virtualbox**: [VirtualBox – wiki.archlinux.de](https://wiki.archlinux.de/title/VirtualBox)
-- **Terminal**: [tilix](https://gnunn1.github.io/tilix-web/)
-- **Writing**: [Typora](https://typora.io)
-- **Notes**: 
-  - I use [Notion](https://www.notion.so/) which atm has not Linux Desktop app and can be used in the browser only.  
-  - [notable](https://github.com/fabiospampinato/notable)
-  - [Boostnote](
+An opinionated [list](https://github.com/pat-s/science-apps) of applications which are great for science and productivity.
 
 A note on _Mailspring_: If you are on battery, quit the app as it consume a lot of energy while steadily trying to sync your mails.
 
@@ -160,13 +159,15 @@ Here's a list of the most popular ones (this list does not claim to be complete)
 - Nano
 - etc.
 
-I currently use [Neovim](https://neovim.io/) which is a fork of `vim` for quick editing on the command line. My general purpose IDE is [Visual Studio Code](https://code.visualstudio.com/) and for R development I use `RStudio`.
+I currently use [Neovim](https://neovim.io/) which is a fork of `vim` for quick editing on the command line. 
+A good general purpose IDE is [Visual Studio Code](https://code.visualstudio.com/).
+For R development I use `RStudio`.
 
 ## 3.4 Office
 
 `trizen --noconfirm libreoffice-fresh`
 
-If you are on a KDE Desktop, _LibreOffice_ may flicker black/white.
+If you chose KDE as the desktop environment, _LibreOffice_ may flicker black/white.
 This is caused by _OpenGl_.
 
 To solve it, set the `value` item in following two lines of `~/.config/libreoffice/4/user/registrymodifications.xcu` to `false`:
@@ -210,7 +211,7 @@ To use R from the shell without a prior defined mirror, you need the system libr
 
 Next, install either the "Intel MKL" or `libopenblas` to be used in favor of the standard "libRlapack/libRblas" libraries that are shipped with the default R installation.
 These libraries are responsible for numerical computations and have [impressive speedups](http://pacha.hk/2017-12-02_why_is_r_slow.html) compared to the default libraries.
-Thanks [@marcosci](https://github.com/marcosci) for the hint.
+Thanks [\@marcosci](https://github.com/marcosci) for the hint.
 While the "Intel MKL" library is the fasted according to the benchmarks, its also much more complicated to install.
 
 `libopenblas` will automatically be used if its installed since the default `R` installation [on Arch](https://git.archlinux.org/svntogit/packages.git/tree/trunk/PKGBUILD?h=packages/r) is configured with the `--with-blas` option (see section A.3.1 in [https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installation](https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Installation)).
@@ -241,6 +242,8 @@ Also to successfully install `intel-mkl`, you need to temporarly increase the `/
 
 Use `trizen -s rstudio` and pick your favorite release channel.
 During installation R will get installed as a dependency (if you have not already done so).
+If you build the "git" version, the appearance will match your chosen DE.
+Others (e.g. the "preview" version) are binary applications which come with a fixed appearance (GTK) and might look odd if you are using a QT-based DE (e.g. KDE).
 
 ## 4.3 Packages
 
@@ -269,7 +272,7 @@ Required system libraries:
 
 `trizen -s v8-3.14`
 
-For `rJava` we need to do `sudo R CMD javareconf`.
+For `rJava` you first need to call `sudo R CMD javareconf`.
 
 Now you can install the `ctv` package and then call `ctv::install.views("Spatial")`.
 This will install all packages listed in the [spatial](https://cran.r-project.org/web/views/Spatial.html) task view.
@@ -299,7 +302,8 @@ The easiest way (in my opinion) is to use _SSH_ and `usethis::create_from_github
 
 If you have never set a “ssh keygen pair” at your local machine, please do so by calling `ssh-keygen -t rsa`.
 
-If you already have a file named `id_rsa.pub` in your `~/.ssh` folder at your local machine, skip this step! Otherwise it will override your existing one and may invalidate previous ssh connections you set up.
+If you already have a file named `id_rsa.pub` in your `~/.ssh` folder at your local machine, skip this step! 
+Otherwise it will override your existing one and may invalidate previous ssh connections you set up.
 You now have an `id_rsa.pub` file in a (hidden!) folder named `.ssh` within `/home` (at your local machine).
 (You can enable viewing hidden files/folders in the file-manager with the shortcut `ALT + .` (Dolphin) or `CTRL + h` (Nautilus)).
 
@@ -309,7 +313,8 @@ Next, make sure that the permissions of the ssh files [are correct](https://supe
 2. Make sure your ssh keys have the right permissions: `sudo chmod 600 ~/.ssh/id_rsa`, `sudo chmod 644 ~/.id_rsa.pub`
 3. Add your ssh-key to the keychain: `ssh-add -K ~/.ssh/id_rsa`
 
-Sometimes,  the  "ssh agent" is not initialized when starting a new shell. You can force this behavior by putting the following either into your `~/.bash_profile` (if you are using the `bash` shell)
+Sometimes,  the  "ssh agent" is not initialized when starting a new shell. 
+You can force this behavior by putting the following either into your `~/.bash_profile` (if you are using the `bash` shell)
 
 ```bash
 if [ -f ~/.ssh/agent.env ] ; then
@@ -369,7 +374,9 @@ else
 end
 ```
 
-You can also hand over the information manually if it does not work at all:
+If you are still facing problems, have a look at [this comment](https://github.com/ropensci/git2r/issues/335#issuecomment-511187135).
+
+As the very last, you can also hand over the information manually:
 
 `cred <- git2r::cred_ssh_key(publickey = "~/.ssh/id_rsa.pub", privatekey = "~/.ssh/id_rsa")`
 
@@ -408,7 +415,12 @@ I've set an alias that maps `r` to `radian`. So whenever I type `r` into the con
 
 ## 4.6 Rprofile
 
-The `~/.Rprofile` holds several options that will be applied during R startup. However, specifying all custom functions, options and other calls in one R file can get messy. Fortunately, there is the [startup](https://github.com/HenrikBengtsson/startup) package. You can put several .R files into the `~/.Rprofile.d` directory. This way you can organize your custom R startup better. Also, by running `startup::startup(debug = TRUE)` you can actually see what happens if you start R. 
+The `~/.Rprofile` holds several options that will be applied during R startup. 
+However, specifying all custom functions, options and other calls in one R file can get messy. 
+Fortunately, there is the [startup](https://github.com/HenrikBengtsson/startup) package. 
+You can put several .R files into the `~/.Rprofile.d` directory. 
+This way you can organize your custom R startup better. 
+Also, by running `startup::startup(debug = TRUE)` you can actually see what happens if you start R. 
 
 You can find my settings [in my Dropbox](https://www.dropbox.com/home/Mackup).
 
@@ -440,11 +452,14 @@ sshfs#<username>@<ip>:<remote mount point> <local mount point> fuse        recon
 
 Reboot.
 
-Both advantage and disadvantage of using `fstab` are that it tries to mount the directories during boot. However, often this fails. Either because of a missing network connection at this point or because you need a VPN to access a server remotely.
+Both advantage and disadvantage of using `fstab` are that it tries to mount the directories during boot. 
+However, often this fails. 
+Either because of a missing network connection at this point or because you need a VPN to access a server remotely.
 
 ### 5.1.2 Manual mount
 
-You can also put this information in a different file and do a manual mount when everything is ready (i.e. your machine is booted, your VPN connected). The syntax looks a bit different then:
+You can also put this information in a different file and do a manual mount when everything is ready (i.e. your machine is booted, your VPN connected). 
+The syntax looks a bit different then:
 
 ```bash
 sudo sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <username>@<server ip>:/ <local mount point>
@@ -452,15 +467,14 @@ sudo sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa
 sudo mount -t cifs -o credentials=<location of credentials file>,uid=1000,file_mode=0775,dir_mode=0775,gid=100,sec=ntlm,vers=1.0,dom=<domain name>,forcegid //<server ip>/<shared folder>     <local mount point>
 ```
 
-I won't go into details of all options I used here. Check out the manual pages of the respective protocols if you are facing errors.
+I won't go into details of all options which are used here. 
+Check out the manual pages of the respective protocols if you are facing errors.
 
 ### 5.1.3 Executing the mount
 
 If you use `fstab`, you can mount all mounts with `sudo mount -a`.
-
 The manual approach needs to be saved in a `bash` script and called from your shell with `bash <filename>.sh`. 
-
-To avoid conflicts when remounting (after a network disconnect or similar),  my wrapper script looks as follows:
+To avoid conflicts when remounting (after a network disconnect or similar), I wrote a little helper script:
 
 ```bash
 #! /bin/bash
@@ -474,7 +488,7 @@ sudo bash `<name of mount file`.sh
 
 Some operations in this file may be redundant or ineffective. 
 
-So in summary, I call my wrapper script which does the following:
+So in summary, I am calling my helper script which does the following:
 
 1. Unmount all mounts 
 2. Mount all mounts specified in `<name of mount file>.sh`.
@@ -483,9 +497,11 @@ So in summary, I call my wrapper script which does the following:
 
 ### 5.2.1 SSH setup
 
-Again we use `ssh`, this time to log into remote servers rather than downloading Github repos. If you have never set a “ssh keygen pair” at your local machine, please do so by calling `ssh-keygen -t rsa`.
+Again we use `ssh`, this time to log into remote servers rather than downloading Github repos. 
+If you have never set a “ssh keygen pair” at your local machine, please do so by calling `ssh-keygen -t rsa`.
 
-If you already have a file named `id_rsa.pub` in your `~/.ssh` folder at your local machine, skip this step! Otherwise it will override your existing one and may invalidate previous ssh connections you set up.
+If you already have a file named `id_rsa.pub` in your `~/.ssh` folder at your local machine, skip this step! 
+Otherwise it will override your existing one and may invalidate previous ssh connections you set up.
 You now have an `id_rsa.pub` file in a (hidden!) folder named `.ssh` within `/home` (at your local machine).
 Now you need to copy this file (`id_rsa.pub`) to the server so that you can be identified:
 
@@ -495,7 +511,6 @@ scp .ssh/id_rsa.pub username@<server>:/home/<username>/.ssh/ # copies your local
 ```
 
 Every time you log in via command line now, you will not be prompted for your password.
-
 You can further simplify the login process.
 Instead of having to type `ssh <user>@<server>` you can store all of this information in your `~/.ssh/config` file:
 
@@ -514,17 +529,18 @@ You can easily connect to all servers you have access to with a little one-time 
 
 One extension, namely [tmuxinator](https://github.com/tmuxinator/tmuxinator) gives you the power to write template files for server connections. This makes it possible to load several server connections with just one command.
 
-For example, I currently have connections to six different servers stored in my config file. Executing `tmuxinator start servers` opens 6 windows with 3 panes each for each server. Here is a screenshot:
-
-
-
-
+For example, I currently have connections to six different servers stored in my config file. 
+Executing `tmuxinator start servers` opens 6 windows with 3 panes each for each server. 
+Here is a screenshot:
 
 # 6. Desktop related
 
 ## 6.1 KDE
 
-KDE is probably the DE (Desktop environment) that is most customizable. By default it comes with a Windows-like navigation panel. However, you can have a dock by using [latte-dock](https://github.com/psifidotos/Latte-Dock). I used KDE for quite some time and I was satisfied with most of it.
+KDE is probably the most customizable desktop environment. 
+By default it comes with a Windows-like navigation panel. 
+However, you can have a dock by using [latte-dock](https://github.com/psifidotos/Latte-Dock). 
+I used KDE for quite some time and I was satisfied with most of it.
 
 **Networkmanager**
 
@@ -533,9 +549,16 @@ It is the GNOME network-manager and has (for whatever reason) no problems with s
 
 ## 6.2 GNOME
 
-GNOME looks more like macOS. Clean, fresh, smooth. However, it needs a bit more love in my opinion to get a proper working setup. You need to find which [gnome-extensions](https://extensions.gnome.org) you need for your work. Most of them are present in the AUR. 
+GNOME looks more like macOS. 
+Clean, fresh, smooth. 
+However, it needs a bit more love in my opinion to get a proper working setup. 
+You need to find which [gnome-extensions](https://extensions.gnome.org) you need for your work. 
+Most of them are present in the AUR. 
 
-Also (and this is the biggest downside) it consumes a lot of memory. I ditched it in the end because of this. On my 16 GB machine, I could hardly have all my standard apps open with now hitting my RAM limit. In contrast, on my current Desktop Environment (i3) I really cross the 8 GB mark.
+Also (and this is the biggest downside) it consumes a lot of memory. 
+I ditched it in the end because of this. 
+On my 16 GB machine, I could hardly have all my standard apps open with now hitting my RAM limit. 
+In contrast, tiling window managers (e.gg. i3 or Sway) hardly cross the 8 GB mark with the same applications.
 
 I had the following extensions installed:
 
@@ -560,7 +583,10 @@ gnome-shell-extensions 3.30.1-1
 
 You can control the settings via the "Tweak tool" that comes with GNOME by default.
 
-Note that GNOME comes with [Wayland](https://wayland.freedesktop.org) as the desktop compositor library while KDE still uses [X](https://www.x.org/wiki/). I am not an expert in both but the future is said to be Wayland. You might run into some troubles with driver support for Wayland and there is much better documentation and help for X. You can also run GNOME with X if you are facing too many issues. 
+Note that some GNOME based distros come with [Wayland](https://wayland.freedesktop.org) as the desktop compositor library while KDE still uses [X](https://www.x.org/wiki/). 
+I am not an expert in both but the future is said to be Wayland. 
+You might run into some troubles with driver support for Wayland and there is much better documentation and help for X. 
+You can also run GNOME with X if you are facing too many issues. 
 
 # 7. Laptop battery life optimization
 
@@ -575,17 +601,19 @@ I prefer `tlp` as `powertop` often causes trouble with USB devices going into sl
 Also, applying the changes on boot is easier with `tlp`.
 
 Do `trizen -S --noconfirm tlp` and then follow the instructions on [TLP - ArchWiki](https://wiki.archlinux.org/index.php/TLP) to configure it correctly.
-`powertop` though is useful to check the applied settings. Do `sudo powertop` and go to the "tunables" section and check if most settings are "GOOD" (most are "BAD" before applying `tlp`).
+`powertop` though is useful to check the applied settings. 
+Do `sudo powertop` and go to the "tunables" section and check if most settings are "GOOD" (most are "BAD" before applying `tlp`).
 
 # 8. Miscellaneous
 
 ## 8.1 Backup your config files and settings
 
-A machine can crash any time. It is not only important to backup your data and scripts (or to have them stored in the cloud). You also want to backup all configurations of your apps so that you can restore them easily with a click. This is also important and useful if you want to sync all your configurations across multiple machines.
+A machine can crash any time. 
+It is not only important to backup your data and scripts (or even better, have them stored in the cloud). 
+You also want to backup all configurations of your apps so that you can restore them easily with the most recent settings. 
+This is also important and useful if you want to sync all your configurations across multiple machines.
 
-[mackup](https://github.com/lra/mackup) is a great tool for this. It syncs a variety of config files and uploads these to a cloud of your choice. Under the hood, the config files will get soft-linked to your cloud which means that updating it on one machine will also trigger a change on all other machines.
-
-On a new machine, you only need to run `mackup restore` to have all your settings back. Unfortunately it does not work with Windows but if you are reading this guide, you are most likely not on Windows anymore ;-). 
+In the past I recommended [mackup](https://github.com/lra/mackup) but nowadys I highly recommedn [yadm](https://yadm.io/).
 
 ## 8.1 arara
 
@@ -603,22 +631,21 @@ It's also integrad in the `latex-workshop` extention in Visual Studio Code.
 
 ## 8.3 Editor schemes
 
-I use the [Dracula](https://draculatheme.com) scheme in almost all applications.
-While its comes integrated into RStudio, here are installation instructions for [Kate](https://draculatheme.com/kate/) and [Tilix](https://github.com/krzysztofzuraw/dracula-tilix).
-Alternatively I like the [tomorrow-night-eighties](https://github.com/chriskempson/tomorrow-theme) theme lately.
+- [Dracula](https://draculatheme.com)
+- [gruvbox](https://github.com/morhetz/gruvbox)
+- [Solarized Light/Dark](https://ethanschoonover.com/solarized/)
 
 ## 8.4 Fonts
 
-I enjoy using [Fira Code](https://github.com/tonsky/FiraCode).
-I use it as a coding font in all editors (monospace ftw) but also as a system wide font (the "medium" variant) with size 10.
-Another great monospace coding font is [Iosevka](https://github.com/be5invis/Iosevka).  
+- [Fira Code](https://github.com/tonsky/FiraCode)
+- [Fira Sans](https://fonts.google.com/specimen/Fira+Sans)
+- [Mononoki](http://madmalik.github.io/mononoki/)
+- [Iosevka](https://github.com/be5invis/Iosevka)
 
 ## 8.5 Icon themes
 
-There are two awesome icon themes: [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) and [numix](http://numixproject.org).
-
-Try them and choose for yourself.
-You will see what a tremendous impact good icons can have on your daily work.
+- [Papirus](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) 
+- [Numix](http://numixproject.org)
 
 ## 8.6 Desktop Themes
 
@@ -664,4 +691,5 @@ Some devices need to install the "synaptic touchpad drivers" to enable the a "so
 ## 8.9 Other helpful tools
 
 - [pacmanity](https://github.com/DerekTBrown/pacmanity): Each time you install a package, this tool adds the package to a Github Gist. 
-This Gist stores all of your installed packages. Here's [mine](https://gist.github.com/pat-s/6509f87cf380cbe81631e444079e90e2).
+This Gist stores all of your installed packages. 
+Here's [mine](https://gist.github.com/pat-s/6509f87cf380cbe81631e444079e90e2).
