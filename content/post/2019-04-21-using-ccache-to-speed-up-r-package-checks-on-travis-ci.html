@@ -2,6 +2,7 @@
 title: Using ccache to speed up R package checks on Travis CI
 author: Patrick Schratz
 date: '2019-04-21'
+lastmod: '2019-10-22'
 slug: using-ccache-to-speed-up-r-package-checks-on-travis-ci
 categories:
   - r-bloggers
@@ -84,7 +85,7 @@ Nevertheless, there is no harm in adding it to your Travis setup and profit from
 <p>There are two important parts.
 First, you need to tell Travis to install <code>ccache</code> and cache its directory:</p>
 <pre class="yml"><code>cache:
-  - ccache
+  - $HOME/.ccache
 
 addons:
   apt:
@@ -93,6 +94,9 @@ addons:
 <p>Second, you need to create the required <code>~/.R/Makevars</code> file with the contents specified in Dirks post:</p>
 <pre class="yml"><code>before_install:
   - mkdir $HOME/.R &amp;&amp; echo -e &#39;CXX_STD = CXX14\n\nVER=\nCCACHE=ccache\nCC=$(CCACHE) gcc$(VER) -std=gnu99\nCXX=$(CCACHE) g++$(VER)\nC11=$(CCACHE) g++$(VER)\nC14=$(CCACHE) g++$(VER)\nFC=$(CCACHE) gfortran$(VER)\nF77=$(CCACHE) gfortran$(VER)&#39; &gt; $HOME/.R/Makevars</code></pre>
+<p>According to Dirk’s post, you should also make some change to <code>~/.ccache/ccache.conf</code>.
+To do so, also add the following call to the <code>before_install</code> stage as shown above.</p>
+<pre class="sh"><code>- echo -e &#39;max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false&#39; &gt; $HOME/.ccache/ccache.conf</code></pre>
 <p>You can simply copy/paste the lines above and it will just work in your Travis builds.
 Happy developing!</p>
 </div>
