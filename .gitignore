@@ -6,3 +6,5 @@
 README.html
 public/
 .directory
+.DS_Store
+resources/_gen/
