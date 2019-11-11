@@ -15,6 +15,7 @@ tags:
   - multicore
   - future
   - reproducibility
+summary: "Reproducibility is important. More important than ever. However, making a project reproducible is not as trivial as it sounds."
 output:
   blogdown::html_page:
     toc: true

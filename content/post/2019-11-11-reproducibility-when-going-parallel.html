@@ -15,6 +15,7 @@ tags:
   - multicore
   - future
   - reproducibility
+summary: "Reproducibility is important. More important than ever. However, making a project reproducible is not as trivial as it sounds."
 output:
   blogdown::html_page:
     toc: true
@@ -125,8 +126,8 @@ suppressMessages({
   parallelStop()
 })
 all.equal(r1, r2)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.2605573&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.4603721&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.816508&quot; 
+## [2] &quot;Component 2: Mean relative difference: 0.8693197&quot;</code></pre>
 </div>
 <div id="reproducible" class="section level3">
 <h3>Reproducible</h3>
@@ -170,8 +171,8 @@ suppressMessages({
   parallelStop()
 })
 all.equal(r5, r6)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.04492&quot; 
-## [2] &quot;Component 2: Mean relative difference: 2.541864&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.7527587&quot;
+## [2] &quot;Component 2: Mean relative difference: 2.343758&quot;</code></pre>
 </div>
 <div id="reproducible-1" class="section level3">
 <h3>Reproducible</h3>
@@ -250,8 +251,8 @@ plan(multicore, workers = 2)
 r10 &lt;- future_lapply(rep(3, 2), runif)
 
 all.equal(r9, r10)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.2758852&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.759416&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.2236196&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.5047078&quot;</code></pre>
 </div>
 <div id="reproducible-2" class="section level3">
 <h3>Reproducible</h3>
@@ -322,8 +323,8 @@ r14 = foreach(i = rep(3, 2)) %dopar% {
 }
 
 all.equal(r13, r14)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.3420553&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.4079925&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.5416887&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.3570786&quot;</code></pre>
 </div>
 <div id="reproducible-3" class="section level3">
 <h3>Reproducible</h3>
@@ -368,8 +369,8 @@ plan(callr, workers = 2)
 r18 &lt;- future_lapply(rep(3, 2), runif)
 
 all.equal(r17, r18)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.7698958&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.3371402&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.3052933&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.3617484&quot;</code></pre>
 </div>
 <div id="reproducible-4" class="section level3">
 <h3>Reproducible</h3>
