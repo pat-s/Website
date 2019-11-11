@@ -1,0 +1,403 @@
+---
+title: Reproducibility of parallel tasks in R
+author: ''
+date: '2019-11-11'
+slug: reproducibility-when-going-parallel
+categories:
+  - R
+  - r-bloggers
+  - reproducibility
+tags:
+  - R
+  - machine learning
+  - parallelization
+  - socket
+  - multicore
+  - future
+  - reproducibility
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction-reproducibility-in-r">Introduction: Reproducibility in R</a></li>
+<li><a href="#the-parallelmap-package">The <em>parallelMap</em> package</a><ul>
+<li><a href="#multicore-backend">Multicore backend</a><ul>
+<li><a href="#not-reproducible">Not reproducible</a></li>
+<li><a href="#reproducible">Reproducible</a></li>
+</ul></li>
+<li><a href="#socket-backend">Socket backend</a><ul>
+<li><a href="#not-reproducible-1">Not reproducible</a></li>
+<li><a href="#reproducible-1">Reproducible</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#the-future-package">The <em>future</em> package</a><ul>
+<li><a href="#multicore-backend-1">Multicore backend</a><ul>
+<li><a href="#not-reproducible-2">Not reproducible</a></li>
+<li><a href="#reproducible-2">Reproducible</a></li>
+</ul></li>
+<li><a href="#socket-backend-1">Socket backend</a><ul>
+<li><a href="#not-reproducible-3">Not reproducible</a></li>
+<li><a href="#reproducible-3">Reproducible</a></li>
+</ul></li>
+<li><a href="#callr-backend">callr backend</a><ul>
+<li><a href="#not-reproducible-4">Not reproducible</a></li>
+<li><a href="#reproducible-4">Reproducible</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</div>
+
+<div id="introduction-reproducibility-in-r" class="section level1">
+<h1>Introduction: Reproducibility in R</h1>
+<p>Reproducibility is important.
+More important than ever.</p>
+<p>However, making a project reproducible is not as trivial as it sounds.
+It involves quite some effort which goes beyond “doing it programmatically”:</p>
+<ul>
+<li><p>Making the raw data available</p></li>
+<li><p>providing the scripts to process</p></li>
+<li><p>ensuring that stochastic processes return the same results when being run in a fresh environment.</p></li>
+</ul>
+<p>For the first two points, efforts like the <a href="https://zenodo.org/">Zenodo</a> project, containerization (<a href="https://github.com/o2r-project/containerit">containerit</a>), and makefile-based approaches (<a href="https://github.com/ropensci/drake">drake</a>, <a href="https://github.com/jdblischak/workflowr">workflowr</a>) provide helpful resources.</p>
+<p>Despite all of these efforts, there is another point that needs to be added to the list: Ensuring that <strong>parallel stochastic computations are reproducible</strong>.</p>
+<p>The idea of this post originated from <a href="https://stackoverflow.com/questions/51333410/mlr-why-does-reproducibility-of-hyperparameter-tuning-fail-using-parallelizatio/51347058#51347058">this Stackoverflow question</a>.
+In particular by <a href="https://stackoverflow.com/a/51347058/4185785">the answer</a> of <a href="https://stubner.me/">Ralf Stubner</a> which got me started thinking about all the differences between parallel modes in R and how complicated it is for users to get an overview of all the available choices.</p>
+<p>Today parallelization is used in many studies.
+Especially when it comes to modeling (machine learning / statistical), parallelization is practically indispensable.
+There is a variety of choices in R to go parallel.
+Speaking from my practical experience over the last years, the most widely known (and used?) approach is <code>foreach</code> with the help of the <code>%dopar%</code> operator.
+Probably because it is based on the good old <code>for()</code>-loop which is usually taught in intro lessons of any programming language.
+Next comes the “multicore” aka “apply” mode in R, with functions <code>lapply()</code> (and friends) and <code>mclappy()</code>.</p>
+<p>When it comes to reproducibility of stochastic processes, most people are aware that one needs to use <code>set.seed()</code>.
+While this holds true for sequential processes, it does not for parallel ones.
+The default RNG kind used in R (“Mersenne-Twister”) does not work with parallel backends.
+When reading <code>?set.seed()</code>, I see people often closing the page quickly after having taken a first look.
+Why?
+There is a lot of information in this help page - however, most of it is also mildly complicated and very theoretical.
+Also, there is only one sentence which relates to parallelization:</p>
+<blockquote>
+<p>This is not particularly interesting of itself, but provides the basis for the multiple streams used in package parallel.</p>
+</blockquote>
+<p>This sentence belongs to the description of the <code>"L'Ecuyer-CMRG"</code> RNG kind.
+When only reading this sentence, there is usually still confusion about what action needs to be taken (if at all).</p>
+<p>As you might already suspect at this point, action needs to be taken to make parallel streams reproducible.
+And unfortunately, this actions differs based on the backend / package used.
+To clear some of this confusion, I’ve put together a few minimal reproducible examples to show how to make stochastic processes reproducible for various parallel backends:</p>
+<ul>
+<li>“multicore” backend</li>
+<li>“socket” backend</li>
+<li>“callr” backend</li>
+</ul>
+<p>The examples of this post relate to the <a href="https://parallelmap.mlr-org.com/">parallelMap</a> and <a href="https://github.com/HenrikBengtsson/future">future</a> packages.
+The first one is being used in the (retired) <a href="https://mlr.mlr-org.com">mlr</a> package while <a href="https://mlr.mlr-org.com/">future</a> provides a generic approach to parallelization in R used by many packages (among other also by the <a href="https://mlr3.mlr-org.com">mlr3</a> package (shameless self-promotion :o).</p>
+<p>You will see that the solutions to ensure reproducibility differ for each backend / package.
+This is really unfortunate and requires users to change code for every backend.
+Unfortunately there is no other way to accomplish this right now (and possibly in the future).
+Maybe this post can help serving as a reference for parallel reproducibility in the R community.</p>
+</div>
+<div id="the-parallelmap-package" class="section level1">
+<h1>The <em>parallelMap</em> package</h1>
+<p>Good to know: In all following examples <code>set.seed(123456, "Mersenne-Twister")</code> is explicitly used instead of just <code>set.seed(123456)</code>.
+This is only for showcases purposes to recall that <code>"Mersenne-Twister"</code> is the default RNG kind used in R.
+Hence, <code>set.seed(123456, "Mersenne-Twister")</code> and <code>set.seed(123456)</code> are effectively the same when being called in a fresh R session.</p>
+<div id="multicore-backend" class="section level2">
+<h2>Multicore backend</h2>
+<p>Let`s take a look at the first example.
+When using the “multicore” mode and the standard RNG kind, results are not reproducible.</p>
+<div id="not-reproducible" class="section level3">
+<h3>Not reproducible</h3>
+<pre class="r"><code>library(&quot;parallelMap&quot;)
+
+suppressMessages({
+  set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
+  parallelStartMulticore(cpus = 2)
+  r1 &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+  
+  set.seed(123456, kind = &quot;Mersenne-Twister&quot;) # R default
+  parallelStartMulticore(cpus = 2)
+  r2 &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+})
+all.equal(r1, r2)</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.2605573&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.4603721&quot;</code></pre>
+</div>
+<div id="reproducible" class="section level3">
+<h3>Reproducible</h3>
+<p>To ensure reproducibility for this mode, one needs to use the <code>"L'Ecuyer-CMRG"</code> RNG kind.
+This holds true for using <code>mclapply()</code> directly as well.
+The <em>parallelMap</em> packages essentially just wraps <code>mclapply()</code> in its <code>parallelStartMulticore()</code> function.</p>
+<pre class="r"><code>library(&quot;parallelMap&quot;)
+
+suppressMessages({
+  set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
+  parallelStartMulticore(cpus = 2)
+  r3 &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+  
+  set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
+  parallelStartMulticore(cpus = 2)
+  r4 &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+})
+all.equal(r3, r4)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+<div id="socket-backend" class="section level2">
+<h2>Socket backend</h2>
+<p>For a cluster-based approach, the approach differs.
+First, the non-reproducible way again.</p>
+<div id="not-reproducible-1" class="section level3">
+<h3>Not reproducible</h3>
+<pre class="r"><code>library(&quot;parallelMap&quot;)
+
+suppressMessages({
+  parallelStartSocket(cpus = 2)
+  set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
+  r5 &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+  
+  parallelStartSocket(cpus = 2)
+  set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
+  r6 &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+})
+all.equal(r5, r6)</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.04492&quot; 
+## [2] &quot;Component 2: Mean relative difference: 2.541864&quot;</code></pre>
+</div>
+<div id="reproducible-1" class="section level3">
+<h3>Reproducible</h3>
+<p>Instead of simply using the <code>"L'Ecuyer-CMRG"</code> RNG kind directly,
+one needs to use the function <code>clusterSetRNGStream()</code> as shown below.
+Behind the scenes, this function also uses the <code>"L'Ecuyer-CMRG"</code> RNG kind.</p>
+<p>I cannot tell why the R-core guys decided to go this route instead of using the same approach as for the “multicore” mode and handling things behind the scenes.
+This would have prevented a lot of confusion and (possibly) non-reproducible results in the past (and future).</p>
+<p><em>Important</em></p>
+<p>The <code>clusterSetRNGStream()</code> call needs to come after the “PSOCK” cluster was initialized (here done within <code>parallelStartSocket()</code>, otherwise by calling <code>makeCluster()</code>).</p>
+<pre class="r"><code>library(&quot;parallelMap&quot;)
+
+suppressMessages({
+  parallelStartSocket(cpus = 2)
+  parallel::clusterSetRNGStream(iseed = 123456)
+  r7 &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+  
+  parallelStartSocket(cpus = 2)
+  parallel::clusterSetRNGStream(iseed = 123456)
+  r8 &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+})
+all.equal(r7, r8)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>If the order is reversed, <code>clusterSetRNGStream()</code> will error:</p>
+<pre class="r"><code>library(&quot;parallelMap&quot;)
+
+suppressMessages({
+  parallel::clusterSetRNGStream(iseed = 123456)
+  parallelStartSocket(cpus = 2)
+  r7b &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+  
+  parallel::clusterSetRNGStream(iseed = 123456)
+  parallelStartSocket(cpus = 2)
+  r8b &lt;- parallelMap(runif, rep(3, 2))
+  parallelStop()
+})</code></pre>
+<pre><code>## Error in defaultCluster(cl): no cluster &#39;cl&#39; supplied and none is registered</code></pre>
+<pre class="r"><code>all.equal(r7b, r8b)</code></pre>
+<pre><code>## Error in all.equal(r7b, r8b): object &#39;r7b&#39; not found</code></pre>
+</div>
+</div>
+</div>
+<div id="the-future-package" class="section level1">
+<h1>The <em>future</em> package</h1>
+<p>As of the time writing this post, the <em>future</em> package comes with support for several asynchronous backends:</p>
+<ul>
+<li>multicore</li>
+<li>multisession (“socket” mode)</li>
+<li>multiprocess (multicore (if avail), fallback multisession)</li>
+<li>callr</li>
+</ul>
+<p>The following modes are derivatives from the multisession/socket mode tailored to be used on HPC and other remote machines:</p>
+<ul>
+<li>cluster (“socket” mode)</li>
+<li>batchtools (execution on HPC)</li>
+</ul>
+<p>The <em>callr</em> backend is entirely different as it does not make use of forking (multicore) or cluster-based approaches.
+See the package’s <a href="https://github.com/HenrikBengtsson/future.callr#each-callr-future-uses-a-fresh-r-session">README</a> for a detailed comparison.</p>
+<p>The following examples show how you can make parallelization relying on the <em>future</em> package and its friends reproducible.</p>
+<div id="multicore-backend-1" class="section level2">
+<h2>Multicore backend</h2>
+<div id="not-reproducible-2" class="section level3">
+<h3>Not reproducible</h3>
+<pre class="r"><code>library(&quot;future&quot;)
+library(&quot;future.apply&quot;)
+
+set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
+plan(multicore, workers = 2)
+r9 &lt;- future_lapply(rep(3, 2), runif)
+
+set.seed(123456, kind = &quot;Mersenne-Twister&quot;) # R default
+plan(multicore, workers = 2)
+r10 &lt;- future_lapply(rep(3, 2), runif)
+
+all.equal(r9, r10)</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.2758852&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.759416&quot;</code></pre>
+</div>
+<div id="reproducible-2" class="section level3">
+<h3>Reproducible</h3>
+<p>In contrast to <a href="#parallelmap">the <em>parallelMap</em> approach</a>, the multicore backend uses the <code>"L'Ecuyer-CMRG"</code> RNG kind already internally.
+See <code>?future_lapply()</code>.
+There are two ways to activate it:</p>
+<ul>
+<li><ol style="list-style-type: lower-roman">
+<li>pass an integer value to the <code>future.seed</code> argument of the foreground function being used (here we use <code>future_lapply()</code> from the <a href="https://github.com/HenrikBengtsson/future.apply"><em>future.apply</em></a> package)</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-roman">
+<li>when setting the a <code>"L'Ecuyer-CMRG"</code> seed upfront, pass <code>TRUE</code> to the <code>future.seed</code> argument</li>
+</ol></li>
+</ul>
+<p>Note that one could also use the <a href="https://github.com/DavisVaughan/furrr"><em>furrr</em></a> package with its function <code>future_map()</code> as equivalent substitute.</p>
+<ol style="list-style-type: lower-roman">
+<li></li>
+</ol>
+<pre class="r"><code>library(&quot;future&quot;)
+library(&quot;future.apply&quot;)
+
+plan(multicore, workers = 2)
+r11a &lt;- future_lapply(rep(3, 2), runif, future.seed = 123456)
+
+plan(multicore, workers = 2)
+r12a &lt;- future_lapply(rep(3, 2), runif, future.seed = 123456)
+
+all.equal(r11a, r12a)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<ol start="2" style="list-style-type: lower-roman">
+<li></li>
+</ol>
+<pre class="r"><code>library(&quot;future&quot;)
+library(&quot;future.apply&quot;)
+
+set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
+plan(multicore, workers = 2)
+r11b &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
+
+set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
+plan(multicore, workers = 2)
+r12b &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
+
+all.equal(r11b, r12b)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+<div id="socket-backend-1" class="section level2">
+<h2>Socket backend</h2>
+<p>The following example uses the <a href="https://github.com/HenrikBengtsson/doFuture">doFuture</a> backend to parallelize a <code>foreach</code> loop.</p>
+<div id="not-reproducible-3" class="section level3">
+<h3>Not reproducible</h3>
+<pre class="r"><code>library(&quot;future&quot;)
+library(&quot;doFuture&quot;)
+
+set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
+registerDoFuture()
+plan(multisession, workers = 2)
+r13 = foreach(i = rep(3, 2)) %dopar% {
+  runif(i)
+}
+
+set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
+registerDoFuture()
+plan(multisession, workers = 2)
+r14 = foreach(i = rep(3, 2)) %dopar% {
+  runif(i)
+}
+
+all.equal(r13, r14)</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.3420553&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.4079925&quot;</code></pre>
+</div>
+<div id="reproducible-3" class="section level3">
+<h3>Reproducible</h3>
+<p>When reading the RNG section of <code>?doFuture::doFuture</code>, one discovers that the <code>doFuture</code> does not support reproducible parallel streams.
+Instead, the <a href="https://github.com/renozao/doRNG">doRNG</a> package is suggested for reproducible parallel <code>foreach</code> calls.</p>
+<p>Subsequently, one needs to initialize a “PSOCK” cluster and call <code>registerDoRNG()</code> with the desired seed value.</p>
+<pre class="r"><code>library(&quot;future&quot;)
+library(&quot;doRNG&quot;)
+
+cl = makeCluster(2, type = &quot;PSOCK&quot;)
+setDefaultCluster(cl)
+registerDoRNG(123456)
+r15 = foreach(i = rep(3, 2)) %dopar% {
+  runif(i)
+}
+
+cl = makeCluster(2, type = &quot;PSOCK&quot;)
+setDefaultCluster(cl)
+registerDoRNG(123456)
+r16 = foreach(i = rep(3, 2)) %dopar% {
+  runif(i)
+}</code></pre>
+<pre class="r"><code>all.equal(r15, r16)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+<div id="callr-backend" class="section level2">
+<h2>callr backend</h2>
+<p>The “callr” backend luckily functions in the same way as the “multicore” one from the <em>future</em> package.</p>
+<div id="not-reproducible-4" class="section level3">
+<h3>Not reproducible</h3>
+<pre class="r"><code>library(&quot;future&quot;)
+library(&quot;future.callr&quot;)
+library(&quot;future.apply&quot;)
+
+set.seed(123456, kind = &quot;Mersenne-Twister&quot;) # R default
+plan(callr, workers = 2)
+r17 &lt;- future_lapply(rep(3, 2), runif)
+
+set.seed(123456, kind = &quot;Mersenne-Twister&quot;) # R default
+plan(callr, workers = 2)
+r18 &lt;- future_lapply(rep(3, 2), runif)
+
+all.equal(r17, r18)</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.7698958&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.3371402&quot;</code></pre>
+</div>
+<div id="reproducible-4" class="section level3">
+<h3>Reproducible</h3>
+<pre class="r"><code>library(&quot;future&quot;)
+library(&quot;future.callr&quot;)
+library(&quot;future.apply&quot;)
+
+set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
+plan(callr, workers = 2)
+r19 &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
+
+set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
+plan(callr, workers = 2)
+r20 &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
+
+all.equal(r19, r20)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+</div>
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<p>With all the examples shown above, it should be clear now that care needs to be taken to achieve reproducibility in R in parallel scenarios.
+Approaches differ not only by mode but also by packages interfacing the modes.</p>
+<p>Sometimes package authors might take care of this internally but more often not.
+In the end it is <em>your</em> own responsibility to check your code for its reproducibility.</p>
+<p>This post does not compare the strong and weak parts of all parallel modes shown.
+If you are curious about this and wonder which backend you should go with in the first place, I can recommend the <a href="https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html">overview vignette of the <em>future</em> package</a>.
+However, do not expect that this document will tell you “the” best mode.
+There is no such thing (currently). ;)</p>
+</div>
