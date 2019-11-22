@@ -19,23 +19,18 @@
   weight = 30
 
 [[main]]
-  name = "Talks"
-  url = "#talks"
-  weight = 40
-
-[[main]]
-  name = "Reading list"
-  url = "#recommended_reading"
-  weight = 50
-
-[[main]]
   name = "Teaching"
   url = "#teaching"
   weight = 60
 
+[[main]]
+  name = 'Talks <i class="fas fa-external-link-alt"></i>'
+  url = "https://github.com/pat-s/presentations"
+  weight = 70
+
 # Link to a PDF of your resume/CV from the menu.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
 [[main]]
-  name = "CV"
+  name = 'CV <i class="fas fa-external-link-alt"></i>'
   url = "files/cv.pdf"
   weight = 80
