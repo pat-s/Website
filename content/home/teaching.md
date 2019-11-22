@@ -21,7 +21,11 @@ I teach within the [Münchner R Kurse](http://www.muenchner-r-kurse.de/kursangeb
 
 # University of Jena
 
-I worked as a teaching assistant in the following courses at University of Jena:
+## Current
 
-- Geo 404: Applied Geoinformatics (WS 17/18, M.Sc.)
-- Geo 311: Geoinformatics III (WS 16/17, B.Sc.)
+- Geo 404: Applied Geoinformatics (WS 19/20, M.Sc.)
+
+## Past
+
+- Geo 404: Applied Geoinformatics (WS 17/18, M.Sc.) - **TA**
+- Geo 311: Geoinformatics III (WS 16/17, B.Sc.) - **TA**
