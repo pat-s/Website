@@ -130,6 +130,17 @@ pre, code {
     background-color: transparent;
 }
 
+/* hover color of navbar */
+.navbar .navbar-nav .nav-link.active {
+    font-weight: bold !important;
+    color: #0072B5 !important;
+}
+
+/* hover color of navbar */
+.navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
+    color: #0072B5;
+}
+
 .navbar-light {
     background: #dadada!important;
     box-shadow: 0 0.125rem 0.25rem 0 rgba(0,0,0,.11);
