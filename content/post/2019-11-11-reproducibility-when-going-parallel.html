@@ -21,30 +21,39 @@ output:
     toc: true
 ---
 
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<script src="/rmarkdown-libs/elevate-section-attrs/elevate-section-attrs.js"></script>
 
 <div id="TOC">
 <ul>
 <li><a href="#introduction-reproducibility-in-r">Introduction: Reproducibility in R</a></li>
-<li><a href="#the-parallelmap-package">The <em>parallelMap</em> package</a><ul>
-<li><a href="#multicore-backend">Multicore backend</a><ul>
+<li><a href="#the-parallelmap-package">The <em>parallelMap</em> package</a>
+<ul>
+<li><a href="#multicore-backend">Multicore backend</a>
+<ul>
 <li><a href="#not-reproducible">Not reproducible</a></li>
 <li><a href="#reproducible">Reproducible</a></li>
 </ul></li>
-<li><a href="#socket-backend">Socket backend</a><ul>
+<li><a href="#socket-backend">Socket backend</a>
+<ul>
 <li><a href="#not-reproducible-1">Not reproducible</a></li>
 <li><a href="#reproducible-1">Reproducible</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#the-future-package">The <em>future</em> package</a><ul>
-<li><a href="#multicore-backend-1">Multicore backend</a><ul>
+<li><a href="#the-future-package">The <em>future</em> package</a>
+<ul>
+<li><a href="#multicore-backend-1">Multicore backend</a>
+<ul>
 <li><a href="#not-reproducible-2">Not reproducible</a></li>
 <li><a href="#reproducible-2">Reproducible</a></li>
 </ul></li>
-<li><a href="#socket-backend-1">Socket backend</a><ul>
+<li><a href="#socket-backend-1">Socket backend</a>
+<ul>
 <li><a href="#not-reproducible-3">Not reproducible</a></li>
 <li><a href="#reproducible-3">Reproducible</a></li>
 </ul></li>
-<li><a href="#callr-backend">callr backend</a><ul>
+<li><a href="#callr-backend">callr backend</a>
+<ul>
 <li><a href="#not-reproducible-4">Not reproducible</a></li>
 <li><a href="#reproducible-4">Reproducible</a></li>
 </ul></li>
@@ -126,8 +135,8 @@ suppressMessages({
   parallelStop()
 })
 all.equal(r1, r2)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.816508&quot; 
-## [2] &quot;Component 2: Mean relative difference: 0.8693197&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.082046&quot; 
+## [2] &quot;Component 2: Mean relative difference: 0.9149094&quot;</code></pre>
 </div>
 <div id="reproducible" class="section level3">
 <h3>Reproducible</h3>
@@ -171,8 +180,8 @@ suppressMessages({
   parallelStop()
 })
 all.equal(r5, r6)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.7527587&quot;
-## [2] &quot;Component 2: Mean relative difference: 2.343758&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.4134359&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.9022507&quot;</code></pre>
 </div>
 <div id="reproducible-1" class="section level3">
 <h3>Reproducible</h3>
@@ -251,8 +260,8 @@ plan(multicore, workers = 2)
 r10 &lt;- future_lapply(rep(3, 2), runif)
 
 all.equal(r9, r10)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.2236196&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.5047078&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.3785177&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.7472642&quot;</code></pre>
 </div>
 <div id="reproducible-2" class="section level3">
 <h3>Reproducible</h3>
@@ -264,9 +273,11 @@ There are two ways to activate it:</p>
 <li>pass an integer value to the <code>future.seed</code> argument of the foreground function being used (here we use <code>future_lapply()</code> from the <a href="https://github.com/HenrikBengtsson/future.apply"><em>future.apply</em></a> package)</li>
 </ol></li>
 <li><ol start="2" style="list-style-type: lower-roman">
-<li>when setting the a <code>"L'Ecuyer-CMRG"</code> seed upfront, pass <code>TRUE</code> to the <code>future.seed</code> argument</li>
+<li>pass <code>TRUE</code> to the <code>future.seed</code> argument in addition with a call to <code>set.seed()</code> with any RNG kind (the default “Mersenne-Twister” is sufficient in that case)</li>
 </ol></li>
 </ul>
+<p>The <em>future</em> package internally accounts for it by using “L’Ecuyer-CMRG” RNG stream when using one of the options above.
+See section “Reproducible random number generation (RNG)” in <code>?future.apply::future_lapply()</code> for more information.</p>
 <p>Note that one could also use the <a href="https://github.com/DavisVaughan/furrr"><em>furrr</em></a> package with its function <code>future_map()</code> as equivalent substitute.</p>
 <ol style="list-style-type: lower-roman">
 <li></li>
@@ -288,11 +299,11 @@ all.equal(r11a, r12a)</code></pre>
 <pre class="r"><code>library(&quot;future&quot;)
 library(&quot;future.apply&quot;)
 
-set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
+set.seed(123)
 plan(multicore, workers = 2)
 r11b &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
-set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
+set.seed(123)
 plan(multicore, workers = 2)
 r12b &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
@@ -323,8 +334,8 @@ r14 = foreach(i = rep(3, 2)) %dopar% {
 }
 
 all.equal(r13, r14)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.5416887&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.3570786&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.6563787&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.6313026&quot;</code></pre>
 </div>
 <div id="reproducible-3" class="section level3">
 <h3>Reproducible</h3>
@@ -369,8 +380,8 @@ plan(callr, workers = 2)
 r18 &lt;- future_lapply(rep(3, 2), runif)
 
 all.equal(r17, r18)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.3052933&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.3617484&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.718335&quot; 
+## [2] &quot;Component 2: Mean relative difference: 0.3756766&quot;</code></pre>
 </div>
 <div id="reproducible-4" class="section level3">
 <h3>Reproducible</h3>

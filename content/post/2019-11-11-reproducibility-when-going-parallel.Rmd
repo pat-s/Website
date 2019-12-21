@@ -249,7 +249,10 @@ See `?future_lapply()`.
 There are two ways to activate it:
 
 - (i) pass an integer value to the `future.seed` argument of the foreground function being used (here we use `future_lapply()` from the [_future.apply_](https://github.com/HenrikBengtsson/future.apply) package)
-- (ii) when setting the a `"L'Ecuyer-CMRG"` seed upfront, pass `TRUE` to the `future.seed` argument
+- (ii) pass `TRUE` to the `future.seed` argument in addition with a call to `set.seed()` with any RNG kind (the default "Mersenne-Twister" is sufficient in that case)
+
+The _future_ package internally accounts for it by using "L'Ecuyer-CMRG" RNG stream when using one of the options above.
+See section "Reproducible random number generation (RNG)" in `?future.apply::future_lapply()` for more information.
 
 Note that one could also use the [_furrr_](https://github.com/DavisVaughan/furrr) package with its function `future_map()` as equivalent substitute.
 
@@ -274,11 +277,11 @@ all.equal(r11a, r12a)
 library("future")
 library("future.apply")
 
-set.seed(123456, "L'Ecuyer-CMRG")
+set.seed(123)
 plan(multicore, workers = 2)
 r11b <- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
-set.seed(123456, "L'Ecuyer-CMRG")
+set.seed(123)
 plan(multicore, workers = 2)
 r12b <- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
