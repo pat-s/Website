@@ -17,14 +17,18 @@ output:
     toc: true 
 ---
 
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<script src="/rmarkdown-libs/elevate-section-attrs/elevate-section-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#glm">GLM</a><ul>
+<li><a href="#glm">GLM</a>
+<ul>
 <li><a href="#the-concept-of-odds-ratio-calculation">The concept of odds ratio calculation</a></li>
 <li><a href="#the-oddsratio-approach">The ‘oddsratio’ approach</a></li>
 </ul></li>
-<li><a href="#gam">GAM</a><ul>
+<li><a href="#gam">GAM</a>
+<ul>
 <li><a href="#plot-gamm-smoothing-functions">Plot GAM(M) smoothing functions</a></li>
 <li><a href="#add-odds-ratio-information-into-smoothing-function-plot">Add odds ratio information into smoothing function plot</a></li>
 </ul></li>
@@ -52,7 +56,7 @@ Subsequently, the result is a ratio of <code>odds1</code> by <code>odds2</code>.
 If you then set an increment value to multiply your coefficient with, this “one unit increase/difference” (+1) is multiplied by this value and then <code>exp()</code> is applied on it.
 This means that if you set an increment value of <code>5</code>, the “new” coefficient (corresponding to a change of <code>5</code>) is simply five times the coefficients of <code>1</code> (which was returned by your model summary).</p>
 <p>If your predictor is not numeric but an indicator variable with certain levels (like <code>rank</code> in the example), it does not make sense to set increments since the calculated coefficients just refer to your base factor level, here being <code>rank1</code>.
-In practice this makes sense because you can just say “being <code>rank1</code> increases/decreases the odds of the event to happen by x % compared to <code>rank2</code>. So you just set the increment to <code>1</code> to calculate the basic odds ratio between the respective levels. Note that you need to set as much”1s&quot; as there are levels of your indicator variable!</p>
+In practice this makes sense because you can just say “being <code>rank1</code> increases/decreases the odds of the event to happen by x % compared to <code>rank2</code>. So you just set the increment to <code>1</code> to calculate the basic odds ratio between the respective levels. Note that you need to set as much”1s" as there are levels of your indicator variable!</p>
 <p>All these steps result in the following code:</p>
 <pre class="r"><code># Example data
 library(oddsratio)
@@ -71,12 +75,14 @@ And yes, this was just the ‘easy’ procedure for GLMs - the GAM approach is w
 <h2>The ‘oddsratio’ approach</h2>
 <p>All what was shown before can be done better - in my opinion!</p>
 <pre class="r"><code>or_glm(data = data_glm, model = fit_glm, incr = list(gre = 100, gpa = 2))</code></pre>
-<pre><code>##   predictor oddsratio CI_low (2.5 %) CI_high (97.5 %)          increment
-## 1       gre     1.254          1.014            1.558                100
-## 2       gpa     4.993          1.378           18.696                  2
-## 3     rank2     0.509          0.272            0.945 Indicator variable
-## 4     rank3     0.262          0.132            0.512 Indicator variable
-## 5     rank4     0.212          0.091            0.471 Indicator variable</code></pre>
+<pre><code>## # A tibble: 5 x 5
+##   predictor oddsratio `CI_low (2.5)` `CI_high (97.5)` increment         
+##   &lt;chr&gt;         &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;             
+## 1 gre           1.25           1.01             1.56  100               
+## 2 gpa           4.99           1.38            18.7   2                 
+## 3 rank2         0.509          0.272            0.945 Indicator variable
+## 4 rank3         0.262          0.132            0.512 Indicator variable
+## 5 rank4         0.212          0.091            0.471 Indicator variable</code></pre>
 <p>Note how the column names of <code>CI_low</code> and <code>CI_high</code> are automatically adjusted.</p>
 <p>By using <code>or_glm()</code> you get a nicely formatted output.
 When setting up the function arguments you avoid false references of increments by providing the information in a named list (<code>gre = 100</code>, <code>gpa = 2</code>).
@@ -85,12 +91,14 @@ Also, automatically confident intervals (CI) of odds ratios are calculated and r
 You can easily specify your own CI using the <code>CI</code> argument:</p>
 <pre class="r"><code>or_glm(data = data_glm, model = fit_glm, 
        incr = list(gre = 100, gpa = 2), CI = .70)</code></pre>
-<pre><code>##   predictor oddsratio CI_low (15 %) CI_high (85 %)          increment
-## 1       gre     1.254         1.120          1.406                100
-## 2       gpa     4.993         2.520          9.984                  2
-## 3     rank2     0.509         0.366          0.706 Indicator variable
-## 4     rank3     0.262         0.183          0.374 Indicator variable
-## 5     rank4     0.212         0.136          0.325 Indicator variable</code></pre>
+<pre><code>## # A tibble: 5 x 5
+##   predictor oddsratio `CI_low (15)` `CI_high (85)` increment         
+##   &lt;chr&gt;         &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;             
+## 1 gre           1.25          1.12           1.41  100               
+## 2 gpa           4.99          2.52           9.98  2                 
+## 3 rank2         0.509         0.366          0.706 Indicator variable
+## 4 rank3         0.262         0.183          0.374 Indicator variable
+## 5 rank4         0.212         0.136          0.325 Indicator variable</code></pre>
 </div>
 </div>
 <div id="gam" class="section level1">
@@ -113,26 +121,24 @@ fit_gam &lt;- mgcv::gam(y ~ s(x0) + s(I(x1^2)) + s(x2) + offset(x3) + x4,
 <p>If you do not understand this theory in depth, do not worry - <code>or_gam()</code> does the work for you! What counts in the first place is to be able to correctly interpret the odds ratios.</p>
 <pre class="r"><code>or_gam(data = dat, model = fit_gam, pred = &quot;x2&quot;, 
        values = c(0.099, 0.198))</code></pre>
-<pre><code>##   predictor value1 value2 oddsratio CI_low (2.5%) CI_high (97.5%)
-## 1        x2  0.099  0.198  23.32353      23.30424        23.34283</code></pre>
+<pre><code>## # A tibble: 1 x 6
+##   predictor value1 value2 oddsratio `CI_low (2.5%)` `CI_high (97.5%)`
+##   &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;             &lt;dbl&gt;
+## 1 x2         0.099  0.198      23.3            23.3              23.3</code></pre>
 <p>Using <code>or_gam()</code> you just specify your fitted model and your predictor, provide your values to calculate the odds ratio for and you receive your result!</p>
 <p>“Hmmm - so I have to call the function x times if I want multiple odds ratios of the same predictor?”
 Well, actually yes - but that is the moment when the <code>slice</code> comes to stage!</p>
 <p><code>or_gam()</code> supports the calculation of multiple odds ratios for one predictor using <code>slice = TRUE</code>. This option splits the value range of the predictor by percentage steps (specified in the <code>percentage</code> argument). So if you want, for example, to calculate odds ratios for 20% quantiles of your predictors value range, you proceed as follows:</p>
 <pre class="r"><code>or_gam(data = dat, model = fit_gam, pred = &quot;x2&quot;, 
        percentage = 20, slice = TRUE)</code></pre>
-<pre><code>##   predictor value1 value2 perc1 perc2 oddsratio CI_low (2.5%)
-## 1        x2  0.001  0.200     0    20   2510.77       1091.68
-## 2        x2  0.200  0.400    20    40      0.03          0.03
-## 3        x2  0.400  0.599    40    60      0.58          0.56
-## 4        x2  0.599  0.799    60    80      0.06          0.06
-## 5        x2  0.799  0.998    80   100      0.41          0.75
-##   CI_high (97.5%)
-## 1         5774.53
-## 2            0.03
-## 3            0.60
-## 4            0.06
-## 5            0.22</code></pre>
+<pre><code>## # A tibble: 5 x 8
+##   predictor value1 value2 perc1 perc2 oddsratio `CI_low (2.5%)` `CI_high (97.5%…
+##   &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;
+## 1 x2         0.001  0.2   0     20     2511.            1092.            5775.  
+## 2 x2         0.2    0.4   20    40        0.03             0.03             0.03
+## 3 x2         0.4    0.599 40    60        0.580            0.56             0.6 
+## 4 x2         0.599  0.799 60    80        0.06             0.06             0.06
+## 5 x2         0.799  0.998 80    100       0.41             0.75             0.22</code></pre>
 <p>You get the values which were taken for the odds ratio calculation (<code>value1</code>, <code>value2</code>), which percentage of the predictor distribution they correspond to (<code>perc1</code>, <code>perc2</code>), the calculate odds ratio and its confident interval borders.</p>
 <p><em>Note that currently the CI of GAMs is fixed to 95% and cannot be modified.</em></p>
 <div id="plot-gamm-smoothing-functions" class="section level2">

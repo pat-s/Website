@@ -15,6 +15,8 @@ header:
 summary: "Maybe you know that for some packages in R there is an entry 'Package NEWS' in the help pane of RStudio. However, it is a bit of mistery how to provide this NEWS entry there for maintainers, especially since the recent wide spread use of NEWS.md in R package development."
 ---
 
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<script src="/rmarkdown-libs/elevate-section-attrs/elevate-section-attrs.js"></script>
 
 
 <p>Maybe you know that for some packages in R you can view the NEWS file in the help pane of RStudio:</p>
@@ -41,5 +43,5 @@ sed -e &#39;/^##/ s/$/:/&#39; -e &#39;s/^*/ */&#39; -e &#39;s/^## *//&#39; -e &q
 It depends on your formatting style (e.g. if you add a colon after each heading or not (I do not)).
 Just apply it, check the resulting NEWS file and tweak it if needed.</p>
 <p><strong>NOTE:</strong> You will only see “Package NEWS” entry in the RStudio help pane if the ASCII file is correctly formatted.
-So if you do not see it after building your package locally (e.g. <code>devtools::document()</code>), something is still wrong.
+So if you do not see it after building your package locally (e.g. <code>devtools::document()</code>), something is still wrong.
 See <a href="https://github.com/pat-s/sperrorest/blob/master/NEWS">this file</a> for a correct example.</p>

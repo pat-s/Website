@@ -11,6 +11,8 @@ output:
     toc: true
 ---
 
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<script src="/rmarkdown-libs/elevate-section-attrs/elevate-section-attrs.js"></script>
 
 <div id="TOC">
 <ul>
@@ -44,7 +46,7 @@ This file holds the main settings.</p>
 Other attempts as suggested in various examples<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> did not work for me.</p>
 <p>Next, you need to edit the specified file from above (here <code>/etc/auto.all</code>).
 It will hold the specific mount instructions for each protocol.
-You can either use multiple entries in <code>/etc/auto.master</code> with subsequent multiple <code>/etc/auto.*</code> files or use a single file for various protocols (e.g. <code>cifs</code>, <code>sshfs</code>, <code>nfs</code>).</p>
+You can either use multiple entries in <code>/etc/auto.master</code> with subsequent multiple <code>/etc/auto.*</code> files or use a single file for various protocols (e.g. <code>cifs</code>, <code>sshfs</code>, <code>nfs</code>).</p>
 <p>I prefer to use a single file that looks as follows:</p>
 <pre class="text"><code>/mnt \
 /server1 -fstype=cifs,rw,credentials=/etc/.smbcredentials.txt,uid=1000,file_mode=0775,dir_mode=0775,users ://&lt;server ip&gt;/&lt;share&gt; \
@@ -54,7 +56,7 @@ You can either use multiple entries in <code>/etc/auto.master</code> with subseq
 <h1>Notes</h1>
 <ul>
 <li><p><code>/mnt</code> is the desired mount point here.</p></li>
-<li>I mount a Windows server using <code>cifs</code> (samba protocol) with the respective credentials (username, password) stores in <code>/etc/.smbcredentials.txt</code> and a Linux server using <code>sshfs</code>.
+<li><p>I mount a Windows server using <code>cifs</code> (samba protocol) with the respective credentials (username, password) stores in <code>/etc/.smbcredentials.txt</code> and a Linux server using <code>sshfs</code>.</p>
 <ul>
 <li>The private ssh key which enables a passwordless ssh connection for <code>sshfs</code> has to be copied from <code>~/.ssh/id_rsa</code> to <code>/root/.ssh/id_rsa</code> because <code>root</code> will be the user which creates the connection.
 Subsequently, <code>sshfs</code> will try to use its respective <code>id_rsa</code> file.
@@ -66,12 +68,12 @@ Without it in front of <code>#username@server</code> and <code>:/home</code>, th
 <li><p>I set specific file and directory rights (<code>file_mode</code>, <code>dir_mode</code>) so that I have full access to the mounted folders.</p></li>
 </ul>
 <p>Be aware that only the direct mount point (here <code>/mnt</code>) exists permanently.
-The on-demand folders (here e.g. <code>/mnt/server1</code>) will be created during the mount process and should not exist before.</p>
+The on-demand folders (here e.g. <code>/mnt/server1</code>) will be created during the mount process and should not exist before.</p>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p><a href="https://help.ubuntu.com/community/Autofs#Introduction" class="uri">https://help.ubuntu.com/community/Autofs#Introduction</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p><a href="https://wiki.ubuntuusers.de/Autofs/" class="uri">https://wiki.ubuntuusers.de/Autofs/</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p><a href="https://help.ubuntu.com/community/Autofs#Introduction" class="uri">https://help.ubuntu.com/community/Autofs#Introduction</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://wiki.ubuntuusers.de/Autofs/" class="uri">https://wiki.ubuntuusers.de/Autofs/</a><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
