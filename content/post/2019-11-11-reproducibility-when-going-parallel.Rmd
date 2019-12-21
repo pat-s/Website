@@ -2,6 +2,7 @@
 title: Reproducibility of parallel tasks in R
 author: ''
 date: '2019-11-11'
+lastmod: '2019-12-20'
 slug: reproducibility-when-going-parallel
 categories:
   - R

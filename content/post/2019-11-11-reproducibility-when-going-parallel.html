@@ -2,6 +2,7 @@
 title: Reproducibility of parallel tasks in R
 author: ''
 date: '2019-11-11'
+lastmod: '2019-12-20'
 slug: reproducibility-when-going-parallel
 categories:
   - R
@@ -135,8 +136,8 @@ suppressMessages({
   parallelStop()
 })
 all.equal(r1, r2)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.082046&quot; 
-## [2] &quot;Component 2: Mean relative difference: 0.9149094&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.6233174&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.4977816&quot;</code></pre>
 </div>
 <div id="reproducible" class="section level3">
 <h3>Reproducible</h3>
@@ -260,8 +261,8 @@ plan(multicore, workers = 2)
 r10 &lt;- future_lapply(rep(3, 2), runif)
 
 all.equal(r9, r10)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.3785177&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.7472642&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.6384958&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.6864517&quot;</code></pre>
 </div>
 <div id="reproducible-2" class="section level3">
 <h3>Reproducible</h3>
@@ -334,8 +335,8 @@ r14 = foreach(i = rep(3, 2)) %dopar% {
 }
 
 all.equal(r13, r14)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.6563787&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.6313026&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.666063&quot; 
+## [2] &quot;Component 2: Mean relative difference: 0.6626579&quot;</code></pre>
 </div>
 <div id="reproducible-3" class="section level3">
 <h3>Reproducible</h3>
@@ -380,8 +381,8 @@ plan(callr, workers = 2)
 r18 &lt;- future_lapply(rep(3, 2), runif)
 
 all.equal(r17, r18)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.718335&quot; 
-## [2] &quot;Component 2: Mean relative difference: 0.3756766&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.539529&quot; 
+## [2] &quot;Component 2: Mean relative difference: 0.4753423&quot;</code></pre>
 </div>
 <div id="reproducible-4" class="section level3">
 <h3>Reproducible</h3>
