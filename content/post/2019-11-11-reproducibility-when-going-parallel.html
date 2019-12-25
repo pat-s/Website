@@ -2,7 +2,7 @@
 title: Reproducibility of parallel tasks in R
 author: ''
 date: '2019-11-11'
-lastmod: '2019-12-20'
+lastmod: '2019-12-25'
 slug: reproducibility-when-going-parallel
 categories:
   - R
@@ -136,8 +136,8 @@ suppressMessages({
   parallelStop()
 })
 all.equal(r1, r2)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.6233174&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.4977816&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.5649852&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.6711908&quot;</code></pre>
 </div>
 <div id="reproducible" class="section level3">
 <h3>Reproducible</h3>
@@ -249,20 +249,20 @@ See the package’s <a href="https://github.com/HenrikBengtsson/future.callr#eac
 <h2>Multicore backend</h2>
 <div id="not-reproducible-2" class="section level3">
 <h3>Not reproducible</h3>
-<pre class="r"><code>library(&quot;future&quot;)
-library(&quot;future.apply&quot;)
+<pre class="r"><code>library(&quot;future.apply&quot;)</code></pre>
+<pre><code>## Loading required package: future</code></pre>
+<pre class="r"><code># register parallel backend
+plan(multicore, workers = 2)
 
 set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
-plan(multicore, workers = 2)
 r9 &lt;- future_lapply(rep(3, 2), runif)
 
 set.seed(123456, kind = &quot;Mersenne-Twister&quot;) # R default
-plan(multicore, workers = 2)
 r10 &lt;- future_lapply(rep(3, 2), runif)
 
 all.equal(r9, r10)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.6384958&quot;
-## [2] &quot;Component 2: Mean relative difference: 0.6864517&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.7284899&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.6608846&quot;</code></pre>
 </div>
 <div id="reproducible-2" class="section level3">
 <h3>Reproducible</h3>
@@ -283,13 +283,13 @@ See section “Reproducible random number generation (RNG)” in <code>?future.a
 <ol style="list-style-type: lower-roman">
 <li></li>
 </ol>
-<pre class="r"><code>library(&quot;future&quot;)
-library(&quot;future.apply&quot;)
+<pre class="r"><code>library(&quot;future.apply&quot;)
 
+# register parallel backend
 plan(multicore, workers = 2)
+
 r11a &lt;- future_lapply(rep(3, 2), runif, future.seed = 123456)
 
-plan(multicore, workers = 2)
 r12a &lt;- future_lapply(rep(3, 2), runif, future.seed = 123456)
 
 all.equal(r11a, r12a)</code></pre>
@@ -297,15 +297,15 @@ all.equal(r11a, r12a)</code></pre>
 <ol start="2" style="list-style-type: lower-roman">
 <li></li>
 </ol>
-<pre class="r"><code>library(&quot;future&quot;)
-library(&quot;future.apply&quot;)
+<pre class="r"><code>library(&quot;future.apply&quot;)
+
+# register parallel backend
+plan(multicore, workers = 2)
 
 set.seed(123)
-plan(multicore, workers = 2)
 r11b &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
 set.seed(123)
-plan(multicore, workers = 2)
 r12b &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
 all.equal(r11b, r12b)</code></pre>
@@ -317,49 +317,68 @@ all.equal(r11b, r12b)</code></pre>
 <p>The following example uses the <a href="https://github.com/HenrikBengtsson/doFuture">doFuture</a> backend to parallelize a <code>foreach</code> loop.</p>
 <div id="not-reproducible-3" class="section level3">
 <h3>Not reproducible</h3>
-<pre class="r"><code>library(&quot;future&quot;)
-library(&quot;doFuture&quot;)
+<pre class="r"><code>library(&quot;doFuture&quot;)
 
-set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
+# register parallel backend
 registerDoFuture()
 plan(multisession, workers = 2)
+
+set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
 r13 = foreach(i = rep(3, 2)) %dopar% {
   runif(i)
 }
 
 set.seed(123456, &quot;Mersenne-Twister&quot;) # R default
-registerDoFuture()
-plan(multisession, workers = 2)
 r14 = foreach(i = rep(3, 2)) %dopar% {
   runif(i)
 }
 
 all.equal(r13, r14)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.666063&quot; 
-## [2] &quot;Component 2: Mean relative difference: 0.6626579&quot;</code></pre>
-</div>
-<div id="reproducible-3" class="section level3">
-<h3>Reproducible</h3>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.3891477&quot;
+## [2] &quot;Component 2: Mean relative difference: 0.8053662&quot;</code></pre>
 <p>When reading the RNG section of <code>?doFuture::doFuture</code>, one discovers that the <code>doFuture</code> does not support reproducible parallel streams.
 Instead, the <a href="https://github.com/renozao/doRNG">doRNG</a> package is suggested for reproducible parallel <code>foreach</code> calls.</p>
-<p>Subsequently, one needs to initialize a “PSOCK” cluster and call <code>registerDoRNG()</code> with the desired seed value.</p>
-<pre class="r"><code>library(&quot;future&quot;)
-library(&quot;doRNG&quot;)
+<p>When using <code>doFuture::registerDoFuture()</code>, setting the “L’Ecuyer-CMRG” has <strong>no effect</strong>.</p>
+<pre class="r"><code>library(&quot;doFuture&quot;)
 
-cl = makeCluster(2, type = &quot;PSOCK&quot;)
-setDefaultCluster(cl)
-registerDoRNG(123456)
+# register parallel backend
+registerDoFuture()
+plan(multisession, workers = 2)
+
+set.seed(123, &quot;L&#39;Ecuyer-CMRG&quot;) 
 r15 = foreach(i = rep(3, 2)) %dopar% {
   runif(i)
 }
 
-cl = makeCluster(2, type = &quot;PSOCK&quot;)
-setDefaultCluster(cl)
-registerDoRNG(123456)
+set.seed(123, &quot;L&#39;Ecuyer-CMRG&quot;) 
 r16 = foreach(i = rep(3, 2)) %dopar% {
   runif(i)
-}</code></pre>
-<pre class="r"><code>all.equal(r15, r16)</code></pre>
+}
+
+all.equal(r15, r16)</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.402801&quot; 
+## [2] &quot;Component 2: Mean relative difference: 0.7837205&quot;</code></pre>
+</div>
+<div id="reproducible-3" class="section level3">
+<h3>Reproducible</h3>
+<p>Instead, one needs to add a call to <code>doRNG::registerDoRNG()</code> to initialize the parallel RNG stream.</p>
+<pre class="r"><code>library(&quot;doFuture&quot;)
+library(&quot;doRNG&quot;)
+
+# register parallel backend
+registerDoFuture()
+plan(multisession, workers = 2)
+
+registerDoRNG(123)
+r15a = foreach(i = rep(3, 2)) %dopar% {
+  runif(i)
+}
+
+registerDoRNG(123)
+r16a = foreach(i = rep(3, 2)) %dopar% {
+  runif(i)
+}
+all.equal(r15a, r16a)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 </div>
@@ -368,34 +387,34 @@ r16 = foreach(i = rep(3, 2)) %dopar% {
 <p>The “callr” backend luckily functions in the same way as the “multicore” one from the <em>future</em> package.</p>
 <div id="not-reproducible-4" class="section level3">
 <h3>Not reproducible</h3>
-<pre class="r"><code>library(&quot;future&quot;)
-library(&quot;future.callr&quot;)
+<pre class="r"><code>library(&quot;future.callr&quot;)
 library(&quot;future.apply&quot;)
 
-set.seed(123456, kind = &quot;Mersenne-Twister&quot;) # R default
+# register parallel backend
 plan(callr, workers = 2)
+
+set.seed(123456, kind = &quot;Mersenne-Twister&quot;) # R default
 r17 &lt;- future_lapply(rep(3, 2), runif)
 
 set.seed(123456, kind = &quot;Mersenne-Twister&quot;) # R default
-plan(callr, workers = 2)
 r18 &lt;- future_lapply(rep(3, 2), runif)
 
 all.equal(r17, r18)</code></pre>
-<pre><code>## [1] &quot;Component 1: Mean relative difference: 1.539529&quot; 
-## [2] &quot;Component 2: Mean relative difference: 0.4753423&quot;</code></pre>
+<pre><code>## [1] &quot;Component 1: Mean relative difference: 0.1377113&quot;
+## [2] &quot;Component 2: Mean relative difference: 1.168101&quot;</code></pre>
 </div>
 <div id="reproducible-4" class="section level3">
 <h3>Reproducible</h3>
-<pre class="r"><code>library(&quot;future&quot;)
-library(&quot;future.callr&quot;)
+<pre class="r"><code>library(&quot;future.callr&quot;)
 library(&quot;future.apply&quot;)
 
-set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
+# register parallel backend
 plan(callr, workers = 2)
+
+set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
 r19 &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
 set.seed(123456, &quot;L&#39;Ecuyer-CMRG&quot;)
-plan(callr, workers = 2)
 r20 &lt;- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
 all.equal(r19, r20)</code></pre>

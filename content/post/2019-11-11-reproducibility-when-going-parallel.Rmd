@@ -2,7 +2,7 @@
 title: Reproducibility of parallel tasks in R
 author: ''
 date: '2019-11-11'
-lastmod: '2019-12-20'
+lastmod: '2019-12-25'
 slug: reproducibility-when-going-parallel
 categories:
   - R
@@ -229,15 +229,15 @@ The following examples show how you can make parallelization relying on the _fut
 ### Not reproducible
 
 ```{r}
-library("future")
 library("future.apply")
 
-set.seed(123456, "Mersenne-Twister") # R default
+# register parallel backend
 plan(multicore, workers = 2)
+
+set.seed(123456, "Mersenne-Twister") # R default
 r9 <- future_lapply(rep(3, 2), runif)
 
 set.seed(123456, kind = "Mersenne-Twister") # R default
-plan(multicore, workers = 2)
 r10 <- future_lapply(rep(3, 2), runif)
 
 all.equal(r9, r10)
@@ -260,13 +260,13 @@ Note that one could also use the [_furrr_](https://github.com/DavisVaughan/furrr
 (i)
 
 ```{r}
-library("future")
 library("future.apply")
 
+# register parallel backend
 plan(multicore, workers = 2)
+
 r11a <- future_lapply(rep(3, 2), runif, future.seed = 123456)
 
-plan(multicore, workers = 2)
 r12a <- future_lapply(rep(3, 2), runif, future.seed = 123456)
 
 all.equal(r11a, r12a)
@@ -275,15 +275,15 @@ all.equal(r11a, r12a)
 (ii)
 
 ```{r}
-library("future")
 library("future.apply")
 
-set.seed(123)
+# register parallel backend
 plan(multicore, workers = 2)
+
+set.seed(123)
 r11b <- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
 set.seed(123)
-plan(multicore, workers = 2)
 r12b <- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
 all.equal(r11b, r12b)
@@ -296,19 +296,18 @@ The following example uses the [doFuture](https://github.com/HenrikBengtsson/doF
 ### Not reproducible
 
 ```{r, message=FALSE}
-library("future")
 library("doFuture")
 
-set.seed(123456, "Mersenne-Twister") # R default
+# register parallel backend
 registerDoFuture()
 plan(multisession, workers = 2)
+
+set.seed(123456, "Mersenne-Twister") # R default
 r13 = foreach(i = rep(3, 2)) %dopar% {
   runif(i)
 }
 
 set.seed(123456, "Mersenne-Twister") # R default
-registerDoFuture()
-plan(multisession, workers = 2)
 r14 = foreach(i = rep(3, 2)) %dopar% {
   runif(i)
 }
@@ -316,34 +315,53 @@ r14 = foreach(i = rep(3, 2)) %dopar% {
 all.equal(r13, r14)
 ```
 
-### Reproducible
-
 When reading the RNG section of `?doFuture::doFuture`, one discovers that the `doFuture` does not support reproducible parallel streams.
 Instead, the [doRNG](https://github.com/renozao/doRNG) package is suggested for reproducible parallel `foreach` calls.
 
-Subsequently, one needs to initialize a "PSOCK" cluster and call `registerDoRNG()` with the desired seed value.
+When using `doFuture::registerDoFuture()`, setting the "L'Ecuyer-CMRG" has **no effect**.
 
 ```{r, message=FALSE}
-library("future")
-library("doRNG")
+library("doFuture")
 
-cl = makeCluster(2, type = "PSOCK")
-setDefaultCluster(cl)
-registerDoRNG(123456)
+# register parallel backend
+registerDoFuture()
+plan(multisession, workers = 2)
+
+set.seed(123, "L'Ecuyer-CMRG") 
 r15 = foreach(i = rep(3, 2)) %dopar% {
   runif(i)
 }
 
-cl = makeCluster(2, type = "PSOCK")
-setDefaultCluster(cl)
-registerDoRNG(123456)
+set.seed(123, "L'Ecuyer-CMRG") 
 r16 = foreach(i = rep(3, 2)) %dopar% {
   runif(i)
 }
+
+all.equal(r15, r16)
 ```
 
-```{r}
-all.equal(r15, r16)
+### Reproducible
+
+Instead, one needs to add a call to `doRNG::registerDoRNG()` to initialize the parallel RNG stream.
+
+```{r, message=FALSE}
+library("doFuture")
+library("doRNG")
+
+# register parallel backend
+registerDoFuture()
+plan(multisession, workers = 2)
+
+registerDoRNG(123)
+r15a = foreach(i = rep(3, 2)) %dopar% {
+  runif(i)
+}
+
+registerDoRNG(123)
+r16a = foreach(i = rep(3, 2)) %dopar% {
+  runif(i)
+}
+all.equal(r15a, r16a)
 ```
 
 ## callr backend
@@ -353,16 +371,16 @@ The "callr" backend luckily functions in the same way as the "multicore" one fro
 ### Not reproducible
 
 ```{r}
-library("future")
 library("future.callr")
 library("future.apply")
 
-set.seed(123456, kind = "Mersenne-Twister") # R default
+# register parallel backend
 plan(callr, workers = 2)
+
+set.seed(123456, kind = "Mersenne-Twister") # R default
 r17 <- future_lapply(rep(3, 2), runif)
 
 set.seed(123456, kind = "Mersenne-Twister") # R default
-plan(callr, workers = 2)
 r18 <- future_lapply(rep(3, 2), runif)
 
 all.equal(r17, r18)
@@ -371,16 +389,16 @@ all.equal(r17, r18)
 ### Reproducible
 
 ```{r}
-library("future")
 library("future.callr")
 library("future.apply")
 
-set.seed(123456, "L'Ecuyer-CMRG")
+# register parallel backend
 plan(callr, workers = 2)
+
+set.seed(123456, "L'Ecuyer-CMRG")
 r19 <- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
 set.seed(123456, "L'Ecuyer-CMRG")
-plan(callr, workers = 2)
 r20 <- future_lapply(rep(3, 2), runif, future.seed = TRUE)
 
 all.equal(r19, r20)
