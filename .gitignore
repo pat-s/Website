@@ -8,3 +8,4 @@ public/
 .directory
 .DS_Store
 resources/_gen/
+.vscode/
