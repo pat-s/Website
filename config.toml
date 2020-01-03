@@ -45,19 +45,16 @@ rel = [
 
 [markup]
 # using blackFriday since goldmark does not render inline javascript (bibbase)
-defaultMarkdownHandler = "blackFriday"
+defaultMarkdownHandler = "goldmark"
 
-  [markup."markup.goldmark"]
-
-    [markup."markup.goldmark"."markup.goldmark.renderer"]
-    unsafe = true
-
-  [markup."markup.highlight"]
-  codeFences = false
-
-  [markup."markup.tableOfContents"]
-  startLevel = 2.0
-  endLevel = "3e"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = false
+  [markup.tableOfContents]
+    startLevel = 2.0
+    endLevel = "3"
 
 [taxonomies]
 tag = "tags"
