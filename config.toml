@@ -44,7 +44,8 @@ rel = [
 ]
 
 [markup]
-defaultMarkdownHandler = "goldmark"
+# using blackFriday since goldmark does not render inline javascript (bibbase)
+defaultMarkdownHandler = "blackFriday"
 
   [markup."markup.goldmark"]
 
