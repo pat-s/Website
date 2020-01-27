@@ -79,7 +79,7 @@ user_groups:
 - Visitors
 ---
 
-I am a **PhD candidate** within the [GIScience group](http://www.geographie.uni-jena.de/Geoinformatik_p_1558.html) at the [Department of Geography](http://www.geographie.uni-jena.de/Institut+für+Geographie.html). 
+I am a **PhD candidate** within the [GIScience group](https://www.geographie.uni-jena.de/Geoinformatik_p_1558.html) at the [Department of Geography](https://www.geographie.uni-jena.de/Institut+für+Geographie.html) at [University of Jena](https://www.uni-jena.de/en/). 
 I focus on the application of statistical- and machine learning techniques to address research questions related to environmental issues.  
 
 At the same time I am working for the [Department of Statistics](http://www.compstat.statistik.uni-muenchen.de/) at LMU Munich to develop the R package framework [mlr3](https://github.com/mlr-org/mlr3).
