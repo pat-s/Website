@@ -6,6 +6,7 @@
 theme = "Minimal"
 # Enable users to switch between day and night mode?
 day_night = false
+light = true
 
 # Font style.
 #   Choose from `Minimal`, `classic`, or `playfair`.
