@@ -47,11 +47,13 @@ rel = [
 # using blackFriday since goldmark does not render inline javascript (bibbase)
 defaultMarkdownHandler = "goldmark"
 
+  [markup.blackFriday]
+  hrefTargetBlank = true
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
   [markup.highlight]
-    codeFences = false
+    codeFences = true
   [markup.tableOfContents]
     startLevel = 2.0
     endLevel = "3"
