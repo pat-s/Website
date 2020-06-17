@@ -1,0 +1,48 @@
+---
+title: "Presentation Ninja"
+subtitle: "⚔<br/>with xaringan"
+author: "Yihui Xie"
+institute: "RStudio, PBC"
+date: "2016/12/12 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      autoplay: 5000
+      restart_slideshow: true
+---
+
+class: middle, center
+
+# Hey there!
+
+---
+
+class: middle, center
+# Let's add a useful feature!
+
+---
+
+class: middle, center
+Restarting a slideshow after it has finished.
+
+---
+
+class: middle, center
+This is useful for slideshows that run in a repetitive manner in the background (e.g. on a screen).
+
+---
+
+class: middle, center
+By default, the time specified in `autoplay` is multiplied by the number of slides.
+After this time has passed, we jump back to slide 1.
+
+---
+
+class: middle, center
+This is the last slide. Wait for it...
+
