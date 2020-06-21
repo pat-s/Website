@@ -14,10 +14,8 @@ role: Data Scientist
 
 # Organizations/Affiliations
 organizations:
-- name: Friedrich-Schiller-University Jena
-  url: ""
-- name: Ludwig-Maximilian-University Munich
-  url: ""
+- cynkra GmbH, Zurich, CH
+  url: https://cynkra.com
 
 # Short bio (displayed in user profile at end of posts)
 # bio: My research interests include distributed robotics, mobile computing and programmable matter.
@@ -79,12 +77,12 @@ user_groups:
 - Visitors
 ---
 
-I am a **PhD candidate** within the [GIScience group](https://www.geographie.uni-jena.de/Geoinformatik_p_1558.html) at the [Department of Geography](https://www.geographie.uni-jena.de/Institut+für+Geographie.html) at [University of Jena](https://www.uni-jena.de/en/). 
-I focus on the application of statistical- and machine learning techniques to address research questions related to environmental issues.  
+I am a Data Scientist working in Zurich, CH.
+My area of expertise is applied machine learning, more specifically in the field of environmental modeling.
+I am also doing a PhD at the [GIScience group](https://www.geographie.uni-jena.de/Geoinformatik_p_1558.html) at the [Department of Geography](https://www.geographie.uni-jena.de/Institut+für+Geographie.html) at [University of Jena](https://www.uni-jena.de/en/) related to this topic.
 
-At the same time I am working for the [Department of Statistics](http://www.compstat.statistik.uni-muenchen.de/) at LMU Munich to develop the R package framework [mlr3](https://github.com/mlr-org/mlr3).
-Currently I also maintain the [mlr](https://github.com/mlr-org/mlr) package.
+At [cynkra](https://cynkra.com), I am an R consultant with many years of experience in the following fields: CI/CD, package development, DevOps tasks, machine learning and spatio-temporal data handling.
 
-Besides the scientific part my interests lie in the development of programming solutions to simplify todays data science challenges. 
-I am working in a reproducible manner and actively working on promoting the idea of reproducible research in science.
-I like to [**write**]({{< relref "#posts" >}}) about the Linux world, the R programming world and other technical topics that I find interesting.
+On the side, I like to develop programmatic solutions to simplify todays data science challenges.
+My standard is to work in a reproducible manner and also actively promote this philosophy in my daily work.
+Furthermore I enjoy [**writing**]({{< relref "#posts" >}}) about the Linux world, the #rstats community and other technical topics that I find interesting.
