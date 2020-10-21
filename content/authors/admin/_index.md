@@ -15,7 +15,7 @@ role: Data Scientist
 # Organizations/Affiliations
 organizations:
 - cynkra GmbH, Zurich, CH
-  url: https://cynkra.com
+url: www.cynkra.com
 
 # Short bio (displayed in user profile at end of posts)
 # bio: My research interests include distributed robotics, mobile computing and programmable matter.
@@ -62,27 +62,26 @@ social:
   icon_pack: fab
   link: https://stackexchange.com/users/5237716/pat-s?tab=accounts
 # Link to a PDF of your resume/CV from the About widget.
-# To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.  
+# To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
 # - icon: cv
 #   icon_pack: ai
 link: files/cv.pdf
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
 email: ""
-  
+
 # Organizational groups that you belong to (for People widget)
-#   Set this to `[]` or comment out if you are not using People widget.  
+#   Set this to `[]` or comment out if you are not using People widget.
 user_groups:
 - Researchers
 - Visitors
 ---
 
-I am a Data Scientist working in Zurich, CH.
-My area of expertise is applied machine learning, more specifically in the field of environmental modeling.
-I am also doing a PhD at the [GIScience group](https://www.geographie.uni-jena.de/Geoinformatik_p_1558.html) at the [Department of Geography](https://www.geographie.uni-jena.de/Institut+für+Geographie.html) at [University of Jena](https://www.uni-jena.de/en/) related to this topic.
+I am an R consultant working in Zurich, CH.
+My area of expertise is is in the area of applied machine learning, more specifically in the field of environmental modeling.
+I am also familiar with DevOps applications (Docker, Terraform, Ansible).
+Besides, I am also undertaking a PhD at the [GIScience group](https://www.geographie.uni-jena.de/Geoinformatik_p_1558.html) at the [Department of Geography](https://www.geographie.uni-jena.de/Institut+für+Geographie.html) at [University of Jena](https://www.uni-jena.de/en/) related to environmental modeling.
 
-At [cynkra](https://cynkra.com), I am an R consultant with many years of experience in the following fields: CI/CD, package development, DevOps tasks, machine learning and spatio-temporal data handling.
-
-On the side, I like to develop programmatic solutions to simplify todays data science challenges.
+In my spare time I like to develop programmatic solutions to simplify todays data science challenges.
 My standard is to work in a reproducible manner and also actively promote this philosophy in my daily work.
 Furthermore I enjoy [**writing**]({{< relref "#posts" >}}) about the Linux world, the #rstats community and other technical topics that I find interesting.
