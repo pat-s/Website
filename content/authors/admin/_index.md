@@ -14,8 +14,8 @@ role: Data Scientist
 
 # Organizations/Affiliations
 organizations:
-- cynkra GmbH, Zurich, CH
-# url: "www.cynkra.com"
+- name: cynkra GmbH
+  url: "https://www.cynkra.com"
 
 # Short bio (displayed in user profile at end of posts)
 # bio: My research interests include distributed robotics, mobile computing and programmable matter.
