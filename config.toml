@@ -2,13 +2,15 @@ relativeurls = true
 baseurl = "https://pat-s.me"
 title = "Patrick Schratz"
 copyright = "&copy; 2017 - {year} Patrick Schratz"
-theme = "academic"
+# theme = "starter-academic"
 enableEmoji = true
 ignoreFiles = [
   "\\.Rmd$",
   "\\.Rmarkdown$",
   "_files$",
-  "_cache$"
+  "_cache$",
+  "\\.knit\\.md$",
+  "\\.utf8\\.md$",
 ]
 min_version = "0.60.1"
 preserveTaxonomyNames = true
@@ -20,45 +22,38 @@ defaultContentLanguageInSubdir = false
 paginate = 10.0
 
 [outputs]
-home = [
-  "HTML",
-  "RSS",
-  "JSON"
-]
-section = [
-  "HTML",
-  "RSS"
-]
+home = ["HTML", "RSS", "JSON"]
+section = ["HTML", "RSS"]
 
 ["mediaTypes.\"application/manifest+json\""]
-suffixes = [
-  "webmanifest"
-]
+suffixes = ["webmanifest"]
 
 ["outputFormats.WebAppManifest"]
-mediaType = [
-  "application/manifest+json"
-]
-rel = [
-  "manifest"
-]
+mediaType = ["application/manifest+json"]
+rel = ["manifest"]
 
 [markup]
 # using blackFriday since goldmark does not render inline javascript (bibbase)
 defaultMarkdownHandler = "goldmark"
 
-  [markup.blackFriday]
-  hrefTargetBlank = true
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
-  [markup.highlight]
-    codeFences = true
-  [markup.tableOfContents]
-    startLevel = 2.0
-    endLevel = "3"
+[markup.blackFriday]
+hrefTargetBlank = true
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+[markup.highlight]
+codeFences = true
+[markup.tableOfContents]
+startLevel = 2.0
+endLevel = "3"
 
 [taxonomies]
 tag = "tags"
 category = "categories"
 publication_type = "publication_types"
+
+[module]
+  [[module.imports]]
+    path = "github.com/wowchemy/wowchemy-hugo-modules/wowchemy"
+  [[module.imports]]
+    path = "github.com/wowchemy/wowchemy-hugo-modules/netlify-cms-academic"
