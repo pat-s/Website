@@ -113,6 +113,7 @@ a {
 
 body {
   font-family: "Roboto";
+  font-size: 0.9rem;
 }
 
 /* code inline highlighting */
@@ -162,4 +163,12 @@ h1 {
   height: auto;
   margin: 0 auto;
   object-fit: cover;
+}
+
+.big-icon {
+  font-size: 1.3rem;
+}
+
+#profile .network-icon {
+  margin-top: 10px;
 }
