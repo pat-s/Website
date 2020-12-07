@@ -24,10 +24,8 @@ interests:
 - Statistical and machine-learning modeling
 - Reproducible research
 - Open-source development
+- DevOps and server administration
 - Remote Sensing
-- Linux
-- Server Administration (HPC)
-- (Geo)-statistics
 
 education:
   courses:
@@ -77,11 +75,12 @@ user_groups:
 - Visitors
 ---
 
-I am an R consultant working in Zurich, CH.
-My area of expertise is is in the area of applied machine learning, more specifically in the field of environmental modeling.
-I am also familiar with DevOps applications (Docker, Terraform, Ansible).
-Besides, I am also undertaking a PhD at the [GIScience group](https://www.geographie.uni-jena.de/Geoinformatik_p_1558.html) at the [Department of Geography](https://www.geographie.uni-jena.de/Institut+für+Geographie.html) at [University of Jena](https://www.uni-jena.de/en/) related to environmental modeling.
+R consultant at [cynkra](https://cynkra.com/) in Zurich, CH.
+
+I have advanced knowledge in the area of applied machine learning, more specifically in the field of environmental modeling.
+I am also familiar in DevOps (Docker, Terraform, Ansible) and Linux administration tasks.
+Besides, I am undertaking a PhD at the [GIScience group](https://www.geographie.uni-jena.de/Geoinformatik_p_1558.html) at the [Department of Geography](https://www.geographie.uni-jena.de/Institut+für+Geographie.html) at [University of Jena](https://www.uni-jena.de/en/) related to environmental modeling.
 
 In my spare time I like to develop programmatic solutions to simplify todays data science challenges.
-My standard is to work in a reproducible manner and also actively promote this philosophy in my daily work.
-Furthermore I enjoy [**writing**]({{< relref "#posts" >}}) about the Linux world, the #rstats community and other technical topics that I find interesting.
+My standard is to work in a reproducible manner which I also actively promote in my daily work.
+Occasionally I am [**blogging**]({{< relref "#posts" >}}) about IT related matters I am interested in.
