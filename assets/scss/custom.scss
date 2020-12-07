@@ -41,7 +41,7 @@ pre{padding:0}
 /* from themes/academic.css */
 .article-container {
   font-size: 13pt;
-  max-width: 850px;
+  max-width: 800px;
   padding: 1rem 20px 0 20px;
   margin: 0 auto 0 auto;
 }
@@ -151,4 +151,15 @@ pre, code {
     color: #0072B5;
     font-weight: 700;
     background-color: transparent !important;
+}
+
+h1 {
+  font-size: 1.9rem;
+}
+
+.avatar {
+  width: 180px;
+  height: auto;
+  margin: 0 auto;
+  object-fit: cover;
 }
