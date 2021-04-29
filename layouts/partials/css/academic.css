@@ -81,7 +81,7 @@ h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word; /* Ensures very long heading words do not overflow into content. */
 }
 h1 {
-  font-size: 2.25rem;
+  font-size: 1.9rem;
 }
 h2 {
   margin-top: 1rem;
@@ -2133,3 +2133,4 @@ body.dark,
 .dark .btn.btn-primary.active {
   color: initial;
 }
+

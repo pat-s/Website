@@ -10,7 +10,7 @@ authors:
 superuser: true
 
 # Role/position
-role: Data Scientist
+role: Full Stack Developer with focus on R
 
 # Organizations/Affiliations
 organizations:
@@ -25,7 +25,6 @@ interests:
 - Reproducible research
 - Open-source development
 - DevOps and server administration
-- Remote Sensing
 
 education:
   courses:

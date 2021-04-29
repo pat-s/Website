@@ -141,3 +141,7 @@ pre, code {
     font-weight: 700;
     background-color: transparent !important;
 }
+
+h1 {
+  font-size: 1.9rem;
+}
