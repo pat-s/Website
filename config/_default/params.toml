@@ -181,7 +181,7 @@ profile = false
   #   0: Disabled
   #   1: Disqus (https://disqus.com)
   #   2: Commento (https://commento.io)
-  engine = 2
+  engine = 1
 
   # Which page types are commentable?
   commentable = {page = true, post = true, docs = true}
