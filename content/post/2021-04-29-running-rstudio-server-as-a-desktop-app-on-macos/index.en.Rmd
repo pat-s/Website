@@ -5,6 +5,7 @@ date: '2021-04-29'
 slug: []
 categories:
   - R
+  - r-bloggers
 tags:
   - RStudio
   - R
