@@ -1,0 +1,137 @@
+---
+title: Running RStudio Server/Workbench as a desktop app on macOS
+author: Patrick Schratz
+date: '2021-04-29'
+slug: []
+categories:
+  - R
+tags:
+  - RStudio
+  - R
+  - r-bloggers
+  - productivity
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-04-29T08:49:14+02:00'
+featured: no
+image:
+  caption: 'Fig:'
+  focal_point: ''
+  preview_only: no
+projects: []
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#rstudio-server-desktop-app-options">RStudio Server desktop app options</a></li>
+<li><a href="#site-specific-browser-sbb-tools">Site-specific-browser (SBB) tools</a>
+<ul>
+<li><a href="#electron">Electron</a></li>
+<li><a href="#unite-coherence-x">Unite / Coherence X</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In my work as an R consultant/scientist, I often work on/with RStudio Server (soon to be RStudio Workbench) instances.
+These have several advantages:</p>
+<ul>
+<li>The workload is executed on the server and not your local machine</li>
+<li>The environment can be centrally managed for many users and prevents OS-related issues on Windows/macOS/Linux user machines</li>
+<li>Session keep running in the background even if the local machine is powered off</li>
+<li>Often RStudio Server instances are way quicker than local RStudio Desktop installations</li>
+</ul>
+<p>However, there is also (at least) one downside: it runs in a browser (tab).
+This comes with the issue that the keybindings of your browser of choice will conflict RStudio’s keybindings.
+Using keybindings is a great way to improve productivity and increase working experience in general, not only in RStudio.</p>
+<p>Probably the most annoying conflict is the ⌘ + W keybinding:</p>
+<ul>
+<li>in RStudio it closes the current file in the editor</li>
+<li>in the browser it closes the current tab (which closes the RStudio Server instance entirely)</li>
+</ul>
+<p>With the recent addition of the command palette in RStudio &gt;= 1.4, the hotkey ⌘ + ⇧ + P does not work in Firefox - there it opens a new private window (and the hotkeys in Firefox cannot be changed).</p>
+<p>Such keybinding conflicts apply to all applications which run in the browser, not solely to RStudio.
+Also without a dedicated desktop app for such applications, these will likely get lost among other browser tabs - most often, one has more than one (five, ten, twenty, etc.) tabs open.</p>
+<p>To me, there is only one solutions to this: run these web apps as dedicated desktop apps.</p>
+</div>
+<div id="rstudio-server-desktop-app-options" class="section level1">
+<h1>RStudio Server desktop app options</h1>
+<p>In fact, there are different options to do this for RStudio (and more generic ones about which I will talk later):</p>
+<ul>
+<li><a href="https://www.rstudio.com/products/rstudio/">RStudio Desktop Pro</a> (995$/year)</li>
+<li><a href="https://rud.is/rswitch/">RSwitch</a> (free)</li>
+</ul>
+<p>Unless you’re working at a company which has lots of money to spare for many RStudio Desktop Pro licenses, you probably want to use RSwitch for this task.
+So did I for quite some time.
+RSwitch is great and does not only provide the option to connect to RStudio Server sessions but also let’s you easily switch between (CRAN) R versions on macOS.</p>
+<p>However, the RSwitch implementation also lacks some features which limit the experience:</p>
+<ul>
+<li>Opening URLs and Shiny Apps does not work</li>
+<li>No password manager integration</li>
+<li>No option to open multiple sessions</li>
+<li>No option to switch between multiple windows (multiple RStudio Server instances)</li>
+</ul>
+<p>Nevertheless it solves the most important issues: the keybinding conflicts with browsers and loosing the instance between all other browser tabs.</p>
+<p>The first points are a showstopper for people developing shiny apps or wanting to preview {pkgdown} or other interactive websites frequently.
+All in all, the experience feels limited for some people which do not make that heavy use of keybindings.</p>
+<p>Because I am working in the consulting business since one year, I know that suggesting half-baked solutions to clients won’t make them happy in the long run (which does not mean that RSwitch is bad - I think it is a great peace of software, especially because it is FOSS!).</p>
+<p>So I was wondering if more sophisticated solutions exist to this problem - and yes, they do!</p>
+</div>
+<div id="site-specific-browser-sbb-tools" class="section level1">
+<h1>Site-specific-browser (SBB) tools</h1>
+<div id="electron" class="section level2">
+<h2>Electron</h2>
+<p>You might have heard of <a href="https://www.electronjs.org/">Electron</a>, a Javascript-based platform to run/wrap pretty much any app into a desktop app.
+Many apps make use of Electron to easily provide desktop apps, especially on Linux (Slack, Discord, Notion, Mattermost, VSCode).
+Electron apps are essentially a wrapper around a web app.
+While this is a great effort in general, Electron apps are also quite energy demanding.
+And they do not allow generic wrapping of any website.</p>
+<p>And after doing more research, I found <a href="https://www.bzgapps.com/unite">Unite</a> / <a href="https://www.bzgapps.com/coherence">Coherence X</a>.</p>
+</div>
+<div id="unite-coherence-x" class="section level2">
+<h2>Unite / Coherence X</h2>
+<p>These apps make it possible to pack <strong>any</strong> web app into a dedicated desktop app.
+While Unite uses Safari for this, Coherence relies on chromium-based browser solutions.
+The downside is that both are not free - but paying 20$ for an app which such universal capabilities that makes dev life so much easier is money well spent in my view.
+Also as usual there is a trial version to play around for free and evaluate if the tool is making life easier.</p>
+<p>The developers also claim that both apps (especially Unite) use way less resources as their Electron counterparts.
+This is not surprising as Safari is well known to be highly optimized in terms of resource usage.
+I am not sure how the chromium-focused Coherence app compares here but given that Electron is quite a resource beast, it might also be lighter.
+One can even think of outsourcing all RStudio tasks to a remote instance this way (as long as you have internet access) because the local RStudio Desktop installation is quite resource hungry (and not really fast).</p>
+<p>Now let’s inspect the RStudio Unite wrapper (I went for Unite instead of Coherence due to less resource and size needs) in more detail:
+One can set custom dock icons, configure the app behavior and style and optionally open multiple instances in the same app.</p>
+<div class="figure">
+<img src="images/unite-overview.png" style="width:80.0%;height:80.0%" alt="" />
+<p class="caption">RStudio Workbench wrapped in Unite</p>
+</div>
+<div class="figure">
+<img src="images/unite-behavior.png" style="width:80.0%;height:80.0%" alt="" />
+<p class="caption">Unite: Behavior setting</p>
+</div>
+<p>An important setting in my view is to set the whitelist setting as follows:</p>
+<p>Only allow the website of RStudio Server to open in the app and force all other URLs to be opened in your default browser.
+Otherwise, URLs opened in RStudio Server (e.g. <code>usethis::browse_github()</code> or <code>pkgdown::preview_site()</code>) will open in the Unite app - whereas you probably want them in your default browser.</p>
+<div class="figure">
+<img src="images/unite-whitelist.png" style="width:80.0%;height:80.0%" alt="" />
+<p class="caption">Unite Whitelist setting</p>
+</div>
+<p>Another neat detail is that one can set a custom dock icon for these apps.
+To have a visual difference to the RStudio Desktop app, I used the gray RStudio Logo:</p>
+<div class="figure">
+<img src="images/Screen%20Shot%202021-04-29%20at%209.53.15%20AM.png" style="width:20.0%;height:20.0%" alt="" />
+<p class="caption">RStudio Unite dock icon</p>
+</div>
+<p>I am not yet sure if I want to wrap all RStudio Server instances into a single app or create a dedicated one for each one.
+Both approaches have their pros and cons.</p>
+<p>All in all, this discovery is really a game changer for me.
+I hope it can also be one for you :-)</p>
+</div>
+</div>
